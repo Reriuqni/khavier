@@ -16,7 +16,7 @@ class SideMenu extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Khavier',
+                Text('KhaviAR',
                 style: TextStyle(fontSize: 30),),
               ],
             ),
@@ -65,18 +65,18 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "System Settings",
-            svgSrc: "assets/icons/menu_profile.svg",
-            press: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-          DrawerListTile(
-            title: "System Settings",
             svgSrc: "assets/icons/menu_setting.svg",
             press: () {
               Navigator.pushNamed(context, '/settings');
             },
           ),
+          DrawerListTile(
+            title: "My Account",
+            svgSrc: "assets/icons/menu_profile.svg",
+            press: () {
+              Navigator.pushNamed(context, '/myaccount');
+            },
+          ),          
         ],
       ),
     );

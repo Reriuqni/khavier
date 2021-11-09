@@ -4,6 +4,7 @@ import 'package:admin/model/model.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/screens/matters/matters_screen.dart';
+import 'package:admin/screens/myaccount/my_account_screen.dart';
 import 'package:admin/screens/notification/notification_screen.dart';
 import 'package:admin/screens/reports/reports_screen.dart';
 import 'package:admin/screens/settings/settings_screen.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
                 '/chat': (context) => ChatScreen(),
                 '/notification': (context) => NotificationScreen(),
                 '/settings': (context) => SettingsScreen(),
+                '/myaccount': (context) => MyAccountScreen(),
               },
               home: MainScreen(),
             ),
