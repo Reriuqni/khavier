@@ -1,5 +1,4 @@
 import 'package:admin/constants.dart';
-// import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/model/api_model.dart';
 import 'package:admin/model/model.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
@@ -10,9 +9,10 @@ import 'package:admin/screens/reports/reports_screen.dart';
 import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:admin/screens/spiner/spinner_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/controllers/MenuController.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,15 +32,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print('------init main');
     model = Model();
     apiModel = ApiModel();
     super.initState();
   }
 
   @override
-   Widget build(BuildContext context) {
-      print('------build main');
+  Widget build(BuildContext context) {
     return _modelLoading
         ? MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -48,12 +46,20 @@ class _MyAppState extends State<MyApp> {
           )
         : MultiProvider(
             providers: [
-              ChangeNotifierProvider<Model>.value(value: model),
-              //ChangeNotifierProvider<UserModel>.value(value: UserModel()),
-              ChangeNotifierProvider<ApiModel>.value(value: apiModel),
+              ChangeNotifierProvider(
+                create: (context) => MenuController(),
+              ),
             ],
             child: MaterialApp(
-              // debugShowCheckedModeBanner: false,
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Admin Panel',
+              theme: ThemeData.dark().copyWith(
+                scaffoldBackgroundColor: bgColor,
+                textTheme:
+                    GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                        .apply(bodyColor: Colors.white),
+                canvasColor: secondaryColor,
+              ),
               routes: {
                 '/reports': (context) => ReportsScreen(),
                 '/tickets': (context) => TicketsScreen(),
@@ -64,6 +70,6 @@ class _MyAppState extends State<MyApp> {
               },
               home: MainScreen(),
             ),
-          ); 
+          );
   }
 }

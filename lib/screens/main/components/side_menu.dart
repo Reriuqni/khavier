@@ -12,7 +12,14 @@ class SideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
+            // child: Image.asset("assets/images/logo.png"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Khavier',
+                style: TextStyle(fontSize: 30),),
+              ],
+            ),
           ),
           DrawerListTile(
             title: "Admin panel",
