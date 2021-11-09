@@ -1,91 +1,75 @@
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/model/api_model.dart';
+import 'package:admin/model/model.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/screens/matters/matters_screen.dart';
 import 'package:admin/screens/notification/notification_screen.dart';
 import 'package:admin/screens/reports/reports_screen.dart';
 import 'package:admin/screens/settings/settings_screen.dart';
+import 'package:admin/screens/spiner/spinner_screen.dart';
+import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/controllers/MenuController.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late Model model;
+  late ApiModel apiModel;
+  bool _modelLoading = false;
+
+  @override
+  void initState() {
+    model = Model();
+    apiModel = ApiModel();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Admin Panel',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: bgColor,
-        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-            .apply(bodyColor: Colors.white),
-        canvasColor: secondaryColor,
-      ),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => MenuController(),
-          ),
-        ],
-        child: MainScreen(),
-      ),
-      routes: {
-        // '/reports': (context) => ReportsScreen(), //Error
-        '/reports': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
+    return _modelLoading
+        ? MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Spinner(),
+          )
+        : MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (context) => MenuController(),
+              ),
+            ],
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Admin Panel',
+              theme: ThemeData.dark().copyWith(
+                scaffoldBackgroundColor: bgColor,
+                textTheme:
+                    GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                        .apply(bodyColor: Colors.white),
+                canvasColor: secondaryColor,
+              ),
+              routes: {
+                '/reports': (context) => ReportsScreen(),
+                '/tickets': (context) => TicketsScreen(),
+                '/matters': (context) => MattersScreen(),
+                '/chat': (context) => ChatScreen(),
+                '/notification': (context) => NotificationScreen(),
+                '/settings': (context) => SettingsScreen(),
+              },
+              home: MainScreen(),
             ),
-          ],
-          child: ReportsScreen(),
-        ),
-        '/tickets': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
-            ),
-          ],
-          child: ReportsScreen(),
-        ),
-        '/matters': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
-            ),
-          ],
-          child: MattersScreen(),
-        ),
-        '/chat': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
-            ),
-          ],
-          child: ChatScreen(),
-        ),
-        '/notification': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
-            ),
-          ],
-          child: NotificationScreen(),
-        ),
-        '/settings': (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) => MenuController(),
-            ),
-          ],
-          child: SettingsScreen(),
-        ),
-      },
-    );
+          );
   }
 }

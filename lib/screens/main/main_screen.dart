@@ -1,16 +1,21 @@
-import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'components/side_menu.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  @override
+  _MainScreen createState() => _MainScreen();
+}
+
+// class _MainScreen extends StatelessWidget {
+class _MainScreen extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: context.read<MenuController>().scaffoldKey,
+      // key: context.read<MenuController>().scaffoldKey,
+      key: GlobalKey<ScaffoldState>(),
       drawer: SideMenu(),
       body: SafeArea(
         child: Row(
