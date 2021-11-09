@@ -1,6 +1,11 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/main/main_screen.dart';
+import 'package:admin/screens/matters/matters_screen.dart';
+import 'package:admin/screens/notification/notification_screen.dart';
+import 'package:admin/screens/reports/reports_screen.dart';
+import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +35,57 @@ class MyApp extends StatelessWidget {
         ],
         child: MainScreen(),
       ),
+      routes: {
+        // '/reports': (context) => ReportsScreen(), //Error
+        '/reports': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: ReportsScreen(),
+        ),
+        '/tickets': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: ReportsScreen(),
+        ),
+        '/matters': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: MattersScreen(),
+        ),
+        '/chat': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: ChatScreen(),
+        ),
+        '/notification': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: NotificationScreen(),
+        ),
+        '/settings': (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: SettingsScreen(),
+        ),
+      },
     );
   }
 }
