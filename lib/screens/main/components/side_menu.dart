@@ -17,42 +17,58 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "Admin panel",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/');
+            },
           ),
           DrawerListTile(
             title: "Alerts & Reports",
             svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/reports');
+            },
           ),
           DrawerListTile(
-            title: "Ticket system ",
+            title: "Ticket system",
             svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/tickets');
+            },
           ),
           DrawerListTile(
             title: "Matters",
             svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/matters');
+            },
           ),
           DrawerListTile(
             title: "Chat",
             svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/chat');
+            },
           ),
           DrawerListTile(
             title: "Notification",
             svgSrc: "assets/icons/menu_notification.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/notification');
+            },
           ),
           DrawerListTile(
             title: "System Settings",
             svgSrc: "assets/icons/menu_profile.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/settings');
+            },
           ),
           DrawerListTile(
             title: "System Settings",
             svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(context, '/settings');
+            },
           ),
         ],
       ),
