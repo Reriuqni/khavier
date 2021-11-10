@@ -16,7 +16,7 @@ class SideMenu extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('KhaviAR',
+                Text('My Solve',
                 style: TextStyle(fontSize: 30),),
               ],
             ),
@@ -25,7 +25,7 @@ class SideMenu extends StatelessWidget {
             title: "Admin panel",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/main');
             },
           ),
           DrawerListTile(
