@@ -62,9 +62,16 @@ class ProfileCard extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Angelina Jolie"),
+              child: Text("UserName",
+              style: TextStyle(fontSize: 16),),
             ),
           Icon(Icons.keyboard_arrow_down),
+          TextButton(onPressed: () => {
+            Navigator.pushNamed(context, '/singin')
+          }, child: Text('SingIn')),
+          // TextButton(onPressed: () => {
+          //   Navigator.pushNamed(context, '/login')
+          // }, child: Text('LogIn')),
         ],
       ),
     );

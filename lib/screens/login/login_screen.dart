@@ -2,6 +2,7 @@ import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../dashboard/components/header.dart';
 
 import '../main/components/side_menu.dart';
 
@@ -51,8 +52,13 @@ class LoginScreenState extends State<LoginScreen> {
     print('userUid: $_userUid');
     print('userPhone: $_userPhone');
     return Scaffold(
+      appBar: AppBar(
+        title: Header(),
+        backgroundColor: Colors.transparent,
+      ),
       body: SafeArea(
-        child: Column(
+        child:
+          Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Form(

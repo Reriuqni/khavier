@@ -25,7 +25,7 @@ class SideMenu extends StatelessWidget {
             title: "Admin panel",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
-              Navigator.pushNamed(context, '/main');
+              Navigator.pushNamed(context, '/');
             },
           ),
           DrawerListTile(

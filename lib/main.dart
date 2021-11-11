@@ -78,8 +78,9 @@ class _MyAppState extends State<MyApp> {
                 '/settings': (context) => SettingsScreen(),
                 '/myaccount': (context) => MyAccountScreen(),
                 '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
+                '/singin': (context) => PhoneScreen(),
               },
-              home: PhoneScreen(),
+              home: MainScreen(),
             ),
           );
   }
