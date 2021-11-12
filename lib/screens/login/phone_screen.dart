@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:admin/model/model.dart';
+import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../dashboard/components/header.dart';
+import 'package:admin/constants.dart';
 
 class PhoneScreen extends StatefulWidget {
   @override
@@ -33,8 +37,15 @@ class _PhoneScreenState extends State<PhoneScreen> {
     model = Provider.of<Model>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      // backgroundColor: Theme.of(context).colorScheme.primary,
       key: _scaffoldKey,
+      appBar: AppBar(
+        title: Header(),
+        backgroundColor: Colors.white,
+        toolbarHeight: 70,
+        iconTheme: IconThemeData(color: primaryColor),
+      ),
+      drawer: SideMenu(),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -48,7 +59,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     child: Column(
                       children: [
                         //Logo(),
-                        SizedBox(height: 40),
+                        SizedBox(height: 40,),
                         Center(
                           child: Text(
                             "Sign In",//S.of(context).login_register,
@@ -61,18 +72,20 @@ class _PhoneScreenState extends State<PhoneScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
+                        Container(
+                          width: 400,
+                          child: TextFormField(
                           controller: _phoneController,
                           decoration: InputDecoration(
                             labelText: "phone number",//S.of(context).hint_phone_number,
                             hintText: '+38 123 456 6789',
                             labelStyle: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).colorScheme.secondary,
+                                color: Colors.black54,
                             ),
                             prefixIcon: Icon(
                               Icons.call,
-                              color: Theme.of(context).colorScheme.secondary,
+                                color: primaryColor,
                             ),
                             suffixIcon: GestureDetector(
                               onTap: () {
@@ -80,44 +93,48 @@ class _PhoneScreenState extends State<PhoneScreen> {
                               },
                               child: Icon(
                                 Icons.delete_outline,
-                                color: Theme.of(context).colorScheme.secondary,
+                                  color: primaryColor,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
                               BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(
-                                  color:
-                                  Theme.of(context).colorScheme.secondary,
+                                    color: Colors.black54,
                                   width: 2.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
                               BorderRadius.all(Radius.circular(20.0)),
                               borderSide: BorderSide(
-                                  color:
-                                  Theme.of(context).colorScheme.secondary,
+                                    color: Colors.black54,
                                   width: 2.0),
                             ),
                           ),
                           keyboardType: TextInputType.phone,
                         ),
+
+                        ),
+
                         SizedBox(
                           height: 20,
                         ),
                         if (_codeInput)
-                          TextFormField(
+                          Container(
+                            margin: EdgeInsets.only(bottom: 15.0),
+                            width: 400,
+                            child: TextFormField(
                             controller: _codeController,
                             decoration: InputDecoration(
                               labelText: "verification code", //S.of(context).verification_code,
                               hintText: 'XXXXXX',
                               labelStyle: TextStyle(
                                 fontSize: 18,
-                                color: Theme.of(context).colorScheme.secondary,
+                                  color: Colors.black54,
                               ),
                               prefixIcon: Icon(
                                 Icons.call,
-                                color: Theme.of(context).colorScheme.secondary,
+                                  color: primaryColor,
                               ),
                               suffixIcon: GestureDetector(
                                 onTap: () {
@@ -125,30 +142,29 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
-                                  color:
-                                  Theme.of(context).colorScheme.secondary,
+                                    color: primaryColor,
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                                 borderSide: BorderSide(
-                                    color:
-                                    Theme.of(context).colorScheme.secondary,
+                                      color: Colors.black54,
                                     width: 2.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                                 borderSide: BorderSide(
-                                    color:
-                                    Theme.of(context).colorScheme.secondary,
+                                      color: Colors.black54,
                                     width: 2.0),
                               ),
                             ),
                             keyboardType: TextInputType.phone,
                           ),
-                        SizedBox(height: 15),
+                          ),
+
+                          // SizedBox(height: 15),
                         InkWell(
                           onTap: () {
                             if (!_codeInput) {
@@ -161,7 +177,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                             padding: EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Colors.black54,
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(10),
@@ -171,7 +187,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                   ? "confirm" //S.of(context).confirm
                                   : "send code", //S.of(context).send_code,
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Colors.black54,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
                               ),
