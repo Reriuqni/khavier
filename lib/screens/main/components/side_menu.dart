@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';  //2do: is need?
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,8 +12,11 @@ class SideMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-            // child: Image.asset("assets/images/logo.png"),
+          Container(
+            height: 70.0,
+            child: DrawerHeader(
+              margin: EdgeInsets.all(0.0),
+              padding: EdgeInsets.all(0.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -21,6 +25,8 @@ class SideMenu extends StatelessWidget {
               ],
             ),
           ),
+          ),
+
           DrawerListTile(
             title: "Admin panel",
             svgSrc: "assets/icons/menu_dashbord.svg",
@@ -102,12 +108,12 @@ class DrawerListTile extends StatelessWidget {
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
         svgSrc,
-        color: Colors.white54,
+        color: Colors.black54,
         height: 16,
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white54),
+        style: TextStyle(color: Colors.black54),
       ),
     );
   }

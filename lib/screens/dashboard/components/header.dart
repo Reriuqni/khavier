@@ -3,6 +3,8 @@ import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:admin/constants.dart';
+
 
 import '../../../constants.dart';
 
@@ -63,12 +65,12 @@ class ProfileCard extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
               child: Text("UserName",
-              style: TextStyle(fontSize: 16),),
+              style: TextStyle(fontSize: 16, color: Colors.black54),),
             ),
           Icon(Icons.keyboard_arrow_down),
           TextButton(onPressed: () => {
             Navigator.pushNamed(context, '/singin')
-          }, child: Text('SingIn')),
+          }, child: Text('SingIn', style: TextStyle(color: primaryColor, fontSize: 16),)),
           // TextButton(onPressed: () => {
           //   Navigator.pushNamed(context, '/login')
           // }, child: Text('LogIn')),
@@ -87,6 +89,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
+        hintStyle: TextStyle(color: Colors.black54),
         hintText: "Search",
         fillColor: secondaryColor,
         filled: true,
