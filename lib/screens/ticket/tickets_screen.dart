@@ -1,4 +1,6 @@
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/model/model.dart';
+import 'package:admin/model/ticket.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,50 +17,22 @@ class TicketsScreen extends StatefulWidget {
 }
 
 class _TicketsScreenState extends State<TicketsScreen> {
-  // final String _pageName = 'Ticket system';
-  bool _initialized = false;
-  bool _error = false;
-  String ticketName = '';
-  late CollectionReference tickets = FirebaseFirestore.instance.collection('tickets');
-  final Stream<QuerySnapshot> ticketsSnapshots = FirebaseFirestore.instance
-      .collection('tickets')
-      .orderBy('name', descending: true)
-      .snapshots();
+  late Model model;
 
   @override
   void initState() {
-    initializeFlutterFire();
     super.initState();
   }
 
-  // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
-      print(e);
-    }
+  void myPrint() async {
+    model = Provider.of<Model>(context);
+    List<Ticket> ts = await model.db.getTickets('dede');
+    print(ts);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_error) {
-      print('Main build: Something Went Wrong');
-    }
-
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      print('Main build: Loading');
-    }
+    myPrint();
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +55,18 @@ class _TicketsScreenState extends State<TicketsScreen> {
             children: [
               Padding(padding: const EdgeInsets.only(top: 30)),
               ElevatedButton(
-                onPressed: () => addTicketShowDialog(),
+                // onPressed: () => addTicketShowDialog(),
+                onPressed: () async {
+                  Ticket tic = Ticket();
+                  tic.id = await model.db.getTicketID();
+
+                  tic.subject = 'subject';
+                  tic.body = 'body';
+                  tic.priority = 'priority';
+                  tic.executorId = 'executorId';
+
+                  model.db.addTicket(tic);
+                },
                 child: Text('Add New Ticket'),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
@@ -89,7 +74,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
               ),
               Padding(padding: const EdgeInsets.only(top: 30)),
               ElevatedButton(
-                onPressed: () => editTicketShowDialog(),
+                // onPressed: () => editTicketShowDialog(),
+                onPressed: () => {
+                  // model.db.updateTicket(tic);
+                },
                 child: Text('Edit Ticket'),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
@@ -97,153 +85,109 @@ class _TicketsScreenState extends State<TicketsScreen> {
               ),
             ],
           ),
-          Expanded(child: getTicketsCard()),
+          // Expanded(child: getTicketsCard()),
         ],
       ),
     );
   }
 
-/* 
-  Widget getBody0() {
-    return SafeArea(
-      child: Column(
-        children: [
-          Padding(padding: const EdgeInsets.only(top: 30)),
-          ElevatedButton(
-            onPressed: () => addTicketShowDialog(),
-            child: Text('Add New Ticket'),
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
-            ),
-          ),
-          Padding(padding: const EdgeInsets.only(top: 30)),
-          ElevatedButton(
-            onPressed: () => editTicketShowDialog(),
-            child: Text('Edit Ticket'),
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Card(
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  print('Card tapped.');
-                  editTicketShowDialog();
-                },
-                child: const SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: Text('A card that can be tapped'),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
- */
+  // StreamBuilder<QuerySnapshot> getTicketsCard() {
+  //   return StreamBuilder<QuerySnapshot>(
+  //     stream: ticketsSnapshots,
+  //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Text('snapshot: Something went wrong');
+  //       }
 
-  StreamBuilder<QuerySnapshot> getTicketsCard() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: ticketsSnapshots,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('snapshot: Something went wrong');
-        }
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         // return Text("snapshot: Loading");
+  //         // return Center(child: CircularProgressIndicator(),);
+  //         return Column(
+  //           children: [
+  //             Shimmer.fromColors(
+  //               child: Text(
+  //                 "Tickets Loading",
+  //                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+  //               ),
+  //               baseColor: Colors.blue,
+  //               highlightColor: Colors.grey[300]!,
+  //             ),
+  //             CircularProgressIndicator()
+  //           ],
+  //         );
+  //       }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // return Text("snapshot: Loading");
-          // return Center(child: CircularProgressIndicator(),);
-          return Column(
-            children: [
-              Shimmer.fromColors(
-                child: Text(
-                  "Tickets Loading",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-                ),
-                baseColor: Colors.blue,
-                highlightColor: Colors.grey[300]!,
-              ),
-              CircularProgressIndicator()
-            ],
-          );
-        }
+  //       return ListView(
+  //         // scrollDirection: Axis.horizontal,
+  //         // shrinkWrap: true,
+  //         children: snapshot.data!.docs.map((DocumentSnapshot document) {
+  //           Map<String, dynamic> data =
+  //               document.data()! as Map<String, dynamic>;
 
-        return ListView(
-          // scrollDirection: Axis.horizontal,
-          // shrinkWrap: true,
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
+  //           data.forEach((k, v) => print('$k: $v'));
 
-            data.forEach((k, v) => print('$k: $v'));
+  //           return Card(
+  //             child: InkWell(
+  //               splashColor: Colors.blue.withAlpha(30),
+  //               onTap: () {
+  //                 print('Card tapped.');
+  //                 editTicketShowDialog();
+  //               },
+  //               child: SizedBox(
+  //                 width: 300,
+  //                 height: 100,
+  //                 child: Text(data['name']),
+  //               ),
+  //             ),
+  //           );
+  //         }).toList(),
+  //       );
+  //     },
+  //   );
+  // }
 
-            return Card(
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  print('Card tapped.');
-                  editTicketShowDialog();
-                },
-                child: SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: Text(data['name']),
-                ),
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
+  // Future<T?> addTicketShowDialog<T>() {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text('Добавить'),
+  //           content: TextField(onChanged: (String value) {
+  //             ticketName = value;
+  //           }),
+  //           actions: [
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 late final id =
+  //                     addName(tickets: tickets, ticketName: ticketName);
+  //                 print('New Id: $id');
+  //               },
+  //               child: Text('Добавить'),
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
 
-  Future<T?> addTicketShowDialog<T>() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Добавить'),
-            content: TextField(onChanged: (String value) {
-              ticketName = value;
-            }),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  late final id =
-                      addName(tickets: tickets, ticketName: ticketName);
-                  print('New Id: $id');
-                },
-                child: Text('Добавить'),
-              )
-            ],
-          );
-        });
-  }
-
-  Future<T?> editTicketShowDialog<T>() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Редактировать'),
-            content: TextField(onChanged: (String value) {
-              ticketName = value;
-            }),
-            actions: [
-              ElevatedButton(
-                onPressed: () =>
-                    editName(tickets: tickets, ticketName: ticketName),
-                child: Text('Редактировать'),
-              )
-            ],
-          );
-        });
-  }
+//   Future<T?> editTicketShowDialog<T>() {
+//     return showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return AlertDialog(
+//             title: Text('Редактировать'),
+//             content: TextField(onChanged: (String value) {
+//               ticketName = value;
+//             }),
+//             actions: [
+//               ElevatedButton(
+//                 onPressed: () =>
+//                     editName(tickets: tickets, ticketName: ticketName),
+//                 child: Text('Редактировать'),
+//               )
+//             ],
+//           );
+//         });
+//   }
 }
 
 // void addName({
