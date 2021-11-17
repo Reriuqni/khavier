@@ -45,7 +45,7 @@ class DataBase {
     return "";
   }
 
-  Future<List<Ticket>> getTickets(String userUid) async {
+  Future<List<Ticket>> getTickets({String userUid = ''}) async {
     List<Ticket> tics = [];
     try {
       await tickets
