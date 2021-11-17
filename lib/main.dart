@@ -12,6 +12,7 @@ import 'package:admin/screens/reports/reports_screen.dart';
 import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:admin/screens/spiner/spinner_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/screens/ticket/add_ticket.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
                 '/myaccount': (context) => MyAccountScreen(),
                 '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
+                '/addticket': (context) => AddTicket(),
               },
               home: MainScreen(),
             ),

@@ -5,6 +5,7 @@ import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:admin/responsive.dart';
 import '../dashboard/components/header.dart';
 import 'package:admin/constants.dart';
 
@@ -39,15 +40,25 @@ class _PhoneScreenState extends State<PhoneScreen> {
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.primary,
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Header(),
-        backgroundColor: Colors.white,
-        toolbarHeight: 70,
-        iconTheme: IconThemeData(color: primaryColor),
-      ),
-      drawer: SideMenu(),
       body: SafeArea(
-        child: Center(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (Responsive.isDesktop(context))
+              Expanded(
+              // default flex = 1
+              // and it takes 1/6 part of the screen
+              child: SideMenu(),
+              ),
+            Expanded(
+              flex: 5,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 0),
+                      child: Header(),
+      ),
+                    Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -98,14 +109,14 @@ class _PhoneScreenState extends State<PhoneScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20.0)),
+                                            BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                     color: Colors.black54,
                                   width: 2.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(20.0)),
+                                            BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
                                     color: Colors.black54,
                                   width: 2.0),
@@ -202,6 +213,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
             ),
           ),
         ),
+                ],
+              )
+            )
+          ],
+        ),
+
       ),
     );
   }
