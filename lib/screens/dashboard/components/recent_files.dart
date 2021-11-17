@@ -1,4 +1,3 @@
-import 'package:admin/model/model.dart';
 import 'package:admin/model/ticket.dart';
 import 'package:admin/models/RecentFile.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -8,8 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 
 class RecentFiles extends StatelessWidget {
-  late Model model;
-  late Future<List<Ticket>> tickets;
+  // late Model model;
+  // late Future<List<Ticket>> tickets;
 
   const RecentFiles({
     Key? key,
@@ -18,13 +17,13 @@ class RecentFiles extends StatelessWidget {
   @override
   void initState() {}
 
-  Future<List<Ticket>> getTickets() async {
-    return await model.db.getTickets();
-  }
+  // Future<List<Ticket>> getTickets() async {
+  //   return await model.db.getTickets();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    tickets = getTickets();
+    // tickets = getTickets();
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -63,8 +62,8 @@ class RecentFiles extends StatelessWidget {
               ],
               rows: List.generate(
                 demoRecentFiles.length,
-                // (index) => recentFileDataRow(demoRecentFiles[index]),
-                (index) => recentTicketDataRow(tickets[index]),
+                (index) => recentFileDataRow(demoRecentFiles[index]),
+                // (index) { recentTicketDataRow(tickets[index])},
               ),
             ),
           ),
