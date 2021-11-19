@@ -1,13 +1,17 @@
+import 'package:admin/model/model.dart';
 import 'package:admin/model/ticket.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 class DataBase {
   late FirebaseAuth auth;
   late User user;
-  late bool isSigned = false;
-  late bool isOK = true;
-  late CollectionReference tickets;
+  bool isSigned = false;
+  bool isOK = true;
+  late CollectionReference ticketsFB;
+  List<Ticket> tickets = [];
 
   DataBase() {
     try {
@@ -27,7 +31,7 @@ class DataBase {
   }
 
   connect() {
-    tickets = FirebaseFirestore.instance.collection('tickets');
+    ticketsFB = FirebaseFirestore.instance.collection('tickets');
     //devices = FirebaseFirestore.instance.collection('devices');
     //settings = FirebaseFirestore.instance.collection('settings');
     //book = FirebaseFirestore.instance.collection('book');
@@ -37,7 +41,7 @@ class DataBase {
 
   Future<String> getTicketID() async {
     try {
-      DocumentReference d = tickets.doc();
+      DocumentReference d = ticketsFB.doc();
       return d.id;
     } catch (e) {
       print("DB error getTicketsID: " + e.toString());
@@ -46,9 +50,10 @@ class DataBase {
   }
 
   Future<List<Ticket>> getTickets({String userUid = ''}) async {
+    tickets = [];
     List<Ticket> tics = [];
     try {
-      await tickets
+      await ticketsFB
           // .where("owner", isEqualTo: userUid) //.orderBy("date")
           .get()
           .then((QuerySnapshot value) {
@@ -59,10 +64,12 @@ class DataBase {
           tics.add(tic);
         });
       });
-      print('Get Tickets from Firebase : ' + tics.length.toString());
+      print('Get TicketsFB from Firebase : ' + tics.length.toString());
     } catch (e) {
       print("DB getTickets() error: " + e.toString());
     }
+
+    tickets = tics;
     return tics;
   }
 
@@ -70,9 +77,9 @@ class DataBase {
     tic.date = DateTime.now().millisecondsSinceEpoch.toString();
     try {
       if (tic.id.isEmpty) {
-        await tickets.add(tic.toMap());
+        await ticketsFB.add(tic.toMap());
       } else {
-        await tickets.doc(tic.id).set(tic.toMap());
+        await ticketsFB.doc(tic.id).set(tic.toMap());
       }
     } catch (e) {
       print("DB error setTicket: " + e.toString());
@@ -81,13 +88,13 @@ class DataBase {
 
   Future<void> updateTicket(Ticket tic) async {
     try {
-      await tickets.doc(tic.id).update(tic.toMap());
+      await ticketsFB.doc(tic.id).update(tic.toMap());
     } catch (e) {
       print("DB error updateTicket: " + e.toString());
     }
   }
 
   Future<void> deleteDevice(String id) async {
-    await tickets.doc(id).delete();
+    await ticketsFB.doc(id).delete();
   }
 }

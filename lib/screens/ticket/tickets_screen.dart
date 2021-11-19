@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../dashboard/components/header.dart';
 import '../dashboard/components/recent_files.dart';
@@ -20,58 +19,20 @@ class TicketsScreen extends StatefulWidget {
 
 class _TicketsScreenState extends State<TicketsScreen> {
   late Model model;
-  late List<Ticket> tickets;
-
-  // bool _initialized = false;
-  // bool _error = false;
-  // String ticketName = '';
-  // late CollectionReference tickets = FirebaseFirestore.instance.collection('tickets');
-  final Stream<QuerySnapshot> ticketsSnapshots = FirebaseFirestore.instance
-      .collection('tickets')
-      .orderBy('name', descending: true)
-      .snapshots();
+  bool ticketsLoad = true;
 
   @override
   void initState() {
-    // initializeFlutterFire();
     super.initState();
-  }
-
-  // Define an async function to initialize FlutterFire
-  // void initializeFlutterFire() async {
-  //   try {
-  //     // Wait for Firebase to initialize and set `_initialized` state to true
-  //     WidgetsFlutterBinding.ensureInitialized();
-  //     await Firebase.initializeApp();
-  //     setState(() {
-  //       _initialized = true;
-  //     });
-  //   } catch (e) {
-  //     // Set `_error` state to true if Firebase initialization fails
-  //     setState(() {
-  //       _error = true;
-  //     });
-  //     print(e);
-  //   }
-  // }
-
-  Future<List<Ticket>> getTickets() async {
-    return await model.db.getTickets();
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (_error) {
-    //   print('Main build: Something Went Wrong');
-    // }
-
-    // // Show a loader until FlutterFire is initialized
-    // if (!_initialized) {
-    //   print('Main build: Loading');
-    // }
-
     model = Provider.of<Model>(context);
-    tickets = getTickets() as List<Ticket>;
+    if (ticketsLoad) {
+      model.db.getTickets();
+      ticketsLoad = false;
+    }
 
     return Scaffold(
       key: context.read<MenuController>().scaffoldKey,
@@ -131,223 +92,70 @@ class _TicketsScreenState extends State<TicketsScreen> {
                 ),
               ],
             ),
-            Row(
-              children: [],
+            // Expanded(child: RecentFiles()),
+            Expanded(
+              child: getTicketsView(),
             ),
-            Expanded(child: getTicketsCard()),
           ],
         ),
       ),
     ]));
   }
 
-  StreamBuilder<QuerySnapshot> getTicketsCard() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: ticketsSnapshots,
+  Widget getTicketsView() {
+    ListTile getListTile(data) {
+      return ListTile(
+        title: Text(data['id']),
+        subtitle: Text(data['name']),
+      );
+    }
+
+    Card getCard(data) {
+      return Card(
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: SizedBox(
+            width: 300,
+            height: 100,
+            child: Text(data['name'] + '-------' + data['name']),
+          ),
+        ),
+      );
+    }
+
+    return FutureBuilder<QuerySnapshot>(
+      future: model.db.ticketsFB.get(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('snapshot: Something went wrong');
+          return Text("Something went wrong");
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // return Text("snapshot: Loading");
-          // return Center(child: CircularProgressIndicator(),);
-          return Column(
-            children: [
-              Shimmer.fromColors(
-                child: Text(
-                  "Tickets Loading",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-                ),
-                baseColor: Colors.blue,
-                highlightColor: Colors.grey[300]!,
-              ),
-              CircularProgressIndicator()
-            ],
+          return CircularProgressIndicator();
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+
+              print('document.id ' + document.id);
+              // data.forEach((k, v) => print('$k: $v'));
+
+              return getCard(data);
+            }).toList(),
           );
         }
 
-        return SafeArea(
-            child: Container(
-          margin: EdgeInsets.all(20.0),
-          child: RecentFiles(),
-        ));
-
-        // return ListView(
-        //   children: snapshot.data!.docs.map((DocumentSnapshot document) {
-        //     Map<String, dynamic> data =
-        //         document.data()! as Map<String, dynamic>;
-        //
-        //     data.forEach((k, v) => print('$k: $v'));
-        //
-        //
-        //     //create card for ticket
-        //     return Card(
-        //       child: Ink(
-        //         color: secondaryColor,
-        //         child: InkWell(
-        //           hoverColor: Colors.black12,
-        //           onTap: () {
-        //             print('Card tapped.');
-        //             //editTicketShowDialog();
-        //             Navigator.pushNamed(context,
-        //                 '/addticket',
-        //                 arguments: ScreenArguments(
-        //                 'Extract Arguments Screen',
-        //                 'This message is extracted in the build method.',
-        //             ),
-        //             );
-        //           },
-        //           child:
-        //               Container(
-        //                 width: 200,
-        //                 height: 100,
-        //                 margin: EdgeInsets.fromLTRB(15, 10, 25, 10),
-        //                 child: Row(
-        //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                   children: [
-        //                     Expanded(
-        //                       flex: 9,
-        //                       child: Column(
-        //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //                       crossAxisAlignment: CrossAxisAlignment.start,
-        //                       children: [
-        //                         Container(
-        //                           margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-        //                           child: Row (
-        //                             children: [
-        //                               Text(data['name'], style: TextStyle(
-        //                                   fontWeight: FontWeight.bold,
-        //                                   fontSize: 20
-        //                               ),),
-        //                               Container(
-        //                                 margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-        //                                 child: Text(data['priority']),
-        //                               ),
-        //                               Text(data['subject'])
-        //                             ],
-        //                           ),
-        //                         ),
-        //
-        //                         Container(
-        //                           child: Text('Owner: ${data['owner']}'),
-        //                         ),
-        //
-        //                         Container(
-        //                           child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        //                             overflow: TextOverflow.ellipsis,
-        //                           ),
-        //                         ),
-        //                       ],
-        //                     ),),
-        //
-        //                     //buttons edit\delete
-        //                     Expanded(
-        //                       flex: 1,
-        //                       child: Row(
-        //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //                       children: [
-        //                         Container(
-        //                           margin: EdgeInsets.fromLTRB(10, 0, 20, 0),
-        //                           child: IconButton(onPressed: () => {
-        //
-        //                           }, icon: Icon(Icons.edit),
-        //                             hoverColor: Colors.amberAccent.withOpacity(0.5),
-        //
-        //                           ),
-        //                         ),
-        //                         IconButton(onPressed: () => {
-        //
-        //                         }, icon: Icon(Icons.delete),
-        //                           hoverColor: Colors.redAccent.withOpacity(0.5),),
-        //                       ],
-        //                     ),
-        //                     )
-        //                   ],
-        //                 ),
-        //               ),
-        //         ),
-        //       ),
-        //     );
-        //   }).toList(),
-        // );
+        return Text("loading");
       },
     );
   }
-
-  // Future<T?> addTicketShowDialog<T>() {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         late String ticketName;
-
-  //         return AlertDialog(
-  //           title: Text('Добавить'),
-  //           content: TextField(onChanged: (String value) {
-  //             ticketName = value;
-  //           }),
-  //           actions: [
-  //             ElevatedButton(
-  //               onPressed: () {
-  //                 late final id =
-  //                     addName(tickets: tickets, ticketName: ticketName);
-  //                 print('New Id: $id');
-  //               },
-  //               child: Text('Добавить'),
-  //             )
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // Future<T?> editTicketShowDialog<T>() {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text('Редактировать'),
-  //           content: TextField(onChanged: (String value) {
-  //             ticketName = value;
-  //           }),
-  //           actions: [
-  //             ElevatedButton(
-  //               onPressed: () =>
-  //                   editName(tickets: tickets, ticketName: ticketName),
-  //               child: Text('Редактировать'),
-  //             )
-  //           ],
-  //         );
-  //       });
-  // }
 }
-
-// Future<String> addName({
-//   required List<Ticket> tickets,
-//   required String ticketName,
-// }) async {
-//   final doc = tickets.doc();
-//   final docId = doc.id;
-
-//   await doc
-//       .set({
-//         'name': ticketName,
-//       })
-//       .then((value) => print("Name is send to firebase"))
-//       .catchError((error) => print("Failed send name to firebase: $error"));
-
-//   return docId;
-// }
-
-// void editName(
-//     {required CollectionReference tickets, required String ticketName}) async {
-//   await tickets
-//       .doc('qmtLQpFLneoVpBq9FzMG')
-//       .set({
-//         'name': ticketName,
-//       })
-//       .then((value) => print("Name is send to firebase"))
-//       .catchError((error) => print("Failed send name to firebase: $error"));
-// }
 
 class ScreenArguments {
   final String title;
