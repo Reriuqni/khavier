@@ -1,10 +1,5 @@
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../dashboard/components/header.dart';
-
-import '../main/components/side_menu.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,11 +7,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-
-  // CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-  late String _userUid;
-  late String _userPhone;
+  String _userUid;
+  String _userPhone;
 
   bool _hidePass = true;
 

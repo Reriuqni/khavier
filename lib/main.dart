@@ -1,6 +1,6 @@
 import 'package:admin/constants.dart';
-import 'package:admin/model/api_model.dart';
 import 'package:admin/model/model.dart';
+import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/login/login_screen.dart';
 import 'package:admin/screens/login/phone_screen.dart';
@@ -14,7 +14,7 @@ import 'package:admin/screens/spiner/spinner_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/add_ticket.dart';
 import 'package:admin/controllers/MenuController.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,14 +33,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Model model;
-  late ApiModel apiModel;
+  Model model;
   bool _modelLoading = false;
 
   @override
   void initState() {
     model = Model();
-    apiModel = ApiModel();
     super.initState();
 
   }
@@ -57,7 +55,10 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (context) => MenuController(),
               ),
-              ChangeNotifierProvider<Model>.value(value: model),
+              // ChangeNotifierProvider<Model>.value(value: model),
+              // ChangeNotifierProvider(create: (context) => Model()),
+              // ChangeNotifierProvider(create: (context) => DataBase()),
+              ChangeNotifierProvider(create: (context) => TicketsProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
                 '/main': (context) => MainScreen(),
                 '/reports': (context) => ReportsScreen(),
                 '/tickets': (context) => TicketsScreen(),
+                '/tickets_pluto_grid': (context) => TicketsScreenPlutoGrid(),
                 '/matters': (context) => MattersScreen(),
                 '/chat': (context) => ChatScreen(),
                 '/notification': (context) => NotificationScreen(),
@@ -81,6 +83,7 @@ class _MyAppState extends State<MyApp> {
                 '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
+                '/editticket': (context) => AddTicket(),
               },
               home: MainScreen(),
             ),

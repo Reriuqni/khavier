@@ -15,10 +15,10 @@ class PhoneScreen extends StatefulWidget {
 }
 
 class _PhoneScreenState extends State<PhoneScreen> {
-  late Model model;
+  Model model;
 
-  late String _verificationId;
-  late ConfirmationResult confirmationResult;
+  String _verificationId;
+  ConfirmationResult confirmationResult;
   bool _codeInput = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -282,7 +282,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
     try {
       UserCredential credential = await confirmationResult.confirm(_codeController.text);
 
-      final User? user =  credential.user;
+      final User user =  credential.user;
 
       showSnackbar("login successful"); //S.of(context).login_successful
 

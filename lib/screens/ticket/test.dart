@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
 // A Widget that extracts the necessary arguments from
 // the ModalRoute.
 class ExtractArgumentsScreen extends StatelessWidget {
-  const ExtractArgumentsScreen({Key? key}) : super(key: key);
+  const ExtractArgumentsScreen({Key key}) : super(key: key);
 
   static const routeName = '/extractArguments/';
 
@@ -123,7 +123,7 @@ class ExtractArgumentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Extract the arguments from the current ModalRoute
     // settings and cast them as ScreenArguments.
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    final args = ModalRoute.of(context).settings.arguments as ScreenArguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -151,9 +151,9 @@ class PassArgumentsScreen extends StatelessWidget {
   // The arguments are extracted by the onGenerateRoute
   // function provided to the MaterialApp widget.
   const PassArgumentsScreen({
-    Key? key,
-    required this.title,
-    required this.message,
+    Key key,
+    @required this.title,
+    @required this.message,
   }) : super(key: key);
 
   @override
