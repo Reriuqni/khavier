@@ -42,7 +42,7 @@ class ChatScreen extends StatelessWidget {
                       // decorationStyle: TextDecorationStyle.wavy,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
-                        ..color = Colors.blue[100]!,
+                        ..color = Colors.blue[100],
                     ),
                   ),
                 ],

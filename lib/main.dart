@@ -1,6 +1,8 @@
 import 'package:admin/constants.dart';
 import 'package:admin/model/api_model.dart';
+import 'package:admin/model/db.dart';
 import 'package:admin/model/model.dart';
+import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/login/login_screen.dart';
 import 'package:admin/screens/login/phone_screen.dart';
@@ -33,8 +35,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Model model;
-  late ApiModel apiModel;
+  Model model;
+  ApiModel apiModel;
   bool _modelLoading = false;
 
   @override
@@ -57,7 +59,10 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (context) => MenuController(),
               ),
-              ChangeNotifierProvider<Model>.value(value: model),
+              // ChangeNotifierProvider<Model>.value(value: model),
+              // ChangeNotifierProvider(create: (context) => Model()),
+              // ChangeNotifierProvider(create: (context) => DataBase()),
+              ChangeNotifierProvider(create: (context) => TicketsProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -81,6 +86,7 @@ class _MyAppState extends State<MyApp> {
                 '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
+                '/editticket': (context) => AddTicket(),
               },
               home: MainScreen(),
             ),

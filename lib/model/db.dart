@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class DataBase {
-  late FirebaseAuth auth;
-  late User user;
+class DataBase extends ChangeNotifier {
+   FirebaseAuth auth;
+   User user;
   bool isSigned = false;
   bool isOK = true;
-  late CollectionReference ticketsFB;
+   CollectionReference ticketsFB;
   List<Ticket> tickets = [];
 
   DataBase() {
@@ -19,7 +19,7 @@ class DataBase {
       connect();
 
       auth = FirebaseAuth.instance;
-      user = auth.currentUser!;
+      user = auth.currentUser;
 
       print('Database auth user OK');
       isSigned = true;
@@ -46,6 +46,8 @@ class DataBase {
     } catch (e) {
       print("DB error getTicketsID: " + e.toString());
     }
+
+    notifyListeners();
     return "";
   }
 
@@ -59,7 +61,7 @@ class DataBase {
           .then((QuerySnapshot value) {
         value.docs.forEach((doc) {
           Ticket tic = Ticket();
-          tic.fromMap(doc.data() as Map<String, Object?>);
+          tic.fromMap(doc.data() as Map<String, Object>);
           tic.id = doc.id;
           tics.add(tic);
         });
@@ -70,7 +72,18 @@ class DataBase {
     }
 
     tickets = tics;
+
+    notifyListeners();
     return tics;
+  }
+
+  Ticket getTicketById(String id) {
+    for (var i = 0; i < tickets.length; i++) {
+      if (tickets[i].id == id) {
+        return tickets[i];
+      }
+    }
+    return Ticket();
   }
 
   Future<void> addTicket(Ticket tic) async {
@@ -84,6 +97,8 @@ class DataBase {
     } catch (e) {
       print("DB error setTicket: " + e.toString());
     }
+
+    notifyListeners();
   }
 
   Future<void> updateTicket(Ticket tic) async {
@@ -92,9 +107,12 @@ class DataBase {
     } catch (e) {
       print("DB error updateTicket: " + e.toString());
     }
+
+    notifyListeners();
   }
 
-  Future<void> deleteDevice(String id) async {
+  Future<void> deleteTicket(String id) async {
     await ticketsFB.doc(id).delete();
+    notifyListeners();
   }
 }
