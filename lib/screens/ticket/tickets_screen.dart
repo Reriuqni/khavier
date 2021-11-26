@@ -147,10 +147,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
     return DataRow(
       cells: [
         DataCell(Text(data.id)),
-        DataCell(Text(data.name ?? '')),
-        DataCell(Text(data.body ?? '')),
-        DataCell(Text(data.status ?? '')),
-        DataCell(Text(data.type ?? '')),
+        DataCell(Text(data.name)),
+        DataCell(Text(data.body)),
+        DataCell(Text(data.status)),
+        DataCell(Text(data.type)),
         // DataCell(Text(data.date)),
         DataCell(Text(Utils.fromDateTimeToJson(data.date).toString())),
         DataCell(Row(
