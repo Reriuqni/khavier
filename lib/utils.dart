@@ -5,15 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
-  static void showSnackBar(BuildContext context, String text) =>
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(text)));
+  // static void showSnackBar(BuildContext context, String text) =>
+  //     Scaffold.of(context)
+  //       ..removeCurrentSnackBar()
+  //       ..showSnackBar(SnackBar(content: Text(text)));
 
   static DateTime toDateTime(Timestamp value) {
     if (value == null) return null;
-    // if (value.toString().isEmpty) return null;
-    // if (value == '') return null;
 
     return value.toDate();
   }
@@ -24,49 +22,21 @@ class Utils {
     return date.toUtc();
   }
 
+  // return Array of Tickets
   static StreamTransformer transformer<T>(
           T Function(Map<String, dynamic> json) fromJson) =>
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
           List<T>>.fromHandlers(
         handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
+          // return 
+          // [{priority: , body: , status: , date: Timestamp(seconds=1636668000, nanoseconds=0), subject: , id: id2, owner: , executorId: , tag: , name: 3, type: }, {tag: , executorId: ,status: , date: Timestamp(seconds=1637272800, nanoseconds=0), subject: , id: id1, name: 4, body: , priority: , owner: , type: }]
           final snaps = data.docs.map((doc) => doc.data()).toList();
+
+          // return
+          // [Instance of 'Ticket', Instance of 'Ticket']
           final objects = snaps.map((json) => fromJson(json)).toList();
 
           sink.add(objects);
         },
       );
-
-  static StreamTransformer transformer2<T>(
-      T Function(Map<String, dynamic> json) fromJson) {
-        print('fromJson:');
-        print(fromJson);
-        print('-------------------------');
-        
-    return StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-        List<T>>.fromHandlers(
-      handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
-        print('data: ' + data.toString());
-        print('sink: ' + sink.toString());
-        final snaps = data.docs.map((doc) => doc.data()).toList();
-
-        print('snaps: ' + snaps.toString());
-        
-        print('snaps forEach:');
-        snaps.forEach((e) { print(e);});
-
-        print('');
-        print('snaps map:');
-        snaps.map((json) => print('json: ' + json));
-        
-
-        print('');
-        print('snaps map toList:');
-        print(snaps.map((json) => fromJson(json)).toList());
-
-        print('snaps end:');
-        // final objects = snaps.map((json) => fromJson(json)).toList();
-        // sink.add(objects);
-      },
-    );
-  }
 }

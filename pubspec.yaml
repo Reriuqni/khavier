@@ -42,6 +42,7 @@ dependencies:
 
   # slidable
   flutter_slidable: ^0.5.7  
+  pluto_grid: ^2.6.1
 
 dev_dependencies:
   flutter_test:

@@ -49,6 +49,13 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
+            title: "Ticket system PG",
+            svgSrc: "assets/icons/menu_task.svg",
+            press: () {
+              Navigator.pushNamed(context, '/tickets_pluto_grid');
+            },
+          ),
+          DrawerListTile(
             title: "Matters",
             svgSrc: "assets/icons/menu_doc.svg",
             press: () {

@@ -31,10 +31,4 @@ class FirebaseApi {
 
     await docTicket.delete();
   }
-
-  static Future deleteTicketById(String docId) async {
-    final docTicket = FirebaseFirestore.instance.collection(collectionName).doc(docId);
-
-    await docTicket.delete();
-  }
 }

@@ -16,6 +16,7 @@ import 'package:admin/screens/spiner/spinner_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/add_ticket.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
                 '/main': (context) => MainScreen(),
                 '/reports': (context) => ReportsScreen(),
                 '/tickets': (context) => TicketsScreen(),
+                '/tickets_pluto_grid': (context) => TicketsScreenPlutoGrid(),
                 '/matters': (context) => MattersScreen(),
                 '/chat': (context) => ChatScreen(),
                 '/notification': (context) => NotificationScreen(),

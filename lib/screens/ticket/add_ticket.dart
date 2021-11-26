@@ -1,8 +1,8 @@
-import 'dart:js';
+// import 'dart:js';
 
 import 'package:admin/constants.dart';
-import 'package:admin/model/model.dart';
-import 'package:admin/model/ticket.dart';
+import 'package:admin/model/ticket_static.dart';
+import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,26 +35,26 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
     super.dispose();
   }
 
+  bool isShowLoading = false;
+  dynamic args;
+
+  Ticket _ticket = Ticket(
+    id: DateTime.now().toString(),
+    name: '',
+    date: DateTime.now(),
+  );
+  String titleOfPage = 'Add Ticket ModalRoute';
+  bool isAddTicket = true;
+
   @override
   Widget build(BuildContext context) {
-    Model model = Provider.of<Model>(context);
-    bool isShowLoading = false;
-    // Extract the arguments from the current ModalRoute
-    // settings and cast them as ScreenArguments.
-    dynamic args;
-    Ticket _ticket = Ticket();
-    String titleOfPage = 'Add Ticket ModalRoute';
-    String dropdownValue = 'One';
-
     args = ModalRoute.of(context).settings.arguments;
     if (args != null) {
       args = args as ScreenArguments;
-      // _ticket = args.ticket ?? Ticket();
-      if (args.ticketId != null) {
+      if (args.ticket != null) {
         titleOfPage = 'Edit Ticket ModalRoute';
-        String id = args.ticketId ?? '';
-        _ticket = model.db.getTicketById(id);
-        // _ticket.id = args.ticketId ?? '';
+        _ticket = args.ticket;
+        isAddTicket = false;
       }
     }
 
@@ -185,7 +185,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       child: Text(
-                        'Title:',
+                        'Name:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -196,8 +196,10 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       width: 700,
                       child: TextFormField(
+                        initialValue: _ticket.name,
                         decoration: InputDecoration(
-                          labelText: _ticket.name,
+                          // labelText: _ticket.name,
+                          labelText: 'Name: ' + _ticket.name,
                           hintText: 'Title of ticket',
                           labelStyle: TextStyle(
                             fontSize: 16,
@@ -224,8 +226,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       child: Text(
-                        _ticket.body,
-                        // 'Description:',
+                        // _ticket.body,
+                        'Body:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -237,10 +239,12 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                         child: Container(
                           width: 700,
                           child: TextFormField(
+                            initialValue: _ticket.body,
                             maxLines: 6,
                             decoration: InputDecoration(
                               // labelText: 'Description1',
-                              labelText: _ticket.body,
+                              // labelText: _ticket.body,
+                              labelText: 'Body',
                               hintText: 'Description',
                               labelStyle: TextStyle(
                                 fontSize: 16,
@@ -276,6 +280,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     ),
                     DropdownButton<String>(
                       value: _ticket.type,
+                      // value: _type,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
                       elevation: 16,
@@ -286,6 +291,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                       ),
                       onChanged: (String newValue) {
                         setState(() {
+                          // _type = newValue;
                           _ticket.type = newValue;
                         });
                       },
@@ -310,47 +316,21 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                             primary: primaryColor,
                             padding: EdgeInsets.fromLTRB(25, 10, 25, 10)),
                         onPressed: () {
-                          print('Save Ticket');
-                          setState(() {
-                            isShowLoading = true;
-                          });
+                          final provider = Provider.of<TicketsProvider>(context,
+                              listen: false);
 
-                          model.db.addTicket(_ticket).whenComplete(() {
-                            model.db.getTickets();
-                            Navigator.pop(context);
-                          });
+                          if (isAddTicket) {
+                            provider.addTicket(_ticket);
+                          } else {
+                            provider.updateTicket(_ticket);
+                          }
 
-                          // Navigator.pop(context);
-                          // setState(() {});
+                          Navigator.pop(context);
                         },
-                        child: isShowLoading ? CircularProgressIndicator() : Text('Sumbit'))
+                        child: isShowLoading
+                            ? CircularProgressIndicator()
+                            : Text('Sumbit'))
                   ]),
-              // Column(
-              //   children: [
-              //     Container(
-              //         margin: EdgeInsets.fromLTRB(30, 50, 15, 30),
-              //         width: 700,
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Text(
-              //               'Documents:',
-              //               style: TextStyle(
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.w600,
-              //               ),
-              //             ),
-              //             ElevatedButton.icon(
-              //                 style: ElevatedButton.styleFrom(
-              //                     primary: primaryColor,
-              //                     padding: EdgeInsets.fromLTRB(25, 10, 25, 10)),
-              //                 onPressed: () => {},
-              //                 icon: Icon(Icons.add),
-              //                 label: Text('Add'))
-              //           ],
-              //         )),
-              //   ],
-              // ),
             ],
           ),
         ),
@@ -358,7 +338,3 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
     );
   }
 }
-
-// Copyright 2019 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
