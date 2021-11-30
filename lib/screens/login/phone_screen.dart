@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:html';
 import 'package:admin/model/model.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
+import 'package:admin/widgets/buttons.dart';
+import 'package:admin/widgets/textFields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -85,43 +87,20 @@ class _PhoneScreenState extends State<PhoneScreen> {
                         ),
                         Container(
                           width: 400,
-                          child: TextFormField(
+                          child: OwnTextFieldWithIcons(
                           controller: _phoneController,
-                          decoration: InputDecoration(
                             labelText: "phone number",//S.of(context).hint_phone_number,
                             hintText: '+38 123 456 6789',
-                            labelStyle: TextStyle(
-                              fontSize: 16,
-                                color: Colors.black54,
-                            ),
-                            prefixIcon: Icon(
-                              Icons.call,
-                                color: primaryColor,
-                            ),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _phoneController.clear();
                               },
                               child: Icon(
                                 Icons.delete_outline,
-                                  color: primaryColor,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                            BorderRadius.all(Radius.circular(5.0)),
-                              borderSide: BorderSide(
-                                    color: Colors.black54,
-                                  width: 2.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                            BorderRadius.all(Radius.circular(5.0)),
-                              borderSide: BorderSide(
-                                    color: Colors.black54,
-                                  width: 2.0),
+                                color: iconColor,
                             ),
                           ),
+                            prefixIcon: Icons.call,
                           keyboardType: TextInputType.phone,
                         ),
 
@@ -134,77 +113,65 @@ class _PhoneScreenState extends State<PhoneScreen> {
                           Container(
                             margin: EdgeInsets.only(bottom: 15.0),
                             width: 400,
-                            child: TextFormField(
+                            child: OwnTextFieldWithIcons(
                             controller: _codeController,
-                            decoration: InputDecoration(
                               labelText: "verification code", //S.of(context).verification_code,
                               hintText: 'XXXXXX',
-                              labelStyle: TextStyle(
-                                fontSize: 18,
-                                  color: Colors.black54,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.call,
-                                  color: primaryColor,
-                              ),
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   _phoneController.clear();
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
-                                    color: primaryColor,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                                borderSide: BorderSide(
-                                      color: Colors.black54,
-                                    width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                                borderSide: BorderSide(
-                                      color: Colors.black54,
-                                    width: 2.0),
+                                  color: iconColor,
                               ),
                             ),
+                              prefixIcon: Icons.call,
                             keyboardType: TextInputType.phone,
                           ),
                           ),
 
-                          // SizedBox(height: 15),
-                        InkWell(
-                          onTap: () {
+                        OwnButton(
+                          onPressed: () {
                             if (!_codeInput) {
                               submitFormNumber();
                             } else {
                               signInWithPhoneNumber();
                             }
                           },
-                          child: Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black54,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              _codeInput
+                          label: _codeInput
                                   ? "confirm" //S.of(context).confirm
-                                  : "send code", //S.of(context).send_code,
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
+                              : "send code",
+                        ),  // SizedBox(height: 15),
+                      //   InkWell(
+                      //     onTap: () {
+                      //       if (!_codeInput) {
+                      //         submitFormNumber();
+                      //       } else {
+                      //         signInWithPhoneNumber();
+                      //       }
+                      //     },
+                      //     child: Container(
+                      //       padding: EdgeInsets.all(5),
+                      //       decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //           color: Colors.black54,
+                      //           width: 2,
+                      //         ),
+                      //         borderRadius: BorderRadius.circular(10),
+                      //       ),
+                      //       child: Text(
+                      //         _codeInput
+                      //             ? "confirm" //S.of(context).confirm
+                      //             : "send code", //S.of(context).send_code,
+                      //         style: TextStyle(
+                      //           color: Colors.black54,
+                      //           fontSize: 24,
+                      //           fontWeight: FontWeight.w500,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
                       ],
                     ),
                   ),

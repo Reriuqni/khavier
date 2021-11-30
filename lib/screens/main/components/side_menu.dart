@@ -1,3 +1,4 @@
+import 'package:admin/constants.dart';
 import 'package:flutter/cupertino.dart';  //2do: is need?
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,15 +16,9 @@ class SideMenu extends StatelessWidget {
           Container(
             height: 70.0,
             child: DrawerHeader(
-              margin: EdgeInsets.all(0.0),
+              margin: EdgeInsets.all(15.0),
               padding: EdgeInsets.all(0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('My Solve',
-                style: TextStyle(fontSize: 30),),
-              ],
-            ),
+              child:  Image.asset("assets/images/logo.png"),
           ),
           ),
 
@@ -111,6 +106,7 @@ class DrawerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      hoverColor: secondaryColor,
       onTap: press,
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
@@ -120,7 +116,7 @@ class DrawerListTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.black54),
+        style: TextStyle(color: Colors.black54, fontSize: 16),
       ),
     );
   }

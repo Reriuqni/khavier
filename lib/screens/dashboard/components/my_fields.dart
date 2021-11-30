@@ -2,7 +2,7 @@ import 'package:admin/models/MyFiles.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants.dart';
-
+import 'package:admin/widgets/buttons.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
@@ -23,18 +23,10 @@ class MyFiles extends StatelessWidget {
               "My Files",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
+            OwnButtonWithICon(
               onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
+              icon: Icons.add,
+              label: "Add New",
             ),
           ],
         ),

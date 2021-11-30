@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:provider/provider.dart';
 import 'package:admin/constants.dart';
-
+import 'package:admin/widgets/scaffold.dart';
+import 'package:admin/widgets/textFields.dart';
+import 'package:admin/widgets/buttons.dart';
 
 import '../../../constants.dart';
 
@@ -43,17 +45,8 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: defaultPadding),
-      padding: EdgeInsets.symmetric(
-        horizontal: defaultPadding,
-        vertical: defaultPadding / 2,
-      ),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        border: Border.all(color: Colors.white10),
-      ),
+    return OwnContainer(
+      height: 56,
       child: Row(
         children: [
           Image.asset(
@@ -68,10 +61,12 @@ class ProfileCard extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: Colors.black54),),
             ),
           Icon(Icons.keyboard_arrow_down),
-          TextButton(onPressed: () => {
+          OwnTextButton(
+            onPressed: () => {
             Navigator.pushNamed(context, '/singin')
-          }, child: Text('SingIn', style: TextStyle(color: primaryColor, fontSize: 16),)),
-          // TextButton(onPressed: () => {
+            },
+            label: 'SingIn',
+          ) // TextButton(onPressed: () => {
           //   Navigator.pushNamed(context, '/login')
           // }, child: Text('LogIn')),
         ],
@@ -87,29 +82,12 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        hintStyle: TextStyle(color: Colors.black54),
+    return OwnTextFieldWithIcons(
         hintText: "Search",
-        fillColor: secondaryColor,
-        filled: true,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-        suffixIcon: InkWell(
-          onTap: () {},
-          child: Container(
-            padding: EdgeInsets.all(defaultPadding * 0.75),
-            margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: SvgPicture.asset("assets/icons/Search.svg"),
-          ),
-        ),
-      ),
+      suffixIcon: OwnButtonICon(
+        icon: Icons.search_sharp,
+        onPressed: () {},
+      )
     );
   }
 }
