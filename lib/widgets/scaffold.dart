@@ -13,7 +13,7 @@ class OwnScaffold extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Header(),
-        backgroundColor: Colors.white,
+        backgroundColor: secondaryColor,
         toolbarHeight: 70,
         iconTheme: IconThemeData(color: iconColor),
       ),
@@ -29,7 +29,8 @@ class OwnContainer extends StatelessWidget{
   final double width;
   final double padding;
   final Widget child;
-  OwnContainer({this.height, this.width, this.padding, this.child});
+  final Color color;
+  OwnContainer({this.height, this.width, this.padding, this.child, this.color = primaryColor});
 
 
   @override
@@ -40,7 +41,7 @@ class OwnContainer extends StatelessWidget{
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: primaryColor,
+        color: color,
         borderRadius: const BorderRadius.all(Radius.circular(defaultBorderRadius)),
         border: Border.all(width: 1.0, color: secondaryColor)
       ),

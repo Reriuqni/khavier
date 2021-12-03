@@ -24,6 +24,8 @@ class DashboardScreen extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
+                  child: Container(
+                    padding: EdgeInsets.all(defaultPadding),
                   child: Column(
                     children: [
                       MyFiles(),
@@ -34,6 +36,7 @@ class DashboardScreen extends StatelessWidget {
                       if (Responsive.isMobile(context)) StarageDetails(),
                     ],
                   ),
+                  ), 
                 ),
                 if (!Responsive.isMobile(context))
                   SizedBox(width: defaultPadding),

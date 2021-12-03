@@ -18,7 +18,11 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Container(
+      margin: EdgeInsets.all(0),
+      padding: EdgeInsets.all(0),
+      color: secondaryColor,
+      child: Row(
       children: [
         // if (!Responsive.isDesktop(context))
         //   IconButton(
@@ -35,6 +39,7 @@ class Header extends StatelessWidget {
         Expanded(child: SearchField()),
         ProfileCard()
       ],
+      )
     );
   }
 }
@@ -55,7 +60,7 @@ class ProfileCard extends StatelessWidget {
     String userName = user?.displayName ?? (user?.phoneNumber ?? 'Anonymous');
 
     return OwnContainer(
-      height: 56,
+      height: 58,
       child: Row(
         children: [
           Image.asset(
