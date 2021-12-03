@@ -36,7 +36,7 @@ class NewUser extends BaseClass {
 
 
   void fromJsonQueryDocumentSnapshot(QueryDocumentSnapshot m) {
-    super.fromJsonQueryDocumentSnapshot(m);
+    // super.fromJsonQueryDocumentSnapshot(m);
     this.subject = m['subject'] == null ? '' : m['subject'];
     this.body = m['body'] == null ? '' : m['body'];
     this.priority = m['priority'] == null ? '' : m['priority'];

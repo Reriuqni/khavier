@@ -1,13 +1,10 @@
 import 'package:admin/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/main/components/side_menu.dart';
-import 'package:admin/controllers/MenuController.dart';
 
 class OwnTextField extends StatelessWidget{
-  final String? hintText;
-  final String? labelText;
-  final TextEditingController? controller;
+  final String hintText;
+  final String labelText;
+  final TextEditingController controller;
   OwnTextField({this.hintText, this.labelText, this.controller});
 
 
@@ -42,11 +39,11 @@ class OwnTextField extends StatelessWidget{
 }
 
 class OwnTextFieldWithIcons extends StatelessWidget{
-  final String? hintText;
-  final String? labelText;
-  final Widget? suffixIcon;
-  final IconData? prefixIcon;
-  final TextEditingController? controller;
+  final String hintText;
+  final String labelText;
+  final Widget suffixIcon;
+  final IconData prefixIcon;
+  final TextEditingController controller;
   OwnTextFieldWithIcons({this.hintText, this.labelText, this.suffixIcon, this.controller, this.prefixIcon});
 
   @override
@@ -85,9 +82,9 @@ class OwnTextFieldWithIcons extends StatelessWidget{
 }
 
 class OwnBigTextField extends StatelessWidget{
-  final String? hintText;
-  final String? labelText;
-  final TextEditingController? controller;
+  final String hintText;
+  final String labelText;
+  final TextEditingController controller;
   OwnBigTextField({this.hintText, this.labelText, this.controller});
 
 

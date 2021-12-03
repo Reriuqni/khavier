@@ -4,6 +4,7 @@ import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
@@ -153,7 +154,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/editticket',
                       arguments: ScreenArguments(ticket: data));
-                      // arguments: ScreenArguments(ticketId: data.id));
+                  // arguments: ScreenArguments(ticketId: data.id));
                 },
                 icon: Icon(Icons.edit, color: Colors.blue),
                 hoverColor: Colors.blue[50]),
@@ -183,12 +184,12 @@ class _TicketsScreenState extends State<TicketsScreen> {
   }
 }
 
-class ScreenArguments {
-  final String ticketId;
-  final Ticket ticket;
+// class ScreenArguments {
+//   final String ticketId;
+//   final Ticket ticket;
 
-  ScreenArguments({this.ticketId, this.ticket});
-}
+//   ScreenArguments({this.ticketId, this.ticket});
+// }
 
 Widget buildText(String text) => Center(
       child: Text(

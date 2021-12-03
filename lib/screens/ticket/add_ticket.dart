@@ -3,7 +3,8 @@
 import 'package:admin/constants.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
-import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
+// import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

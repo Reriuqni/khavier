@@ -1,10 +1,11 @@
 import 'package:admin/api/firebase_api.dart';
-import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
+import 'package:admin/widgets/buttons.dart';
 // import 'package:data_table_2/data_table_2.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,15 +51,7 @@ class _TicketsScreenPlutoGrid extends State<TicketsScreenPlutoGrid> {
             Row(
               children: [
                 SizedBox(height: 20),
-                ElevatedButton.icon(
-                  style: TextButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: defaultPadding * 1.5,
-                      vertical: defaultPadding /
-                          (Responsive.isMobile(context) ? 2 : 1),
-                    ),
-                  ),
+                OwnButtonWithICon(
                   onPressed: () async {
                     Navigator.pushNamed(
                       context,
@@ -66,9 +59,9 @@ class _TicketsScreenPlutoGrid extends State<TicketsScreenPlutoGrid> {
                       arguments: ScreenArguments(),
                     );
                   },
-                  icon: Icon(Icons.add),
-                  label: Text("Add New"),
-                ),
+                  icon: Icons.add,
+                  label: "Add New",
+                ),                
               ],
             ),
             // Expanded(child: RecentFiles()),
@@ -280,12 +273,12 @@ class _TicketsScreenPlutoGrid extends State<TicketsScreenPlutoGrid> {
   }
 }
 
-class ScreenArguments {
-  final String ticketId;
-  final Ticket ticket;
+// class ScreenArguments {
+//   final String ticketId;
+//   final Ticket ticket;
 
-  ScreenArguments({this.ticketId, this.ticket});
-}
+//   ScreenArguments({this.ticketId, this.ticket});
+// }
 
 Widget buildText(String text) => Center(
       child: Text(

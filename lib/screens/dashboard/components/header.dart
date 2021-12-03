@@ -1,12 +1,13 @@
 // import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/provider/UserProvider.dart';
 import 'package:admin/responsive.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:provider/provider.dart';
 import 'package:admin/constants.dart';
 import 'package:admin/widgets/scaffold.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:admin/widgets/buttons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
@@ -45,6 +46,14 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserPovider>(context);
+    User user = userProvider.auth.currentUser;
+
+    /// Якщо є ім'я, показуємо. Якщо немає імені, перевіряємо поле телефон. Є - показуємо, ні - 'Anonymous'.
+    /// Якщо авторизація по телефону, displayName може бути null
+    /// Якщо авторизація через Google, phoneNumber може буте null.
+    String userName = user?.displayName ?? (user?.phoneNumber ?? 'Anonymous');
+
     return OwnContainer(
       height: 56,
       child: Row(
@@ -57,18 +66,19 @@ class ProfileCard extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("User Name",
-              style: TextStyle(fontSize: 16, color: Colors.black54),),
+              child: Text(
+                userName,
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
             ),
           Icon(Icons.keyboard_arrow_down),
           OwnTextButton(
-            onPressed: () => {
-            Navigator.pushNamed(context, '/singin')
+            onPressed: () {
+              if (userProvider.isSigned) userProvider.signOut();
+              Navigator.pushNamed(context, '/singin');
             },
-            label: 'SingIn',
-          ) // TextButton(onPressed: () => {
-          //   Navigator.pushNamed(context, '/login')
-          // }, child: Text('LogIn')),
+            label: userProvider.isSigned ? 'Sing Out' : 'Sing In',
+          ) 
         ],
       ),
     );
@@ -84,10 +94,27 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return OwnTextFieldWithIcons(
         hintText: "Search",
-      suffixIcon: OwnButtonICon(
-        icon: Icons.search_sharp,
-        onPressed: () {},
-      )
-    );
+        suffixIcon: OwnButtonICon(
+          icon: Icons.search_sharp,
+          onPressed: () {},
+        ));
   }
 }
+
+
+/* 
+// Спробував отримати картинку користувача з Гугл профайлу. На localhost видає 404
+// user.photoURL                                          // 404
+// userProvider.uc.additionalUserInfo.profile['picture']  // 404
+// https://lh3.googleusercontent.com/a/AATXAJw932APxDbN4L1gzo_VWv_5d5SkIQACq5cHSe-r=s96-c
+Container getPicture1(photoURL) {
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        fit: BoxFit.cover,
+        image: NetworkImage(photoURL), // localhost -> 404
+      ),
+    ),
+  );
+}
+ */

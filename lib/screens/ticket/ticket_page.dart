@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import '../main/components/side_menu.dart';
 import '../dashboard/components/header.dart';
 import 'package:admin/constants.dart';
 
 class TicketPage extends StatefulWidget {
-  const TicketPage({Key? key}) : super(key: key);
+  const TicketPage({Key key}) : super(key: key);
   @override
   _TicketPage createState() => _TicketPage();
 }
 
 class _TicketPage extends State<TicketPage>
     with SingleTickerProviderStateMixin, RestorationMixin {
-  late TabController _tabController;
+  TabController _tabController;
 
   final RestorableInt tabIndex = RestorableInt(0);
 
@@ -19,7 +18,7 @@ class _TicketPage extends State<TicketPage>
   String get restorationId => 'tab_non_scrollable_demo';
 
   @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+  void restoreState(RestorationBucket oldBucket, bool initialRestore) {
     registerForRestoration(tabIndex, 'tab_index');
     _tabController.index = tabIndex.value;
   }

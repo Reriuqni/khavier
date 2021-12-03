@@ -1,18 +1,13 @@
 import 'package:admin/model/ticket.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
 
 class RecenttTickets extends StatelessWidget {
   const RecenttTickets({
-    Key? key,
+    Key key,
 
   }) : super(key: key);
-
-  @override
-  void initState() {}
 
   @override
   Widget build(BuildContext context) {
