@@ -4,12 +4,13 @@ import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:admin/widgets/buttons.dart';
 import '../dashboard/components/header.dart';
 import '../main/components/side_menu.dart';
 
@@ -49,15 +50,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
             Row(
               children: [
                 SizedBox(height: 20),
-                ElevatedButton.icon(
-                  style: TextButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: defaultPadding * 1.5,
-                      vertical: defaultPadding /
-                          (Responsive.isMobile(context) ? 2 : 1),
-                    ),
-                  ),
+                OwnButtonWithICon(
                   onPressed: () async {
                     Navigator.pushNamed(
                       context,
@@ -65,8 +58,8 @@ class _TicketsScreenState extends State<TicketsScreen> {
                       arguments: ScreenArguments(),
                     );
                   },
-                  icon: Icon(Icons.add),
-                  label: Text("Add New"),
+                  icon: Icons.add,
+                  label: "Add New",
                 ),
               ],
             ),
@@ -147,10 +140,10 @@ class _TicketsScreenState extends State<TicketsScreen> {
     return DataRow(
       cells: [
         DataCell(Text(data.id)),
-        DataCell(Text(data.name)),
-        DataCell(Text(data.body)),
-        DataCell(Text(data.status)),
-        DataCell(Text(data.type)),
+        DataCell(Text(data.name ?? '')),
+        DataCell(Text(data.body ?? '')),
+        DataCell(Text(data.status ?? '')),
+        DataCell(Text(data.type ?? '')),
         // DataCell(Text(data.date)),
         DataCell(Text(Utils.fromDateTimeToJson(data.date).toString())),
         DataCell(Row(
@@ -161,7 +154,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/editticket',
                       arguments: ScreenArguments(ticket: data));
-                      // arguments: ScreenArguments(ticketId: data.id));
+                  // arguments: ScreenArguments(ticketId: data.id));
                 },
                 icon: Icon(Icons.edit, color: Colors.blue),
                 hoverColor: Colors.blue[50]),
@@ -191,12 +184,12 @@ class _TicketsScreenState extends State<TicketsScreen> {
   }
 }
 
-class ScreenArguments {
-  final String ticketId;
-  final Ticket ticket;
+// class ScreenArguments {
+//   final String ticketId;
+//   final Ticket ticket;
 
-  ScreenArguments({this.ticketId, this.ticket});
-}
+//   ScreenArguments({this.ticketId, this.ticket});
+// }
 
 Widget buildText(String text) => Center(
       child: Text(

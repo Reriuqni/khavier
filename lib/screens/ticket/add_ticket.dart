@@ -3,9 +3,12 @@
 import 'package:admin/constants.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
-import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
+// import 'package:admin/screens/ticket/tickets_screen.dart';
+import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/widgets/textFields.dart';
 import 'package:provider/provider.dart';
 
 import '../dashboard/components/header.dart';
@@ -61,11 +64,12 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
     return Scaffold(
       appBar: AppBar(
         title: Header(),
-        backgroundColor: Colors.white,
+        backgroundColor: primaryColor,
         toolbarHeight: 70,
-        iconTheme: IconThemeData(color: primaryColor),
+        iconTheme: IconThemeData(color: iconColor),
       ),
       body: SafeArea(
+        child: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(20.0),
           child: Row(
@@ -75,25 +79,22 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        child: Text(
+                    Text(
                       titleOfPage + ' ' + _ticket.id,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           height: 1),
-                    )),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Text(
+                    ),
+                    SizedBox(height: 15,),
+                    Text(
                         'Owner: ' + _ticket.owner,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
                       child: Text(
@@ -106,12 +107,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     ),
                     Wrap(
                       children: [
-                        ChoiceChip(
-                          selectedColor: Colors.indigo.withOpacity(0.5),
-                          disabledColor: Colors.indigo.withOpacity(0.6),
-                          labelStyle: TextStyle(color: Colors.black54),
-                          label: Text('Blocker'),
-                          // selected: _indexSelected.value == 0,
+                        OwnChoiceChip(
+                          label: 'Blocker',
                           selected: _ticket.status == 'Blocker',
                           onSelected: (value) {
                             setState(() {
@@ -121,12 +118,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                           },
                         ),
                         const SizedBox(width: 8),
-                        ChoiceChip(
-                          selectedColor: Colors.indigo.withOpacity(0.5),
-                          disabledColor: Colors.indigo.withOpacity(0.6),
-                          labelStyle: TextStyle(color: Colors.black54),
-                          label: Text('Critical'),
-                          // selected: _indexSelected.value == 1,
+                        OwnChoiceChip(
+                          label: 'Critical',
                           selected: _ticket.status == 'Critical',
                           onSelected: (value) {
                             setState(() {
@@ -136,12 +129,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                           },
                         ),
                         const SizedBox(width: 8),
-                        ChoiceChip(
-                          selectedColor: Colors.indigo.withOpacity(0.5),
-                          disabledColor: Colors.indigo.withOpacity(0.6),
-                          labelStyle: TextStyle(color: Colors.black54),
-                          label: Text('Medium'),
-                          // selected: _indexSelected.value == 2,
+                        OwnChoiceChip(
+                          label: 'Medium',
                           selected: _ticket.status == 'Medium',
                           onSelected: (value) {
                             setState(() {
@@ -151,12 +140,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                           },
                         ),
                         const SizedBox(width: 8),
-                        ChoiceChip(
-                          selectedColor: Colors.indigo.withOpacity(0.5),
-                          disabledColor: Colors.indigo.withOpacity(0.6),
-                          labelStyle: TextStyle(color: Colors.black54),
-                          label: Text('Low'),
-                          // selected: _indexSelected.value == 3,
+                        OwnChoiceChip(
+                          label: 'Low',
                           selected: _ticket.status == 'Low',
                           onSelected: (value) {
                             setState(() {
@@ -166,12 +151,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                           },
                         ),
                         const SizedBox(width: 8),
-                        ChoiceChip(
-                          selectedColor: Colors.indigo.withOpacity(0.5),
-                          disabledColor: Colors.indigo.withOpacity(0.6),
-                          labelStyle: TextStyle(color: Colors.black54),
-                          label: Text('Idea'),
-                          // selected: _indexSelected.value == 4,
+                        OwnChoiceChip(
+                          label: 'Idea',
                           selected: _ticket.status == 'Idea',
                           onSelected: (value) {
                             setState(() {
@@ -182,44 +163,23 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Text(
+                    SizedBox(height: 15,),
+                    Text(
                         'Name:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       width: 700,
-                      child: TextFormField(
-                        initialValue: _ticket.name,
-                        decoration: InputDecoration(
-                          // labelText: _ticket.name,
+                      child: OwnTextField(
                           labelText: 'Name: ' + _ticket.name,
                           hintText: 'Title of ticket',
-                          labelStyle: TextStyle(
-                            fontSize: 16,
-                            color: primaryColor,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(color: Colors.black54, width: 2.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(color: Colors.black54, width: 2.0),
-                          ),
-                        ),
-                        onChanged: (title) {
-                          _ticket.name = title;
+                        initialValue: _ticket.name,
+                        onChanged: (body) {
+                          _ticket.name = body;
                         },
                       ),
                     ),
@@ -234,40 +194,19 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                         ),
                       ),
                     ),
+                    SizedBox(height: 15),
                     Container(
-                        margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                        child: Container(
                           width: 700,
-                          child: TextFormField(
+                        child: OwnBigTextField(
                             initialValue: _ticket.body,
-                            maxLines: 6,
-                            decoration: InputDecoration(
-                              // labelText: 'Description1',
-                              // labelText: _ticket.body,
                               labelText: 'Body',
                               hintText: 'Description',
-                              labelStyle: TextStyle(
-                                fontSize: 16,
-                                color: primaryColor,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(
-                                    color: Colors.black54, width: 2.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(
-                                    color: Colors.black54, width: 2.0),
-                              ),
-                            ),
                             onChanged: (body) {
                               _ticket.body = body;
                             },
+                        )
                           ),
-                        )),
+                    SizedBox(height: 15),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
                       child: Text(
@@ -311,10 +250,8 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: primaryColor,
-                            padding: EdgeInsets.fromLTRB(25, 10, 25, 10)),
+                    OwnButton(
+                      label: 'Sumbit',
                         onPressed: () {
                           final provider = Provider.of<TicketsProvider>(context,
                               listen: false);
@@ -327,14 +264,32 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
 
                           Navigator.pop(context);
                         },
-                        child: isShowLoading
-                            ? CircularProgressIndicator()
-                            : Text('Sumbit'))
+                    ),
+                    // ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //         primary: primaryColor,
+                    //         padding: EdgeInsets.fromLTRB(25, 10, 25, 10)),
+                    //     onPressed: () {
+                    //       final provider = Provider.of<TicketsProvider>(context,
+                    //           listen: false);
+                    //
+                    //       if (isAddTicket) {
+                    //         provider.addTicket(_ticket);
+                    //       } else {
+                    //         provider.updateTicket(_ticket);
+                    //       }
+                    //
+                    //       Navigator.pop(context);
+                    //     },
+                    //     child: isShowLoading
+                    //         ? CircularProgressIndicator()
+                    //         : Text('Sumbit'))
                   ]),
             ],
           ),
         ),
       ),
+      )
     );
   }
 }

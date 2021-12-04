@@ -1,40 +1,25 @@
 import 'package:admin/model/ticket.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DataBase extends ChangeNotifier {
-   FirebaseAuth auth;
-   User user;
-  bool isSigned = false;
-  bool isOK = true;
-   CollectionReference ticketsFB;
+  CollectionReference ticketsFB;
   List<Ticket> tickets = [];
 
   DataBase() {
     try {
       print('Database creation...');
       connect();
-
-      auth = FirebaseAuth.instance;
-      user = auth.currentUser;
-
-      print('Database auth user OK');
-      isSigned = true;
     } catch (e) {
-      print("Database auth user is null: " + e.toString());
-      isSigned = false;
-      isOK = false;
+      // print("Database auth user is null: " + e.toString());
     }
   }
 
   connect() {
     ticketsFB = FirebaseFirestore.instance.collection('tickets');
-    //devices = FirebaseFirestore.instance.collection('devices');
-    //settings = FirebaseFirestore.instance.collection('settings');
-    //book = FirebaseFirestore.instance.collection('book');
-    //settings.doc("iot_server").get().then((value) => {iotIP = value.data()}); //value.data()['ip']
     print("Database connected!");
+    //settings = FirebaseFirestore.instance.collection('settings');
+    //settings.doc("iot_server").get().then((value) => {iotIP = value.data()}); //value.data()['ip']
   }
 
   Future<String> getTicketID() async {

@@ -1,6 +1,8 @@
 import 'package:admin/constants.dart';
-import 'package:admin/model/model.dart';
+// import 'package:admin/model/db.dart';
+// import 'package:admin/model/model.dart';
 import 'package:admin/provider/TicketsProvider.dart';
+import 'package:admin/provider/UserProvider.dart';
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/login/login_screen.dart';
 import 'package:admin/screens/login/phone_screen.dart';
@@ -20,7 +22,6 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -33,14 +34,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Model model;
+  // Model model;
   bool _modelLoading = false;
+  UserPovider userPovider;
 
   @override
   void initState() {
-    model = Model();
+    // model = Model();
+    userPovider = UserPovider();
     super.initState();
-
   }
 
   @override
@@ -55,20 +57,19 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (context) => MenuController(),
               ),
-              // ChangeNotifierProvider<Model>.value(value: model),
+              // ChangeNotifierProvider<Model>.value(value: model), // для авторизації
               // ChangeNotifierProvider(create: (context) => Model()),
               // ChangeNotifierProvider(create: (context) => DataBase()),
               ChangeNotifierProvider(create: (context) => TicketsProvider()),
+              ChangeNotifierProvider(create: (context) => UserPovider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'MySolve',
               theme: ThemeData.dark().copyWith(
-                scaffoldBackgroundColor: bgColor,
-                textTheme:
-                    GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-                        .apply(bodyColor: Colors.black),
-                canvasColor: secondaryColor,
+                scaffoldBackgroundColor: primaryColor,
+                textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),
+                canvasColor: primaryColor,
               ),
               routes: {
                 '/main': (context) => MainScreen(),
@@ -80,7 +81,8 @@ class _MyAppState extends State<MyApp> {
                 '/notification': (context) => NotificationScreen(),
                 '/settings': (context) => SettingsScreen(),
                 '/myaccount': (context) => MyAccountScreen(),
-                '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
+                // '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
+                '/login': (context) => userPovider.isSigned ? MainScreen() : LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
                 '/editticket': (context) => AddTicket(),

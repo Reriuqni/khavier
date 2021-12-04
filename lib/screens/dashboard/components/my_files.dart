@@ -5,6 +5,7 @@ import 'package:admin/models/MyFiles.dart';
 import '../../../constants.dart';
 import 'file_info_card.dart';
 
+
 class MyFiles extends StatelessWidget {
   const MyFiles({
     Key key,
@@ -22,18 +23,11 @@ class MyFiles extends StatelessWidget {
               "My Files",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
-            ),
+            // OwnButtonWithICon(
+            //   onPressed: () {},
+            //   icon: Icons.add,
+            //   label: "Add New",
+            // ),
           ],
         ),
         SizedBox(height: defaultPadding),
