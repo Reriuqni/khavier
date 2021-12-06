@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'MySolve',
+              title: 'My Solve',
               theme: ThemeData.dark().copyWith(
                 scaffoldBackgroundColor: primaryColor,
                 textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),

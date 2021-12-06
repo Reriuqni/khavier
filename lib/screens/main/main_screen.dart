@@ -64,45 +64,44 @@ class _MainScreen extends State<MainScreen> {
   void initState() {
     header = Header();
     super.initState();
-
   }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      key: GlobalKey<ScaffoldState>(),
-      extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: Container(
+        key: GlobalKey<ScaffoldState>(),
+        extendBodyBehindAppBar: true,
+        body: SafeArea(
+          child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
+                    colorFilter:
+                        ColorFilter.mode(Colors.black54, BlendMode.darken),
                     fit: BoxFit.cover,
-                    image: NetworkImage("assets/assets/images/home.jpg")
-                )
+                    image: NetworkImage("assets/assets/images/home.jpg"))),
+            child: Column(
+              children: [
+                Header(),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     // We want this side menu only for large screen
+                //     if (Responsive.isDesktop(context))
+                //       Expanded(
+                //         // default flex = 1
+                //         // and it takes 1/6 part of the screen
+                //           child: SideMenu()
+                //       ),
+                //     Expanded(
+                //       // It takes 5/6 part of the screen
+                //       flex: 5,
+                //       child: Image.asset('assets/images/home.jpg', fit: BoxFit.cover,),
+                //     ),
+                //   ],
+                // ),
+              ],
             ),
-          child: Column(
-            children: [
-              Header(),
-              // Row(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     // We want this side menu only for large screen
-              //     if (Responsive.isDesktop(context))
-              //       Expanded(
-              //         // default flex = 1
-              //         // and it takes 1/6 part of the screen
-              //           child: SideMenu()
-              //       ),
-              //     Expanded(
-              //       // It takes 5/6 part of the screen
-              //       flex: 5,
-              //       child: Image.asset('assets/images/home.jpg', fit: BoxFit.cover,),
-              //     ),
-              //   ],
-              // ),
-            ],
           ),
-        ),
-      )
-    );
+        ));
   }
 }
