@@ -82,12 +82,13 @@ class _MyAppState extends State<MyApp> {
                 '/settings': (context) => SettingsScreen(),
                 '/myaccount': (context) => MyAccountScreen(),
                 // '/login': (context) => model.db.isSigned ? MainScreen() : LoginScreen(),
-                '/login': (context) => userPovider.isSigned ? MainScreen() : LoginScreen(),
+                '/login': (context) => LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
                 '/editticket': (context) => AddTicket(),
               },
-              home: MainScreen(),
+              // home: MainScreen(),
+              home: LoginScreen(),
             ),
           );
   }

@@ -1,125 +1,153 @@
 // import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/provider/UserProvider.dart';
+import 'dart:html';
+import 'dart:io';
+
 import 'package:admin/responsive.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:admin/screens/main/components/side_menu.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:provider/provider.dart';
 import 'package:admin/constants.dart';
 import 'package:admin/widgets/scaffold.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:admin/widgets/buttons.dart';
-import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   const Header({
     Key key,
   }) : super(key: key);
 
   @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  bool searchField = false;
+  bool settingsShow = false;
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment:  CrossAxisAlignment.start,
+          children: [
+            Container(
       margin: EdgeInsets.all(0),
-      padding: EdgeInsets.all(0),
-      color: secondaryColor,
-      child: Row(
+                padding: EdgeInsets.fromLTRB(100, 15, 100, 15),
+                color: Color(0xB2000000),
+                child: Column(
       children: [
         // if (!Responsive.isDesktop(context))
         //   IconButton(
         //     icon: Icon(Icons.menu),
         //     onPressed: context.read<MenuController>().controlMenu,
         //   ),
-        if (!Responsive.isMobile(context))
-          Text(
-            "Dashboard",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        if (!Responsive.isMobile(context))
-          Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Expanded(child: SearchField()),
-        ProfileCard()
+                    // if (!Responsive.isMobile(context))
+                    //   Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
+                    // Expanded(child: SearchField()),
+                    // ProfileCard()
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(secondaryColor)
+                          ),
+                          child: SvgPicture.asset('assets/icons/exclamation-square.svg', width: 20, height: 20, color: primaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              settingsShow = settingsShow == false ? true : false;
+                            });
+                          },
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(secondaryColor)
+                          ),
+                          child: SvgPicture.asset('assets/icons/cog.svg', width: 20, height: 20, color: primaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(secondaryColor)
+                          ),
+                          child: SvgPicture.asset('assets/icons/user.svg', width: 20, height: 20, color: primaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(secondaryColor)
+                          ),
+                          child: SvgPicture.asset('assets/icons/sign-out.svg', width: 20, height: 20, color: primaryColor),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (searchField == false)
+                          Row(
+                            children: [
+                              Image.asset('assets/images/logo_white.png'),
+                              Text('MATTERS', style: TextStyle(fontSize: 20, color: Colors.white),)
       ],
-      )
-    );
-  }
-}
 
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserPovider>(context);
-    User user = userProvider.auth.currentUser;
-
-    /// Якщо є ім'я, показуємо. Якщо немає імені, перевіряємо поле телефон. Є - показуємо, ні - 'Anonymous'.
-    /// Якщо авторизація по телефону, displayName може бути null
-    /// Якщо авторизація через Google, phoneNumber може буте null.
-    String userName = user?.displayName ?? (user?.phoneNumber ?? 'Anonymous');
-
-    return OwnContainer(
-      height: 58,
-      child: Row(
-        children: [
-          Image.asset(
-            "assets/images/profile_pic.png",
-            height: 38,
-          ),
-          if (!Responsive.isMobile(context))
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text(
-                userName,
-                style: TextStyle(fontSize: 16, color: Colors.black54),
+                          ),
+                        if (searchField == true)
+                          SizedBox(
+                            width: 700,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: 'Search',
+                                  labelStyle: TextStyle(color: primaryColor)
+                              ),
               ),
             ),
-          Icon(Icons.keyboard_arrow_down),
-          OwnTextButton(
+                        TextButton(
             onPressed: () {
-              if (userProvider.isSigned) userProvider.signOut();
-              Navigator.pushNamed(context, '/singin');
+                            setState(() {
+                              searchField = searchField == false ? true : false;
+                            });
             },
-            label: userProvider.isSigned ? 'Sing Out' : 'Sing In',
-          ) 
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(secondaryColor)
+                          ),
+                          child: SvgPicture.asset('assets/icons/search.svg', width: 20, height: 20, color: primaryColor),
+                        ),
         ],
       ),
-    );
-  }
-}
 
-class SearchField extends StatelessWidget {
-  const SearchField({
-    Key key,
-  }) : super(key: key);
+                  ],
+                )
+            ),
+            if(settingsShow == true)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment:  CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 630,
+                    width: 260,
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: SideMenu(),
+                    )
+                  )
+                ],
+              )
 
-  @override
-  Widget build(BuildContext context) {
-    return OwnTextFieldWithIcons(
-        hintText: "Search",
-        suffixIcon: OwnButtonICon(
-          icon: Icons.search_sharp,
-          onPressed: () {},
-        ));
-  }
-}
 
+          ],
+        )
 
-/* 
-// Спробував отримати картинку користувача з Гугл профайлу. На localhost видає 404
-// user.photoURL                                          // 404
-// userProvider.uc.additionalUserInfo.profile['picture']  // 404
-// https://lh3.googleusercontent.com/a/AATXAJw932APxDbN4L1gzo_VWv_5d5SkIQACq5cHSe-r=s96-c
-Container getPicture1(photoURL) {
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        fit: BoxFit.cover,
-        image: NetworkImage(photoURL), // localhost -> 404
-      ),
-    ),
   );
 }
- */
+}
