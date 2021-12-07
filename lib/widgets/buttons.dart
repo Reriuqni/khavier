@@ -1,4 +1,5 @@
 import 'package:admin/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OwnButton extends StatelessWidget{
@@ -94,6 +95,49 @@ class OwnChoiceChip extends StatelessWidget{
       // selected: _indexSelected.value == 3,
       selected: selected,
       onSelected: onSelected
+    );
+  }
+}
+
+class AnimatedButton extends StatefulWidget{
+  @override
+  State<AnimatedButton> createState() => _AnimatedButtonState();
+
+  final Widget child;
+  final void Function() onTap;
+
+  AnimatedButton({this.child, this.onTap});
+
+}
+
+class _AnimatedButtonState extends State<AnimatedButton> {
+  Color _color = Colors.transparent;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: _color,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        width: 50,
+        height: 30,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            padding: EdgeInsets.all(5),
+            child: InkWell(
+              hoverColor: Colors.transparent,
+              onHover: (isHover) {
+                setState(() {
+                  _color = _color == Colors.transparent ? secondaryColor : Colors.transparent;
+                });
+              },
+              onTap: widget.onTap,
+              child: widget.child,
+            ),
+          ) 
+        )
     );
   }
 }

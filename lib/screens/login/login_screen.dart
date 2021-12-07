@@ -57,7 +57,7 @@ class LoginForm extends StatelessWidget{
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset("assets/images/logo_white.png",
+              Image.asset("assets/images/logo2.png",
                 width: 200,
                 height: 50,
               ),

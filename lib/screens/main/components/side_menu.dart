@@ -19,7 +19,7 @@ class SideMenu extends StatelessWidget {
           children: [
             DrawerListTile(
                 title: 'Platform settings',
-                press: (){Navigator.pushNamed(context, '/login');}),
+            ),
             DrawerListSubTile(
                 title: 'Details',
                 subTitle: 'Contact Info, SSL, Time Zone',
@@ -44,7 +44,7 @@ class SideMenu extends StatelessWidget {
 
             DrawerListTile(
                 title: 'Access',
-                press: (){}),
+            ),
             DrawerListSubTile(
                 title: 'User Groups',
                 subTitle: 'Manage your business entities',
@@ -61,7 +61,7 @@ class SideMenu extends StatelessWidget {
 
             DrawerListTile(
                 title: 'Management',
-                press: (){}),
+            ),
             DrawerListSubTile(
                 title: 'Matter Templates',
                 subTitle: 'Manage your matter processes',
@@ -163,19 +163,15 @@ class DrawerListTile extends StatelessWidget {
     // For selecting those three line once press "Command+D"
     @required this.title,
     // @required this.svgSrc,
-    @required this.press,
   }) : super(key: key);
 
   final String title;
-  // final String svgSrc;
-  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      mouseCursor: MouseCursor.defer,
       shape: Border(top: BorderSide(color: primaryColor, width: 5)),
-      hoverColor: iconColor,
-      onTap: press,
       horizontalTitleGap: 0.0,
       // leading: SvgPicture.asset(
       //   svgSrc,

@@ -58,50 +58,43 @@ class MainScreen extends StatefulWidget {
 
 // class _MainScreen extends StatelessWidget {
 class _MainScreen extends State<MainScreen> {
-  Header header;
-
-  @override
-  void initState() {
-    header = Header();
-    super.initState();
-  }
-
+  double _width = 0;
+  bool settingsShow = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: GlobalKey<ScaffoldState>(),
-        extendBodyBehindAppBar: true,
-        body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter:
-                        ColorFilter.mode(Colors.black54, BlendMode.darken),
-                    fit: BoxFit.cover,
-                    image: NetworkImage("assets/assets/images/home.jpg"))),
-            child: Column(
-              children: [
-                Header(),
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     // We want this side menu only for large screen
-                //     if (Responsive.isDesktop(context))
-                //       Expanded(
-                //         // default flex = 1
-                //         // and it takes 1/6 part of the screen
-                //           child: SideMenu()
-                //       ),
-                //     Expanded(
-                //       // It takes 5/6 part of the screen
-                //       flex: 5,
-                //       child: Image.asset('assets/images/home.jpg', fit: BoxFit.cover,),
-                //     ),
-                //   ],
-                // ),
-              ],
+    return SingleChildScrollView(
+        child: SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                colorFilter:
+                    ColorFilter.mode(Colors.black12, BlendMode.lighten),
+                alignment: Alignment.topCenter,
+                fit: BoxFit.cover,
+                image: NetworkImage("assets/assets/images/home.jpg"))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Header(
+              onPressed: () {
+                setState(() {
+                  settingsShow = !settingsShow;
+                  _width = _width == 0 ? 260 : 0;
+                });
+              },
             ),
-          ),
-        ));
+            AnimatedContainer(
+                width: _width,
+                height: MediaQuery.of(context).size.height - 118,
+                duration: Duration(milliseconds: 200),
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: SideMenu(),
+                )),
+          ],
+        ),
+      ),
+    ));
   }
 }
