@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OwnButton extends StatelessWidget{
+class OwnButton extends StatelessWidget {
   final String label;
   final void Function() onPressed;
   OwnButton({this.label, this.onPressed});
@@ -10,18 +10,20 @@ class OwnButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        style: TextButton.styleFrom(
-          backgroundColor: primaryColor,
-          padding: EdgeInsets.all(defaultPadding),
-        ),
-        onPressed: onPressed,
-        child: Text(label, style: TextStyle(color: iconColor),),
-
+      style: TextButton.styleFrom(
+        backgroundColor: primaryColor,
+        padding: EdgeInsets.all(defaultPadding),
+      ),
+      onPressed: onPressed,
+      child: Text(
+        label,
+        style: TextStyle(color: iconColor),
+      ),
     );
   }
 }
 
-class OwnButtonWithICon extends StatelessWidget{
+class OwnButtonWithICon extends StatelessWidget {
   final String label;
   final IconData icon;
   final void Function() onPressed;
@@ -30,20 +32,23 @@ class OwnButtonWithICon extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-
         style: TextButton.styleFrom(
           backgroundColor: primaryColor,
           padding: EdgeInsets.all(defaultPadding),
         ),
         onPressed: onPressed,
-        icon: Icon(icon, color: iconColor,),
-        label: Text(label, style: TextStyle(color: iconColor),)
-
-    );
+        icon: Icon(
+          icon,
+          color: iconColor,
+        ),
+        label: Text(
+          label,
+          style: TextStyle(color: iconColor),
+        ));
   }
 }
 
-class OwnButtonICon extends StatelessWidget{
+class OwnButtonICon extends StatelessWidget {
   final IconData icon;
   final void Function() onPressed;
   OwnButtonICon({this.icon, this.onPressed});
@@ -55,12 +60,11 @@ class OwnButtonICon extends StatelessWidget{
         color: iconColor,
         hoverColor: secondaryColor,
         onPressed: onPressed,
-        icon: Icon(icon)
-    );
+        icon: Icon(icon));
   }
 }
 
-class OwnTextButton extends StatelessWidget{
+class OwnTextButton extends StatelessWidget {
   final String label;
   final void Function() onPressed;
   OwnTextButton({this.label, this.onPressed});
@@ -68,17 +72,19 @@ class OwnTextButton extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
+      onPressed: onPressed,
+      style: ButtonStyle(
           padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-          overlayColor: MaterialStateProperty.all(secondaryColor)
-        ),
-        child: Text(label, style: TextStyle(color: iconColor, fontSize: 16),),
+          overlayColor: MaterialStateProperty.all(secondaryColor)),
+      child: Text(
+        label,
+        style: TextStyle(color: iconColor, fontSize: 16),
+      ),
     );
   }
 }
 
-class OwnChoiceChip extends StatelessWidget{
+class OwnChoiceChip extends StatelessWidget {
   final String label;
   final void Function(bool) onSelected;
   final bool selected;
@@ -87,27 +93,27 @@ class OwnChoiceChip extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      backgroundColor: secondaryColor,
-      selectedColor: Colors.indigo.withOpacity(0.5),
-      disabledColor: Colors.indigo.withOpacity(0.6),
-      labelStyle: TextStyle(color: Colors.black54),
-      label: Text(label),
-      // selected: _indexSelected.value == 3,
-      selected: selected,
-      onSelected: onSelected
-    );
+        backgroundColor: secondaryColor,
+        selectedColor: Colors.indigo.withOpacity(0.5),
+        disabledColor: Colors.indigo.withOpacity(0.6),
+        labelStyle: TextStyle(color: Colors.black54),
+        label: Text(label),
+        // selected: _indexSelected.value == 3,
+        selected: selected,
+        onSelected: onSelected);
   }
 }
 
-class AnimatedButton extends StatefulWidget{
+class AnimatedButton extends StatefulWidget {
   @override
   State<AnimatedButton> createState() => _AnimatedButtonState();
 
   final Widget child;
+  final int index;
   final void Function() onTap;
+  final void Function(bool, int) callback;
 
-  AnimatedButton({this.child, this.onTap});
-
+  AnimatedButton({this.child, this.index, this.onTap, this.callback});
 }
 
 class _AnimatedButtonState extends State<AnimatedButton> {
@@ -123,21 +129,22 @@ class _AnimatedButtonState extends State<AnimatedButton> {
         width: 50,
         height: 30,
         child: Material(
-          type: MaterialType.transparency,
-          child: Container(
-            padding: EdgeInsets.all(5),
-            child: InkWell(
-              hoverColor: Colors.transparent,
-              onHover: (isHover) {
-                setState(() {
-                  _color = _color == Colors.transparent ? secondaryColor : Colors.transparent;
-                });
-              },
-              onTap: widget.onTap,
-              child: widget.child,
-            ),
-          ) 
-        )
-    );
+            type: MaterialType.transparency,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: InkWell(
+                hoverColor: Colors.transparent,
+                onHover: (isHover) {
+                  setState(() {
+                    // _color = _color == Colors.transparent
+                    //     ? secondaryColor
+                    //     : Colors.transparent;
+                    widget.callback(isHover, widget.index);
+                  });
+                },
+                onTap: widget.onTap,
+                child: widget.child,
+              ),
+            )));
   }
 }
