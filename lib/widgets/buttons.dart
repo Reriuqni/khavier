@@ -99,18 +99,19 @@ class OwnChoiceChip extends StatelessWidget{
   }
 }
 
-class AnimatedButton extends StatefulWidget{
+class OwnAnimatedButton extends StatefulWidget{
   @override
-  State<AnimatedButton> createState() => _AnimatedButtonState();
+  State<OwnAnimatedButton> createState() => _OwnAnimatedButtonState();
 
   final Widget child;
   final void Function() onTap;
+  final double width;
 
-  AnimatedButton({this.child, this.onTap});
+  OwnAnimatedButton({this.child, this.onTap, this.width = 50});
 
 }
 
-class _AnimatedButtonState extends State<AnimatedButton> {
+class _OwnAnimatedButtonState extends State<OwnAnimatedButton> {
   Color _color = Colors.transparent;
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,7 @@ class _AnimatedButtonState extends State<AnimatedButton> {
           color: _color,
           borderRadius: BorderRadius.circular(5),
         ),
-        width: 50,
+        width: widget.width,
         height: 30,
         child: Material(
           type: MaterialType.transparency,
@@ -141,3 +142,45 @@ class _AnimatedButtonState extends State<AnimatedButton> {
     );
   }
 }
+
+class OwnAnimatedTextButton extends StatefulWidget{
+  @override
+  State<OwnAnimatedTextButton> createState() => _OwnAnimatedTextButton();
+
+  final void Function() onPressed;
+  final String childText;
+  final double fontSize;
+
+  OwnAnimatedTextButton({this.childText, this.onPressed, this.fontSize = 25});
+
+}
+
+class _OwnAnimatedTextButton extends State<OwnAnimatedTextButton> {
+  Color _color = primaryColor;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: InkWell(
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onHover: (isHover) {
+                  setState(() {
+                    _color = _color == primaryColor ? secondaryColor : primaryColor;
+                  });
+                },
+                onTap: widget.onPressed,
+                child: Text(widget.childText,  style: TextStyle(color: _color, fontSize: widget.fontSize)),
+              ),
+            )
+        )
+    );
+  }
+}
+
+
+
