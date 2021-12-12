@@ -1,8 +1,7 @@
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:admin/widgets/scaffold.dart';
+
 import 'components/side_menu.dart';
 
 // class MainScreen extends StatefulWidget {
@@ -66,10 +65,13 @@ class _MainScreen extends State<MainScreen> {
         child: SafeArea(
       child: Container(
         decoration: BoxDecoration(
+            color: Colors.black,
             image: DecorationImage(
                 colorFilter:
-                    ColorFilter.mode(Colors.black12, BlendMode.lighten),
-                alignment: Alignment.topCenter,
+                    ColorFilter.mode(Colors.black45, BlendMode.dstATop),
+                alignment: Responsive.isDesktop(context)
+                    ? Alignment.topCenter
+                    : Alignment.center,
                 fit: BoxFit.cover,
                 image: NetworkImage("assets/assets/images/home.jpg"))),
         child: Column(
