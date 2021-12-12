@@ -17,7 +17,7 @@ class PhoneScreen extends StatefulWidget {
 
 class _PhoneScreenState extends State<PhoneScreen> {
   // Model model;
-  UserPovider userProvider;
+  UserProvider userProvider;
 
   ConfirmationResult confirmationResult;
   bool _codeInput = false;
@@ -37,7 +37,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   Widget build(BuildContext context) {
     // model = Provider.of<Model>(context, listen: false);
-    userProvider = Provider.of<UserPovider>(context, listen: false);
+    userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.primary,
