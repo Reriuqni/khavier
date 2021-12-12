@@ -22,10 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-
-
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutterfire_ui/auth.dart';
 
@@ -43,7 +39,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // Model model;
   bool _modelLoading = false;
-  UserProvider userProvider;
+  UserProvider? userProvider;
 
   @override
   void initState() {
@@ -86,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => MenuController(),
               ),
               // ChangeNotifierProvider<Model>.value(value: model), // для авторизації
-              ChangeNotifierProvider<UserProvider>.value(
+              ChangeNotifierProvider<UserProvider?>.value(
                   value: userProvider), // для авторизації
               // ChangeNotifierProvider(create: (context) => Model()),
               // ChangeNotifierProvider(create: (context) => DataBase()),
@@ -114,7 +110,7 @@ class _MyAppState extends State<MyApp> {
                 '/settings': (context) => SettingsScreen(),
                 '/myaccount': (context) => MyAccountScreen(),
                 '/login': (context) =>
-                    userProvider.isSigned ? MainScreen() : LoginScreen(),
+                    userProvider!.isSigned ? MainScreen() : LoginScreen(),
                 // '/login': (context) => LoginScreen(),
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
