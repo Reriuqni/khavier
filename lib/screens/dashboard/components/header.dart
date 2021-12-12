@@ -8,12 +8,12 @@ import 'package:admin/widgets/buttons.dart';
 import '../../../constants.dart';
 
 class Header extends StatefulWidget {
-  final void Function() tapCog;
-  final void Function() tapSquare;
-  final void Function() tapUser;
-  final void Function() tapMore;
-  final void Function() tapBurger;
-  final Animation controller;
+  final void Function()? tapCog;
+  final void Function()? tapSquare;
+  final void Function()? tapUser;
+  final void Function()? tapMore;
+  final void Function()? tapBurger;
+  final Animation? controller;
   Header(
       {this.tapCog,
       this.tapSquare,
@@ -74,7 +74,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                           onTap: widget.tapBurger,
                           child: AnimatedIcon(
                               icon: AnimatedIcons.menu_close,
-                              progress: widget.controller,
+                              progress: widget.controller as Animation<double>,
                               size: 25),
                         ),
                         SizedBox(
@@ -158,9 +158,9 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
 }
 
 class HeaderIcons extends StatefulWidget {
-  final void Function() tapCog;
-  final void Function() tapSquare;
-  final void Function() tapUser;
+  final void Function()? tapCog;
+  final void Function()? tapSquare;
+  final void Function()? tapUser;
 
   HeaderIcons({this.tapCog, this.tapSquare, this.tapUser});
 

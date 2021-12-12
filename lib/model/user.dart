@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Status.dart';
 
 class NewUser extends BaseClass {
-  String subject = '';
-  String body = '';
-  String priority = '';
-  String executorId = '';
+  String? subject = '';
+  String? body = '';
+  String? priority = '';
+  String? executorId = '';
   List<String> executorHelpers = [];
   // List comments = [];
   List<Status> history = [];

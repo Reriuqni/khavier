@@ -17,9 +17,9 @@ class PhoneScreen extends StatefulWidget {
 
 class _PhoneScreenState extends State<PhoneScreen> {
   // Model model;
-  UserProvider userProvider;
+  late UserProvider userProvider;
 
-  ConfirmationResult confirmationResult;
+  ConfirmationResult? confirmationResult;
   bool _codeInput = false;
 
   final _formKey = GlobalKey<FormState>();

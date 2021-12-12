@@ -3,20 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:admin/api/firebase_api.dart';
 
 class TicketsProvider extends ChangeNotifier {
-  List<Ticket> _tickets = [];
+  List<Ticket>? _tickets = [];
 
   List<Ticket> get ticketsStatusMedium =>
-      _tickets.where((ticket) => ticket.status == 'Medium').toList();
+      _tickets!.where((ticket) => ticket.status == 'Medium').toList();
   List<Ticket> get ticketsCompleted =>
-      _tickets.where((ticket) => ticket.status == 'Low').toList();
+      _tickets!.where((ticket) => ticket.status == 'Low').toList();
 
-  void setTickets(List<Ticket> tickets) =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+  void setTickets(List<Ticket>? tickets) =>
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         _tickets = tickets;
         notifyListeners();
       });
 
-  List<Ticket> get tickets => _tickets;
+  List<Ticket>? get tickets => _tickets;
   void addTicket(Ticket ticket) => FirebaseApi.createTicket(ticket);
   void removeTicket(Ticket ticket) => FirebaseApi.deleteTicket(ticket);
 
@@ -29,8 +29,8 @@ class TicketsProvider extends ChangeNotifier {
   //   FirebaseApi.updateTicket(ticket);
   // }
 
-  bool toggleTicketStatus(Ticket ticket) {
-    ticket.isDone = !ticket.isDone;
+  bool? toggleTicketStatus(Ticket ticket) {
+    ticket.isDone = !ticket.isDone!;
     FirebaseApi.updateTicket(ticket);
 
     return ticket.isDone;

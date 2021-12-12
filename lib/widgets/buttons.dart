@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OwnButton extends StatelessWidget{
-  final String label;
-  final void Function() onPressed;
+  final String? label;
+  final void Function()? onPressed;
   OwnButton({this.label, this.onPressed});
 
   @override
@@ -15,16 +15,16 @@ class OwnButton extends StatelessWidget{
           padding: EdgeInsets.all(defaultPadding),
         ),
         onPressed: onPressed,
-        child: Text(label, style: TextStyle(color: iconColor),),
+        child: Text(label!, style: TextStyle(color: iconColor),),
 
     );
   }
 }
 
 class OwnButtonWithICon extends StatelessWidget{
-  final String label;
-  final IconData icon;
-  final void Function() onPressed;
+  final String? label;
+  final IconData? icon;
+  final void Function()? onPressed;
   OwnButtonWithICon({this.label, this.icon, this.onPressed});
 
   @override
@@ -37,15 +37,15 @@ class OwnButtonWithICon extends StatelessWidget{
         ),
         onPressed: onPressed,
         icon: Icon(icon, color: iconColor,),
-        label: Text(label, style: TextStyle(color: iconColor),)
+        label: Text(label!, style: TextStyle(color: iconColor),)
 
     );
   }
 }
 
 class OwnButtonICon extends StatelessWidget{
-  final IconData icon;
-  final void Function() onPressed;
+  final IconData? icon;
+  final void Function()? onPressed;
   OwnButtonICon({this.icon, this.onPressed});
 
   @override
@@ -61,8 +61,8 @@ class OwnButtonICon extends StatelessWidget{
 }
 
 class OwnTextButton extends StatelessWidget{
-  final String label;
-  final void Function() onPressed;
+  final String? label;
+  final void Function()? onPressed;
   OwnTextButton({this.label, this.onPressed});
 
   @override
@@ -73,15 +73,15 @@ class OwnTextButton extends StatelessWidget{
           padding: MaterialStateProperty.all(EdgeInsets.all(10)),
           overlayColor: MaterialStateProperty.all(secondaryColor)
         ),
-        child: Text(label, style: TextStyle(color: iconColor, fontSize: 16),),
+        child: Text(label!, style: TextStyle(color: iconColor, fontSize: 16),),
     );
   }
 }
 
 class OwnChoiceChip extends StatelessWidget{
-  final String label;
-  final void Function(bool) onSelected;
-  final bool selected;
+  final String? label;
+  final void Function(bool)? onSelected;
+  final bool? selected;
   OwnChoiceChip({this.label, this.onSelected, this.selected});
 
   @override
@@ -91,9 +91,9 @@ class OwnChoiceChip extends StatelessWidget{
       selectedColor: Colors.indigo.withOpacity(0.5),
       disabledColor: Colors.indigo.withOpacity(0.6),
       labelStyle: TextStyle(color: Colors.black54),
-      label: Text(label),
+      label: Text(label!),
       // selected: _indexSelected.value == 3,
-      selected: selected,
+      selected: selected!,
       onSelected: onSelected
     );
   }
@@ -103,8 +103,8 @@ class OwnAnimatedButton extends StatefulWidget{
   @override
   State<OwnAnimatedButton> createState() => _OwnAnimatedButtonState();
 
-  final Widget child;
-  final void Function() onTap;
+  final Widget? child;
+  final void Function()? onTap;
   final double width;
 
   OwnAnimatedButton({this.child, this.onTap, this.width = 50});
@@ -147,8 +147,8 @@ class OwnAnimatedTextButton extends StatefulWidget{
   @override
   State<OwnAnimatedTextButton> createState() => _OwnAnimatedTextButton();
 
-  final void Function() onPressed;
-  final String childText;
+  final void Function()? onPressed;
+  final String? childText;
   final double fontSize;
 
   OwnAnimatedTextButton({this.childText, this.onPressed, this.fontSize = 25});
@@ -174,7 +174,7 @@ class _OwnAnimatedTextButton extends State<OwnAnimatedTextButton> {
                   });
                 },
                 onTap: widget.onPressed,
-                child: Text(widget.childText,  style: TextStyle(color: _color, fontSize: widget.fontSize)),
+                child: Text(widget.childText!,  style: TextStyle(color: _color, fontSize: widget.fontSize)),
               ),
             )
         )

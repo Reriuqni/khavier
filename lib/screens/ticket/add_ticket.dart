@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../dashboard/components/header.dart';
 
 class AddTicket extends StatefulWidget {
-  const AddTicket({Key key}) : super(key: key);
+  const AddTicket({Key? key}) : super(key: key);
   static const routeName = '/extractArguments';
 
   @override
@@ -28,7 +28,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
   String get restorationId => 'choice_chip_demo';
 
   @override
-  void restoreState(RestorationBucket oldBucket, bool initialRestore) {
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(_indexSelected, 'choice_chip');
   }
 
@@ -41,7 +41,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
   bool isShowLoading = false;
   dynamic args;
 
-  Ticket _ticket = Ticket(
+  Ticket? _ticket = Ticket(
     id: DateTime.now().toString(),
     name: '',
     date: DateTime.now(),
@@ -51,9 +51,9 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context).settings.arguments;
+    args = ModalRoute.of(context)!.settings.arguments;
     if (args != null) {
-      args = args as ScreenArguments;
+      args = args as ScreenArguments?;
       if (args.ticket != null) {
         titleOfPage = 'Edit Ticket ModalRoute';
         _ticket = args.ticket;
@@ -80,7 +80,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      titleOfPage + ' ' + _ticket.id,
+                      titleOfPage + ' ' + _ticket!.id!,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
@@ -89,7 +89,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     ),
                     SizedBox(height: 15,),
                     Text(
-                        'Owner: ' + _ticket.owner,
+                        'Owner: ' + _ticket!.owner!,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -109,55 +109,55 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                       children: [
                         OwnChoiceChip(
                           label: 'Blocker',
-                          selected: _ticket.status == 'Blocker',
+                          selected: _ticket!.status == 'Blocker',
                           onSelected: (value) {
                             setState(() {
                               _indexSelected.value = value ? 0 : -1;
-                              _ticket.status = 'Blocker';
+                              _ticket!.status = 'Blocker';
                             });
                           },
                         ),
                         const SizedBox(width: 8),
                         OwnChoiceChip(
                           label: 'Critical',
-                          selected: _ticket.status == 'Critical',
+                          selected: _ticket!.status == 'Critical',
                           onSelected: (value) {
                             setState(() {
                               _indexSelected.value = value ? 1 : -1;
-                              _ticket.status = 'Critical';
+                              _ticket!.status = 'Critical';
                             });
                           },
                         ),
                         const SizedBox(width: 8),
                         OwnChoiceChip(
                           label: 'Medium',
-                          selected: _ticket.status == 'Medium',
+                          selected: _ticket!.status == 'Medium',
                           onSelected: (value) {
                             setState(() {
                               _indexSelected.value = value ? 2 : -1;
-                              _ticket.status = 'Medium';
+                              _ticket!.status = 'Medium';
                             });
                           },
                         ),
                         const SizedBox(width: 8),
                         OwnChoiceChip(
                           label: 'Low',
-                          selected: _ticket.status == 'Low',
+                          selected: _ticket!.status == 'Low',
                           onSelected: (value) {
                             setState(() {
                               _indexSelected.value = value ? 3 : -1;
-                              _ticket.status = 'Low';
+                              _ticket!.status = 'Low';
                             });
                           },
                         ),
                         const SizedBox(width: 8),
                         OwnChoiceChip(
                           label: 'Idea',
-                          selected: _ticket.status == 'Idea',
+                          selected: _ticket!.status == 'Idea',
                           onSelected: (value) {
                             setState(() {
                               _indexSelected.value = value ? 4 : -1;
-                              _ticket.status = 'Idea';
+                              _ticket!.status = 'Idea';
                             });
                           },
                         ),
@@ -175,11 +175,11 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
                       width: 700,
                       child: OwnTextField(
-                          labelText: 'Name: ' + _ticket.name,
+                          labelText: 'Name: ' + _ticket!.name!,
                           hintText: 'Title of ticket',
-                        initialValue: _ticket.name,
+                        initialValue: _ticket!.name,
                         onChanged: (body) {
-                          _ticket.name = body;
+                          _ticket!.name = body;
                         },
                       ),
                     ),
@@ -198,11 +198,11 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                     Container(
                           width: 700,
                         child: OwnBigTextField(
-                            initialValue: _ticket.body,
+                            initialValue: _ticket!.body,
                               labelText: 'Body',
                               hintText: 'Description',
                             onChanged: (body) {
-                              _ticket.body = body;
+                              _ticket!.body = body;
                             },
                         )
                           ),
@@ -218,7 +218,7 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                       ),
                     ),
                     DropdownButton<String>(
-                      value: _ticket.type,
+                      value: _ticket!.type,
                       // value: _type,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
@@ -228,10 +228,10 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                         height: 2,
                         color: Colors.deepPurpleAccent,
                       ),
-                      onChanged: (String newValue) {
+                      onChanged: (String? newValue) {
                         setState(() {
                           // _type = newValue;
-                          _ticket.type = newValue;
+                          _ticket!.type = newValue;
                         });
                       },
                       items: <String>[
@@ -257,9 +257,9 @@ class _AddTicket extends State<AddTicket> with RestorationMixin {
                               listen: false);
 
                           if (isAddTicket) {
-                            provider.addTicket(_ticket);
+                            provider.addTicket(_ticket!);
                           } else {
-                            provider.updateTicket(_ticket);
+                            provider.updateTicket(_ticket!);
                           }
 
                           Navigator.pop(context);

@@ -6,18 +6,18 @@ class TicketField {
 }
 
 class Ticket {
-  DateTime date;
-  String name;
-  String status;
-  String type;
-  String id;
-  String owner;
-  String body;
-  bool isDone;
+  DateTime? date;
+  String? name;
+  String? status;
+  String? type;
+  String? id;
+  String? owner;
+  String? body;
+  bool? isDone;
 
   Ticket({
-    @required this.date,
-    @required this.name,
+    required this.date,
+    required this.name,
     this.status = '',
     this.type = '',
     this.id = '',

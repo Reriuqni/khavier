@@ -35,11 +35,11 @@ class LoginScreenState extends State<LoginScreen> {
 }
 
 class LoginForm extends StatelessWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   String email = '';
   String password = '';
-  UserProvider userProvider;
+  late UserProvider userProvider;
 
   LoginForm({this.width, this.height});
 

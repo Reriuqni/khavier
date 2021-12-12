@@ -3,10 +3,10 @@ import 'package:admin/model/baseClass.dart';
 import 'Status.dart';
 
 class Ticket extends BaseClass {
-  String subject = '';
-  String body = '';
-  String priority = '';
-  String executorId = '';
+  String? subject = '';
+  String? body = '';
+  String? priority = '';
+  String? executorId = '';
   List<String> executorHelpers = [];
   // List comments = [];
   List<Status> history = [];

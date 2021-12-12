@@ -8,13 +8,13 @@ class Utils {
   //       ..removeCurrentSnackBar()
   //       ..showSnackBar(SnackBar(content: Text(text)));
 
-  static DateTime toDateTime(Timestamp value) {
+  static DateTime? toDateTime(Timestamp? value) {
     if (value == null) return null;
 
     return value.toDate();
   }
 
-  static dynamic fromDateTimeToJson(DateTime date) {
+  static dynamic fromDateTimeToJson(DateTime? date) {
     if (date == null) return null;
 
     return date.toUtc();
@@ -32,7 +32,7 @@ class Utils {
 
           // return
           // [Instance of 'Ticket', Instance of 'Ticket']
-          final objects = snaps.map((json) => fromJson(json)).toList();
+          final objects = snaps.map((json) => fromJson(json as Map<String, dynamic>)).toList();
 
           sink.add(objects);
         },

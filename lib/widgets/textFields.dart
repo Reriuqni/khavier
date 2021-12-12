@@ -2,12 +2,12 @@ import 'package:admin/constants.dart';
 import 'package:flutter/material.dart';
 
 class OwnTextField extends StatelessWidget{
-  final String hintText;
-  final String labelText;
-  final String initialValue;
-  final TextInputType  keyboardType;
-  final TextEditingController controller;
-  final void Function(String) onChanged;
+  final String? hintText;
+  final String? labelText;
+  final String? initialValue;
+  final TextInputType?  keyboardType;
+  final TextEditingController? controller;
+  final void Function(String)? onChanged;
   OwnTextField({
     this.hintText,
     this.labelText,
@@ -51,14 +51,14 @@ class OwnTextField extends StatelessWidget{
 }
 
 class OwnTextFieldWithIcons extends StatelessWidget{
-  final String hintText;
-  final String labelText;
-  final Widget suffixIcon;
-  final IconData prefixIcon;
-  final String initialValue;
-  final TextInputType  keyboardType;
-  final void Function(String) onChanged;
-  final TextEditingController controller;
+  final String? hintText;
+  final String? labelText;
+  final Widget? suffixIcon;
+  final IconData? prefixIcon;
+  final String? initialValue;
+  final TextInputType?  keyboardType;
+  final void Function(String)? onChanged;
+  final TextEditingController? controller;
   OwnTextFieldWithIcons({
     this.hintText,
     this.labelText,
@@ -108,12 +108,12 @@ class OwnTextFieldWithIcons extends StatelessWidget{
 }
 
 class OwnBigTextField extends StatelessWidget{
-  final String hintText;
-  final String labelText;
-  final String initialValue;
-  final TextInputType  keyboardType;
-  final void Function(String) onChanged;
-  final TextEditingController controller;
+  final String? hintText;
+  final String? labelText;
+  final String? initialValue;
+  final TextInputType?  keyboardType;
+  final void Function(String)? onChanged;
+  final TextEditingController? controller;
   OwnBigTextField({
     this.hintText,
     this.labelText,

@@ -10,8 +10,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  String _userUid;
-  String _userPhone;
+  String? _userUid;
+  String? _userPhone;
 
   bool _hidePass = true;
 

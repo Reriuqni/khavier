@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserProvider extends ChangeNotifier {
-  FirebaseAuth auth;
+  late FirebaseAuth auth;
   bool get isSigned => auth.currentUser != null;
 
   UserProvider() {
@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   _addListenerUser() {
-    FirebaseAuth.instance.authStateChanges().listen((User listenUser) {
+    FirebaseAuth.instance.authStateChanges().listen((User? listenUser) {
       if (listenUser == null) {
         print('User is currently signed out!');
       } else {
@@ -37,8 +37,8 @@ class UserProvider extends ChangeNotifier {
         googleProvider); // UserCredential userCredentialBySignWithGoogle
   }
 
-  Future<UserCredential> signInWithEmail(
-      {String email, String password}) async {
+  Future<UserCredential?> signInWithEmail(
+      {required String email, required String password}) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);

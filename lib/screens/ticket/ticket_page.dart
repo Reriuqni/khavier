@@ -3,14 +3,14 @@ import '../dashboard/components/header.dart';
 import 'package:admin/constants.dart';
 
 class TicketPage extends StatefulWidget {
-  const TicketPage({Key key}) : super(key: key);
+  const TicketPage({Key? key}) : super(key: key);
   @override
   _TicketPage createState() => _TicketPage();
 }
 
 class _TicketPage extends State<TicketPage>
     with SingleTickerProviderStateMixin, RestorationMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
   final RestorableInt tabIndex = RestorableInt(0);
 
@@ -18,9 +18,9 @@ class _TicketPage extends State<TicketPage>
   String get restorationId => 'tab_non_scrollable_demo';
 
   @override
-  void restoreState(RestorationBucket oldBucket, bool initialRestore) {
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(tabIndex, 'tab_index');
-    _tabController.index = tabIndex.value;
+    _tabController!.index = tabIndex.value;
   }
 
 
@@ -32,18 +32,18 @@ class _TicketPage extends State<TicketPage>
       length: 3,
       vsync: this,
     );
-    _tabController.addListener(() {
+    _tabController!.addListener(() {
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
       setState(() {
-        tabIndex.value = _tabController.index;
+        tabIndex.value = _tabController!.index;
       });
     });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     tabIndex.dispose();
     super.dispose();
   }

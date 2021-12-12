@@ -21,7 +21,7 @@ class _MainScreen extends State<MainScreen>
   double _heightIcons = 0;
   bool _burger = false;
 
-  AnimationController controller;
+  AnimationController? controller;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _MainScreen extends State<MainScreen>
 
   void tapBurger() {
     _burger = false;
-    _burger ? controller.forward() : controller.reverse();
+    _burger ? controller!.forward() : controller!.reverse();
   }
 
   @override
@@ -69,7 +69,7 @@ class _MainScreen extends State<MainScreen>
               },
               tapBurger: () => setState(() {
                 _burger = !_burger;
-                _burger ? controller.forward() : controller.reverse();
+                _burger ? controller!.forward() : controller!.reverse();
                 _widthBurger = _widthBurger == 0 ? 200 : 0;
                 _width = 0;
               }),

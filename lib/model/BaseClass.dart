@@ -1,11 +1,11 @@
 class BaseClass {
-  String id = '';
-  String type = '';
-  String date = '';
-  String tag = '';
-  String name = '';
-  String status = '';
-  String owner = '';
+  String? id = '';
+  String? type = '';
+  String? date = '';
+  String? tag = '';
+  String? name = '';
+  String? status = '';
+  String? owner = '';
 
   Map<String, dynamic> toMap() => {
         'id': id,

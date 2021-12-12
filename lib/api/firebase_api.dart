@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/utils.dart';
@@ -18,7 +20,7 @@ class FirebaseApi {
       .collection(collectionName)
       // .orderBy(TicketField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(Ticket.fromJson));
+      .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
 
   static Future updateTicket(Ticket ticket) async {
     final docTicket = FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);

@@ -5,7 +5,7 @@ import '../../../constants.dart';
 
 class RecenttTickets extends StatelessWidget {
   const RecenttTickets({
-    Key key,
+    Key? key,
 
   }) : super(key: key);
 
@@ -61,11 +61,11 @@ class RecenttTickets extends StatelessWidget {
 DataRow recentTicketDataRow(Ticket ticket) {
   return DataRow(
     cells: [
-      DataCell(Text(ticket.id)),
-      DataCell(Text(ticket.name)),
-      DataCell(Text(ticket.priority)),
-      DataCell(Text(ticket.type)),
-      DataCell(Text(ticket.date)),
+      DataCell(Text(ticket.id!)),
+      DataCell(Text(ticket.name!)),
+      DataCell(Text(ticket.priority!)),
+      DataCell(Text(ticket.type!)),
+      DataCell(Text(ticket.date!)),
     ],
   );
 }

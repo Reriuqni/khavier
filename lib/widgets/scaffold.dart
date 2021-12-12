@@ -4,8 +4,8 @@ import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
 
 class OwnScaffold extends StatelessWidget{
-  final Key key;
-  final Widget body;
+  final Key? key;
+  final Widget? body;
   OwnScaffold({this.key, this.body});
 
 
@@ -25,10 +25,10 @@ class OwnScaffold extends StatelessWidget{
 }
 
 class OwnContainer extends StatelessWidget{
-  final double height;
-  final double width;
-  final double padding;
-  final Widget child;
+  final double? height;
+  final double? width;
+  final double? padding;
+  final Widget? child;
   final Color color;
   OwnContainer({this.height, this.width, this.padding, this.child, this.color = primaryColor});
 

@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -159,9 +159,9 @@ class SideMenu extends StatelessWidget {
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    Key key,
+    Key? key,
     // For selecting those three line once press "Command+D"
-    @required this.title,
+    required this.title,
     // @required this.svgSrc,
   }) : super(key: key);
 
@@ -188,14 +188,14 @@ class DrawerListTile extends StatelessWidget {
 
 class DrawerListSubTile extends StatelessWidget {
   const DrawerListSubTile({
-    Key key,
+    Key? key,
     // For selecting those three line once press "Command+D"
-    @required this.title,
+    required this.title,
     this.subTitle,
-    @required this.press,
+    required this.press,
   }) : super(key: key);
 
-  final String title, subTitle;
+  final String? title, subTitle;
   final VoidCallback press;
 
   @override
@@ -209,8 +209,8 @@ class DrawerListSubTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500, )),
-              Text(subTitle, style: TextStyle(color: Colors.cyan.shade700, fontSize: 10))
+              Text(title!, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500, )),
+              Text(subTitle!, style: TextStyle(color: Colors.cyan.shade700, fontSize: 10))
             ],
           )
       ),

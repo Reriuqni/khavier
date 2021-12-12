@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DataBase extends ChangeNotifier {
-  CollectionReference ticketsFB;
+  late CollectionReference ticketsFB;
   List<Ticket> tickets = [];
 
   DataBase() {
@@ -72,7 +72,7 @@ class DataBase extends ChangeNotifier {
   Future<void> addTicket(Ticket tic) async {
     tic.date = DateTime.now().millisecondsSinceEpoch.toString();
     try {
-      if (tic.id.isEmpty) {
+      if (tic.id!.isEmpty) {
         await ticketsFB.add(tic.toMap());
       } else {
         await ticketsFB.doc(tic.id).set(tic.toMap());

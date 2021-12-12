@@ -62,7 +62,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       // decorationStyle: TextDecorationStyle.wavy,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
-                        ..color = Colors.blue[100],
+                        ..color = Colors.blue[100]!,
                     ),
                   ),
                   SizedBox(height: 20,),
