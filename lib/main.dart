@@ -1,29 +1,14 @@
-import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 // import 'package:admin/model/db.dart';
 // import 'package:admin/model/model.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/provider/UserProvider.dart';
-import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/login/login_screen.dart';
-import 'package:admin/screens/login/phone_screen.dart';
 import 'package:admin/screens/main/main_screen.dart';
-import 'package:admin/screens/matters/matters_screen.dart';
-import 'package:admin/screens/myaccount/my_account_screen.dart';
-import 'package:admin/screens/notification/notification_screen.dart';
-import 'package:admin/screens/reports/reports_screen.dart';
-import 'package:admin/screens/settings/settings_screen.dart';
-import 'package:admin/screens/spiner/spinner_screen.dart';
-import 'package:admin/screens/ticket/add_ticket.dart';
-import 'package:admin/screens/ticket/tickets_screen.dart';
-import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutterfire_ui/auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +16,43 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+            ChangeNotifierProvider(create: (context) => TicketsProvider()),
+            ChangeNotifierProvider(create: (context) => UserProvider()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: AuthenticationGate(),
+          ));
+}
+
+class AuthenticationGate extends StatelessWidget {
+  const AuthenticationGate({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          // User is not signed in - show a sign-in screen
+          if (!snapshot.hasData) {
+            Navigator
+            return LoginScreen();
+          }
+
+          return MainScreen(); // show your app’s home page after login
+        },
+      );
+}
+
+/* class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -46,26 +67,6 @@ class _MyAppState extends State<MyApp> {
     // model = Model();
     super.initState();
   }
-
-  //   @override
-  // Widget build(BuildContext context) => StreamBuilder<User?>(
-  //       stream: FirebaseAuth.instance.authStateChanges(),
-  //       builder: (context, snapshot) {
-  //         // User is not signed in - show a sign-in screen
-  //         if (!snapshot.hasData) {
-  //           return SignInScreen(
-  //             providerConfigs: [
-  //               EmailProviderConfiguration(),
-  //               GoogleProviderConfiguration(
-  //                 clientId: 'xxxx-xxxx.apps.googleusercontent.com',
-  //               ),
-  //             ],
-  //           );
-  //         }
-
-  //         return MainScreen(); // show your app’s home page after login
-  //       },
-  //     );
 
   @override
   Widget build(BuildContext context) {
@@ -122,3 +123,4 @@ class _MyAppState extends State<MyApp> {
           );
   }
 }
+ */
