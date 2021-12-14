@@ -104,9 +104,9 @@ class LoginForm extends StatelessWidget {
                       onPressed: () async {
                         await userProvider.signInWithEmail(
                             email: email, password: password);
-                        if (userProvider.isSigned) {
-                          Navigator.pushNamed(context, "/main");
-                        }
+                        // if (userProvider.isSigned) {
+                        //   Navigator.pushNamed(context, "/main");
+                        // }
                       },
                       child: Text(
                         'Login',

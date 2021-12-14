@@ -43,7 +43,6 @@ class AuthenticationGate extends StatelessWidget {
         builder: (context, snapshot) {
           // User is not signed in - show a sign-in screen
           if (!snapshot.hasData) {
-            Navigator
             return LoginScreen();
           }
 

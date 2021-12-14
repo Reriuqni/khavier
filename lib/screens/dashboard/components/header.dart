@@ -1,9 +1,11 @@
+import 'package:admin/constants.dart';
+import 'package:admin/provider/UserProvider.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:admin/constants.dart';
-import 'package:admin/widgets/buttons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
@@ -171,6 +173,8 @@ class HeaderIcons extends StatefulWidget {
 class _HeaderIcons extends State<HeaderIcons> {
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     return Row(
       children: [
         OwnAnimatedButton(
@@ -190,7 +194,8 @@ class _HeaderIcons extends State<HeaderIcons> {
         ),
         OwnAnimatedButton(
           onTap: () {
-            Navigator.pushNamed(context, '/login');
+            userProvider.signOut();
+            // Navigator.pushNamed(context, '/login');
           },
           child: SvgPicture.asset('assets/icons/sign-out.svg',
               width: 15, height: 15, color: primaryColor),
