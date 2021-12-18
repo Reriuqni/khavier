@@ -1,5 +1,6 @@
 import 'dart:js';
 
+import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 // import 'package:admin/model/db.dart';
 // import 'package:admin/model/model.dart';
@@ -35,8 +36,12 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: AuthenticationGate(),
             theme: ThemeData(
-                textTheme: GoogleFonts.montserratTextTheme(
-                    Theme.of(context).textTheme)),
+              scaffoldBackgroundColor: primaryColor,
+              textTheme:
+                  GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
+                      .apply(bodyColor: Colors.black),
+              canvasColor: primaryColor,
+            ),
           ));
 }
 
@@ -48,6 +53,10 @@ class AuthenticationGate extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           // User is not signed in - show a sign-in screen
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
           if (!snapshot.hasData) {
             return LoginScreen();
           }
@@ -101,7 +110,7 @@ class _MyAppState extends State<MyApp> {
               theme: ThemeData.dark().copyWith(
                 scaffoldBackgroundColor: primaryColor,
                 textTheme:
-                    GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+                    GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
                         .apply(bodyColor: Colors.black),
                 canvasColor: primaryColor,
               ),
