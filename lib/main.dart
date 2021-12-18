@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:admin/controllers/MenuController.dart';
 // import 'package:admin/model/db.dart';
 // import 'package:admin/model/model.dart';
@@ -8,6 +10,7 @@ import 'package:admin/screens/main/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             home: AuthenticationGate(),
+            theme: ThemeData(
+                textTheme: GoogleFonts.montserratTextTheme(
+                    Theme.of(context).textTheme)),
           ));
 }
 
