@@ -23,8 +23,7 @@ class _MainScreen extends State<MainScreen> with SingleTickerProviderStateMixin{
         decoration: BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
-            // ColorFilter.mode(Colors.black45, BlendMode.dstATop),
-                  colorFilter: ColorFilter.mode(Colors.black26, BlendMode.darken),
+                  colorFilter: ColorFilter.mode(Colors.black45, BlendMode.dstATop),
                   alignment: Responsive.isDesktop(context) ? Alignment.topCenter : Alignment.center,
                 fit: Responsive.isDesktop(context) ? BoxFit.cover : BoxFit.fitHeight,
                   image: NetworkImage("assets/assets/images/home.jpg")

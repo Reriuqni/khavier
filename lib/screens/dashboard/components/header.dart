@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+
 double _width = 0;
 
 class Header extends StatefulWidget {
@@ -44,85 +45,87 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-          Container(
-              color: headerColor,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    HeaderIcons(
-                          tapCog: () {
-                            setState(() {
-                              _width = _width == 0 ? 260 : 0;
-                            });
-                          },
-                          tapSquare: () {},
-                          tapUser: () {},
-                    )
-                  ],
-                ),
-                    )
-                ),
-          Container(
-              margin: EdgeInsets.all(0),
+        Container(
+            color: headerColor,
+            child: Container(
               padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
-              color: Color(0xB2000000),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                      SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (searchField == false)
-                        Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                                Image.asset('assets/images/logo2.png', width: 280, height: 54,),
-                            OwnAnimatedTextButton(
-                              childText: 'MATTERS',
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/main');
-                              },
-                            )
-                          ],
-                        ),
-                      if (searchField == true)
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width - 300,
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: 'Search',
-                                      labelStyle: TextStyle(color: primaryColor)
-                                  ),
-                                  style: TextStyle(color: primaryColor),
-                                ),
-                              )
-                              ),
-                      OwnAnimatedButton(
+                  HeaderIcons(
+                    tapCog: () {
+                      setState(() {
+                        _width = _width == 0 ? 260 : 0;
+                      });
+                    },
+                    tapSquare: () {},
+                    tapUser: () {},
+                  )
+                ],
+              ),
+            )),
+        Container(
+            margin: EdgeInsets.all(0),
+            padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
+            color: Color(0xB2000000),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (searchField == false)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            'assets/images/logo2.png',
+                            width: 280,
+                            height: 54,
+                          ),
+                          OwnAnimatedTextButton(
+                            childText: 'MATTERS',
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/main');
+                            },
+                          )
+                        ],
+                      ),
+                    if (searchField == true)
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width - 300,
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: 'Search',
+                                  labelStyle: TextStyle(color: primaryColor)),
+                              style: TextStyle(color: primaryColor),
+                            ),
+                          )),
+                    OwnAnimatedButton(
                         onTap: () {
                           setState(() {
                             searchField = !searchField;
                           });
                         },
-                            child: FaIcon(FontAwesomeIcons.search, size: 20,)
-                      )
-                    ],
-                  ),
-                ],
-                  )
-              ),
-              SideMenuContainer(
-                width: _width,
-                height: MediaQuery.of(context).size.height - 134,
-              )
-      ],
+                        child: FaIcon(
+                          FontAwesomeIcons.search,
+                          size: 20,
+                        ))
+                  ],
+                ),
+              ],
+            )),
+        SideMenuContainer(
+          width: _width,
+          height: MediaQuery.of(context).size.height - 134,
         )
-
-    );
+      ],
+    ));
   }
 }
 
@@ -143,16 +146,30 @@ class _HeaderIcons extends State<HeaderIcons> {
     return Row(
       children: [
         OwnAnimatedButton(
-            onTap: () {},
-            child: FaIcon(FontAwesomeIcons.exclamationTriangle, size: 17,),
+          onTap: () {},
+          child: FaIcon(
+            FontAwesomeIcons.exclamationTriangle,
+            size: 17,
+          ),
         ),
         OwnAnimatedButton(
           onTap: widget.tapCog,
-            child: FaIcon(FontAwesomeIcons.cog, size: 17,),
+          child: FaIcon(
+            FontAwesomeIcons.cog,
+            size: 17,
+          ),
         ),
         OwnAnimatedButton(
-            onTap: widget.tapUser,
-            child: FaIcon(FontAwesomeIcons.user, size: 17,),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/profile',
+            );
+          },
+          child: FaIcon(
+            FontAwesomeIcons.user,
+            size: 17,
+          ),
         ),
         OwnAnimatedButton(
           onTap: () {
@@ -160,14 +177,17 @@ class _HeaderIcons extends State<HeaderIcons> {
             // userProvider.signOut();
             // Navigator.pushNamed(context, '/login');
           },
-            child: FaIcon(FontAwesomeIcons.signOutAlt, size: 17,),
+          child: FaIcon(
+            FontAwesomeIcons.signOutAlt,
+            size: 17,
+          ),
         ),
       ],
     );
   }
 }
 
-class SideMenuContainer extends StatelessWidget{
+class SideMenuContainer extends StatelessWidget {
   final double width;
   final double height;
   SideMenuContainer({required this.width, required this.height});
@@ -181,7 +201,6 @@ class SideMenuContainer extends StatelessWidget{
         child: Material(
           type: MaterialType.transparency,
           child: SideMenu(),
-        )
-    );
+        ));
   }
 }
