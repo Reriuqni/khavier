@@ -172,6 +172,9 @@ class FlutterFireUIWidget extends StatelessWidget {
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
         ),
+        textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
+            .apply(bodyColor: Colors.black),
+        canvasColor: primaryColor,
       ),
       initialRoute: auth.currentUser == null ? '/' : '/profile',
       routes: {
