@@ -205,8 +205,8 @@ class FlutterFireUIWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
                   action == AuthAction.signIn
-                      ? 'Welcome to FlutterFire UI! Please sign in to continue.'
-                      : 'Welcome to FlutterFire UI! Please create an account to continue',
+                      ? 'Welcome to My Solve! Please sign in to continue.'
+                      : 'Welcome to My Solve! Please create an account to continue',
                 ),
               );
             },
@@ -295,7 +295,7 @@ class FlutterFireUIWidget extends StatelessWidget {
           );
         },
       },
-      title: 'Firebase UI demo',
+      title: 'My Solve',
       debugShowCheckedModeBanner: false,
       locale: const Locale('en'),
       localizationsDelegates: [

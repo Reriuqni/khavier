@@ -45,6 +45,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Іконки в правій частині хедера
         Container(
             color: headerColor,
             child: Container(
@@ -65,6 +66,8 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                 ],
               ),
             )),
+        // Іконки в правій частині хедера
+
         Container(
             margin: EdgeInsets.all(0),
             padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
@@ -115,6 +118,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                         child: FaIcon(
                           FontAwesomeIcons.search,
                           size: 20,
+                          color: primaryColor,
                         ))
                   ],
                 ),
@@ -181,9 +185,9 @@ class _HeaderIcons extends State<HeaderIcons> {
             // Navigator.pushNamed(context, '/login');
           },
           child: FaIcon(
-            FontAwesomeIcons.signOutAlt, 
+            FontAwesomeIcons.signOutAlt,
             size: 17,
-            color: primaryColor,            
+            color: primaryColor,
           ),
         ),
       ],

@@ -108,7 +108,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                             searchField = !searchField;
                           });
                         },
-                            child: FaIcon(FontAwesomeIcons.search, size: 20,)
+                            child: FaIcon(FontAwesomeIcons.search, size: 20,color: primaryColor,)
                       )
                     ],
                   ),
@@ -146,7 +146,7 @@ class _HeaderIcons extends State<HeaderIcons> {
       children: [
         OwnAnimatedButton(
             onTap: () {},
-            child: FaIcon(FontAwesomeIcons.exclamationTriangle, size: 17,),
+            child: FaIcon(FontAwesomeIcons.exclamationTriangle, size: 17,color: primaryColor,),
         ),
         OwnAnimatedButton(
           onTap: widget.tapCog,
