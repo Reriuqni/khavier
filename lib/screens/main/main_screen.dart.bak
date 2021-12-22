@@ -15,10 +15,8 @@ class _MainScreen extends State<MainScreen> with SingleTickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-  // return SingleChildScrollView(
-     //   child: SafeArea(
-  
-    return SafeArea(
+    return SingleChildScrollView(
+        child: SafeArea(
       child: Container(
         decoration: BoxDecoration(
             color: Colors.black,

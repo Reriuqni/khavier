@@ -140,6 +140,8 @@ class HeaderIcons extends StatefulWidget {
 class _HeaderIcons extends State<HeaderIcons> {
   @override
   Widget build(BuildContext context) {
+    // UserProvider userProvider =
+    //     Provider.of<UserProvider>(context, listen: false);
     return Row(
       children: [
         OwnAnimatedButton(
@@ -148,11 +150,18 @@ class _HeaderIcons extends State<HeaderIcons> {
         ),
         OwnAnimatedButton(
           onTap: widget.tapCog,
-            child: FaIcon(FontAwesomeIcons.cog, size: 17,),
+          child: SvgPicture.asset('assets/icons/cog.svg',
+              width: 15, height: 15, color: primaryColor),
         ),
         OwnAnimatedButton(
-            onTap: widget.tapUser,
-            child: FaIcon(FontAwesomeIcons.user, size: 17,),
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/profile',
+            );
+          },
+          child: SvgPicture.asset('assets/icons/user.svg',
+              width: 15, height: 15, color: primaryColor),
         ),
         OwnAnimatedButton(
           onTap: () {
@@ -160,28 +169,10 @@ class _HeaderIcons extends State<HeaderIcons> {
             // userProvider.signOut();
             // Navigator.pushNamed(context, '/login');
           },
-            child: FaIcon(FontAwesomeIcons.signOutAlt, size: 17,),
+          child: SvgPicture.asset('assets/icons/sign-out.svg',
+              width: 15, height: 15, color: primaryColor),
         ),
       ],
-    );
-  }
-}
-
-class SideMenuContainer extends StatelessWidget{
-  final double width;
-  final double height;
-  SideMenuContainer({required this.width, required this.height});
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-        width: width,
-        height: height,
-        duration: Duration(milliseconds: 200),
-        child: Material(
-          type: MaterialType.transparency,
-          child: SideMenu(),
-        )
     );
   }
 }
