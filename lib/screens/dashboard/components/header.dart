@@ -150,6 +150,7 @@ class _HeaderIcons extends State<HeaderIcons> {
           child: FaIcon(
             FontAwesomeIcons.exclamationTriangle,
             size: 17,
+            color: primaryColor,
           ),
         ),
         OwnAnimatedButton(
@@ -157,6 +158,7 @@ class _HeaderIcons extends State<HeaderIcons> {
           child: FaIcon(
             FontAwesomeIcons.cog,
             size: 17,
+            color: primaryColor,
           ),
         ),
         OwnAnimatedButton(
@@ -169,6 +171,7 @@ class _HeaderIcons extends State<HeaderIcons> {
           child: FaIcon(
             FontAwesomeIcons.user,
             size: 17,
+            color: primaryColor,
           ),
         ),
         OwnAnimatedButton(
@@ -178,8 +181,9 @@ class _HeaderIcons extends State<HeaderIcons> {
             // Navigator.pushNamed(context, '/login');
           },
           child: FaIcon(
-            FontAwesomeIcons.signOutAlt,
+            FontAwesomeIcons.signOutAlt, 
             size: 17,
+            color: primaryColor,            
           ),
         ),
       ],

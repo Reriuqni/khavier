@@ -116,6 +116,7 @@ class _OwnAnimatedButtonState extends State<OwnAnimatedButton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+        alignment: Alignment.center,
         duration: Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: _color,
@@ -128,6 +129,7 @@ class _OwnAnimatedButtonState extends State<OwnAnimatedButton> {
           child: Container(
             padding: EdgeInsets.all(5),
             child: InkWell(
+              focusColor: secondaryColor,
               hoverColor: Colors.transparent,
               onHover: (isHover) {
                 setState(() {
