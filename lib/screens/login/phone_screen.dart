@@ -1,5 +1,5 @@
 // import 'package:admin/model/model.dart';
-import 'package:admin/provider/UserProvider.dart';
+// import 'package:admin/provider/UserProvider.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
@@ -17,7 +17,7 @@ class PhoneScreen extends StatefulWidget {
 
 class _PhoneScreenState extends State<PhoneScreen> {
   // Model model;
-  late UserProvider userProvider;
+  // late UserProvider userProvider;
 
   ConfirmationResult? confirmationResult;
   bool _codeInput = false;
@@ -37,7 +37,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   Widget build(BuildContext context) {
     // model = Provider.of<Model>(context, listen: false);
-    userProvider = Provider.of<UserProvider>(context, listen: false);
+    // userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.primary,
@@ -151,9 +151,10 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                         onPressed: () async {
                                           // UserCredential uc = await userProvider.signInWithGoogle();
                                           // if (uc != null) Navigator.pushNamed(context, '/main');
-                                          await userProvider.signInWithGoogle();
-                                          if (userProvider.auth.currentUser != null)
-                                            Navigator.pushNamed(context, '/main');
+                                          //
+                                          // await userProvider.signInWithGoogle();
+                                          // if (userProvider.auth.currentUser != null)
+                                          //   Navigator.pushNamed(context, '/main');
                                         },
                                         label: "Google Sign In"), // SizedBox(height: 15),
                                     //   InkWell(
@@ -226,7 +227,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
         _codeInput = true;
       });
       // confirmationResult = await  model.db.auth.signInWithPhoneNumber('+${_phoneController.text}');
-      confirmationResult = await userProvider.auth.signInWithPhoneNumber('+${_phoneController.text}');
+      // confirmationResult = await userProvider.auth.signInWithPhoneNumber('+${_phoneController.text}');
 
       // await model.db.auth.verifyPhoneNumber(
       //   phoneNumber: '+${_phoneController.text}',
