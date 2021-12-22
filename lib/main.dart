@@ -138,39 +138,22 @@ class AuthenticationGate extends StatelessWidget {
                 '/singin': (context) => PhoneScreen(),
                 '/addticket': (context) => AddTicket(),
                 '/editticket': (context) => AddTicket(),
+                '/profile': (context) {
+                  return ProfileScreen(
+                    providerConfigs: providerConfigs,
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.pushReplacementNamed(context, '/');
+                      }),
+                    ],
+                  );
+                },
               },
             )); // show your app’s home page after login
       },
     );
   }
 }
-
-class LoginForm extends StatelessWidget {
-  final double? width;
-  final double? height;
-
-  LoginForm({this.width, this.height});
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(color: Colors.black54.withOpacity(0.6)),
-        child: Center(
-          child: Container(
-            width: 300,
-            height: 220,
-            child: Column(
-              children: [
-              ],
-            ),
-          ),
-        ));
-  }
-}
-
 
 class FlutterFireUIWidget extends StatelessWidget {
   const FlutterFireUIWidget({
@@ -193,114 +176,52 @@ class FlutterFireUIWidget extends StatelessWidget {
       initialRoute: auth.currentUser == null ? '/' : '/profile',
       routes: {
         '/': (context) {
-          return Scaffold(
-              body: SafeArea(
-            child: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter:
-                          ColorFilter.mode(Colors.black54, BlendMode.darken),
-                      fit: BoxFit.cover,
-                      image: NetworkImage("assets/assets/images/team.jpg"))),
-              child: Container(
-            width: 1000,
-            height: 1000,
-            child: SignInScreen(
-                          actions: [
-                ForgotPasswordAction((context, email) {
-                  Navigator.pushNamed(
-                    context,
-                    '/forgot-password',
-                    arguments: {'email': email},
-                  );
-                }),
-                VerifyPhoneAction((context, _) {
-                  Navigator.pushNamed(context, '/phone');
-                }),
-                AuthStateChangeAction<SignedIn>((context, state) {
-                  Navigator.pushReplacementNamed(context, '/profile');
-                }),
-                EmailLinkSignInAction((context) {
-                  Navigator.pushReplacementNamed(context, '/email-link-sign-in');
-                }),
-                          ],
-                          headerBuilder: headerImage('assets/images/flutterfire_logo.png'),
-                          sideBuilder: sideImage('assets/images/flutterfire_logo.png'),
-                          subtitleBuilder: (context, action) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
+          return SignInScreen(
+            actions: [
+              ForgotPasswordAction((context, email) {
+                Navigator.pushNamed(
+                  context,
+                  '/forgot-password',
+                  arguments: {'email': email},
+                );
+              }),
+              VerifyPhoneAction((context, _) {
+                Navigator.pushNamed(context, '/phone');
+              }),
+              AuthStateChangeAction<SignedIn>((context, state) {
+                Navigator.pushReplacementNamed(context, '/profile');
+              }),
+              EmailLinkSignInAction((context) {
+                Navigator.pushReplacementNamed(context, '/email-link-sign-in');
+              }),
+            ],
+            headerBuilder: headerImage('assets/images/flutterfire_logo.png'),
+            sideBuilder: sideImage('assets/images/flutterfire_logo.png'),
+            subtitleBuilder: (context, action) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  action == AuthAction.signIn
+                      ? 'Welcome to FlutterFire UI! Please sign in to continue.'
+                      : 'Welcome to FlutterFire UI! Please create an account to continue',
+                ),
+              );
+            },
+            footerBuilder: (context, action) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16),
                   child: Text(
                     action == AuthAction.signIn
-                        ? 'Welcome to FlutterFire UI! Please sign in to continue.'
-                        : 'Welcome to FlutterFire UI! Please create an account to continue',
+                        ? 'By signing in, you agree to our terms and conditions.'
+                        : 'By registering, you agree to our terms and conditions.',
+                    style: const TextStyle(color: Colors.grey),
                   ),
-                );
-                          },
-                          footerBuilder: (context, action) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      action == AuthAction.signIn
-                          ? 'By signing in, you agree to our terms and conditions.'
-                          : 'By registering, you agree to our terms and conditions.',
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                );
-                          },
-                          providerConfigs: providerConfigs,
-                        ),
-              ),
-            ),
-          ));
-
-          // return SignInScreen(
-          //   actions: [
-          //     ForgotPasswordAction((context, email) {
-          //       Navigator.pushNamed(
-          //         context,
-          //         '/forgot-password',
-          //         arguments: {'email': email},
-          //       );
-          //     }),
-          //     VerifyPhoneAction((context, _) {
-          //       Navigator.pushNamed(context, '/phone');
-          //     }),
-          //     AuthStateChangeAction<SignedIn>((context, state) {
-          //       Navigator.pushReplacementNamed(context, '/profile');
-          //     }),
-          //     EmailLinkSignInAction((context) {
-          //       Navigator.pushReplacementNamed(context, '/email-link-sign-in');
-          //     }),
-          //   ],
-          //   headerBuilder: headerImage('assets/images/flutterfire_logo.png'),
-          //   sideBuilder: sideImage('assets/images/flutterfire_logo.png'),
-          //   subtitleBuilder: (context, action) {
-          //     return Padding(
-          //       padding: const EdgeInsets.only(bottom: 8),
-          //       child: Text(
-          //         action == AuthAction.signIn
-          //             ? 'Welcome to FlutterFire UI! Please sign in to continue.'
-          //             : 'Welcome to FlutterFire UI! Please create an account to continue',
-          //       ),
-          //     );
-          //   },
-          //   footerBuilder: (context, action) {
-          //     return Center(
-          //       child: Padding(
-          //         padding: const EdgeInsets.only(top: 16),
-          //         child: Text(
-          //           action == AuthAction.signIn
-          //               ? 'By signing in, you agree to our terms and conditions.'
-          //               : 'By registering, you agree to our terms and conditions.',
-          //           style: const TextStyle(color: Colors.grey),
-          //         ),
-          //       ),
-          //     );
-          //   },
-          //   providerConfigs: providerConfigs,
-          // );
+                ),
+              );
+            },
+            providerConfigs: providerConfigs,
+          );
         },
         '/phone': (context) {
           return PhoneInputScreen(

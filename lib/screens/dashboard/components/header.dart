@@ -179,7 +179,8 @@ class _HeaderIcons extends State<HeaderIcons> {
     return Row(
       children: [
         OwnAnimatedButton(
-          onTap: widget.tapSquare,
+          // onTap: widget.tapSquare,
+          onTap: () {},
           child: SvgPicture.asset('assets/icons/exclamation-square.svg',
               width: 15, height: 15, color: primaryColor),
         ),
@@ -189,7 +190,12 @@ class _HeaderIcons extends State<HeaderIcons> {
               width: 15, height: 15, color: primaryColor),
         ),
         OwnAnimatedButton(
-          onTap: widget.tapUser,
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              '/profile',
+            );
+          },
           child: SvgPicture.asset('assets/icons/user.svg',
               width: 15, height: 15, color: primaryColor),
         ),
