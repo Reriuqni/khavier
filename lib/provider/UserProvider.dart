@@ -40,7 +40,7 @@ class UserProvider extends ChangeNotifier {
   Future<UserCredential?> signInWithEmail(
       {required String email, required String password}) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       print('signInWidthEmail, userCredential:\n ' + userCredential.toString());
       return userCredential;

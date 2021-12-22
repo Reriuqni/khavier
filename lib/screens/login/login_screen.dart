@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:admin/constants.dart';
-import 'package:admin/provider/UserProvider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,13 +35,11 @@ class LoginForm extends StatelessWidget {
   final double? height;
   String email = '';
   String password = '';
-  late UserProvider userProvider;
 
   LoginForm({this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
-    userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Container(
         width: width,
@@ -102,11 +96,11 @@ class LoginForm extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await userProvider.signInWithEmail(
-                            email: email, password: password);
-                        if (userProvider.isSigned) {
-                          Navigator.pushNamed(context, "/main");
-                        }
+                        // await userProvider.signInWithEmail(
+                        //     email: email, password: password);
+                        // if (userProvider.isSigned) {
+                        //   Navigator.pushNamed(context, "/main");
+                        // }
                       },
                       child: Text(
                         'Login',
