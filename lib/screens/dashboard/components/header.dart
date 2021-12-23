@@ -91,6 +91,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                           ),
                           OwnAnimatedTextButton(
                             childText: 'MATTERS',
+                            fontSize: 18,
                             onPressed: () {
                               Navigator.pushNamed(context, '/main');
                             },

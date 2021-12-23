@@ -40,7 +40,7 @@ SideBuilder sideImage(String assetName) {
         // decoration: BoxDecoration(color: Colors.black54.withOpacity(0.6)),
         child: Center(
           child: Container(
-            // width: 300,
+            width: 400,
             // height: 220,
             child:Image.asset(assetName),))
         
