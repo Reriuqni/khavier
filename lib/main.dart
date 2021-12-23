@@ -19,11 +19,11 @@ import 'package:flutterfire_ui/i10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'config.dart';
-import 'decorations.dart';
-import 'init.dart'
-    if (dart.library.html) 'web_init.dart'
-    if (dart.library.io) 'io_init.dart';
+import 'auth/config.dart';
+import 'auth/decorations.dart';
+import 'auth/init.dart'
+    if (dart.library.html) 'auth/web_init.dart'
+    if (dart.library.io) 'auth/io_init.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
