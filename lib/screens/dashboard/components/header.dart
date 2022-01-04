@@ -90,8 +90,8 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                             height: 54,
                           ),
                           OwnAnimatedTextButton(
+                            fontSize: 20,
                             childText: 'MATTERS',
-                            fontSize: 18,
                             onPressed: () {
                               Navigator.pushNamed(context, '/main');
                             },

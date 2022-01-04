@@ -10,6 +10,7 @@ import 'package:admin/screens/notification/notification_screen.dart';
 import 'package:admin/screens/reports/reports_screen.dart';
 import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:admin/screens/ticket/add_ticket.dart';
+import 'package:admin/screens/login/my_profile.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -254,16 +255,17 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
         sideBuilder: sideIcon(Icons.sms_outlined),
       );
     },
-    '/profile': (context) {
-      return ProfileScreen(
-        providerConfigs: providerConfigs,
-        actions: [
-          SignedOutAction((context) {
-            Navigator.pushReplacementNamed(context, '/');
-          }),
-        ],
-      );
-    },
+    // '/profile': (context) {
+    //   return ProfileScreen(
+    //     providerConfigs: providerConfigs,
+    //     actions: [
+    //       SignedOutAction((context) {
+    //         Navigator.pushReplacementNamed(context, '/');
+    //       }),
+    //     ],
+    //   );
+    // },
+    '/profile': (context) => ProfilePage(),
     '/forgot-password': (context) {
       final arguments =
           ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
