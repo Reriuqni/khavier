@@ -200,12 +200,12 @@ class DrawerListSubTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  InkWell(
+    return Container(
+      padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+      child: InkWell(
         overlayColor: MaterialStateProperty.all(iconColor),
-          hoverColor: headerColor,
+          hoverColor: iconColor,
           onTap: press,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(25, 5, 0, 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

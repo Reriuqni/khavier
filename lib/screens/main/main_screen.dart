@@ -39,18 +39,21 @@ class _MainScreen extends State<MainScreen>
                       ? BoxFit.cover
                       : BoxFit.fitHeight,
                   image: NetworkImage("assets/assets/images/home.jpg"))),
-          child: OverflowBox(
-            maxWidth: MediaQuery.of(context).size.width,
-            minWidth: MediaQuery.of(context).size.width - 200,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (Responsive.isDesktop(context)) Header(),
-                if (!Responsive.isDesktop(context)) HeaderResponsive(),
-              ],
-            ),
-          )),
+          child:Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (Responsive.isDesktop(context))
+                    Header(),
+                  if (!Responsive.isDesktop(context))
+                    HeaderResponsive()
+                ],
+              ),
+            ]
+            )),
     );
   }
 }
