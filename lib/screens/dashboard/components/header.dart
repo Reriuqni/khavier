@@ -1,16 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants.dart';
 // import 'package:admin/provider/UserProvider.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 

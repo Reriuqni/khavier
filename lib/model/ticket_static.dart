@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:admin/utils.dart';
 
 class TicketField {

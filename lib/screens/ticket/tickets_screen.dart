@@ -7,7 +7,6 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
 import 'package:data_table_2/data_table_2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:admin/widgets/buttons.dart';
