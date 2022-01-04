@@ -26,16 +26,6 @@ Map<String, WidgetBuilder> getAdminRoutes(BuildContext context) {
     '/singin': (context) => PhoneScreen(),
     '/addticket': (context) => AddTicket(),
     '/editticket': (context) => AddTicket(),
-    // '/profile': (context) {
-    //   return ProfileScreen(
-    //     providerConfigs: providerConfigs,
-    //     actions: [
-    //       SignedOutAction((context) {
-    //         Navigator.pushReplacementNamed(context, '/');
-    //       }),
-    //     ],
-    //   );
-    // },
     '/profile': (context) => ProfilePage(),
   };
 }

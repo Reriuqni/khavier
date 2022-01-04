@@ -1,8 +1,7 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/provider/TicketsProvider.dart';
-import 'package:admin/routers/admin_routes.dart';
-import 'package:admin/routers/auth_routes.dart';
+import 'package:admin/routes/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/i10n.dart';
@@ -106,19 +105,6 @@ ThemeData getThemeData(BuildContext context) {
   );
 }
 
-enum RoutesType {
-  AUTH,
-  ADMIN,
-}
 
-Map<String, WidgetBuilder> getRoutes(
-    BuildContext context, RoutesType routesType) {
-  switch (routesType) {
-    case RoutesType.AUTH:
-      return getAuthRoutes(context);
-    case RoutesType.ADMIN:
-      return getAdminRoutes(context);
-    default:
-      return throw 'Unsupported routes type: $routesType';
-  }
-}
+
+
