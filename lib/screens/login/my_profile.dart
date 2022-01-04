@@ -1,6 +1,9 @@
+import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/auth.dart';
 import '../dashboard/components/header.dart';
 import 'package:admin/constants.dart';
 import 'package:admin/responsive.dart';
@@ -32,7 +35,7 @@ class _ProfilePage extends State<ProfilePage>
     super.initState();
     _tabController = TabController(
       initialIndex: 0,
-      length: 3,
+      length: 4,
       vsync: this,
     );
     _tabController!.addListener(() {
@@ -53,7 +56,7 @@ class _ProfilePage extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['Info', 'Contact', 'Other'];
+    final tabs = ['Info', 'Contact', 'Other', 'Firebase'];
 
     return SafeArea(
       child: Container(
@@ -103,10 +106,11 @@ class _ProfilePage extends State<ProfilePage>
                         InfoTab(),
                         ContactTab(),
                         Column(children: [
-                          rowItem(
+                          RowItem(
                             label: 'Liquidator #',
                           )
-                        ])
+                        ]),
+                        FirebaseTab(),
                       ],
                     ),
                   )),
@@ -124,11 +128,11 @@ class _ProfilePage extends State<ProfilePage>
   }
 }
 
-class rowItem extends StatelessWidget {
+class RowItem extends StatelessWidget {
   final String text;
   final String label;
   final Widget widget;
-  rowItem(
+  RowItem(
       {this.text = '', this.label = 'Default', this.widget = const Text('')});
 
   @override
@@ -179,18 +183,18 @@ class InfoTab extends StatelessWidget {
         child: Container(
       child: Column(
         children: [
-          rowItem(text: 'Site:'),
-          rowItem(text: 'Access Level:'),
-          rowItem(text: 'User ID:'),
-          rowItem(text: '* First Name:'),
-          rowItem(text: '* Last Name:'),
-          rowItem(
+          RowItem(text: 'Site:'),
+          RowItem(text: 'Access Level:'),
+          RowItem(text: 'User ID:'),
+          RowItem(text: '* First Name:'),
+          RowItem(text: '* Last Name:'),
+          RowItem(
             text: '* Password:',
           ),
-          rowItem(
+          RowItem(
               text: '* Confirm Password:',
               widget: OwnButton(onPressed: () {}, label: 'Generate')),
-          rowItem(
+          RowItem(
               text: '* Preferred OTP',
               widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
         ],
@@ -208,16 +212,30 @@ class ContactTab extends StatelessWidget {
         child: Container(
       child: Column(
         children: [
-          rowItem(label: 'Email'),
-          rowItem(label: 'Mobile'),
-          rowItem(label: 'Street Address 1'),
-          rowItem(label: 'Street Address 2'),
-          rowItem(label: 'City'),
-          rowItem(label: 'State'),
-          rowItem(label: 'PostCode'),
-          rowItem(label: 'Country'),
+          RowItem(label: 'Email'),
+          RowItem(label: 'Mobile'),
+          RowItem(label: 'Street Address 1'),
+          RowItem(label: 'Street Address 2'),
+          RowItem(label: 'City'),
+          RowItem(label: 'State'),
+          RowItem(label: 'PostCode'),
+          RowItem(label: 'Country'),
         ],
       ),
     ));
   }
+}
+
+class FirebaseTab extends StatelessWidget {
+  FirebaseTab();
+
+  @override
+  Widget build(BuildContext context) => ProfileScreen(
+        providerConfigs: providerConfigs,
+        actions: [
+          SignedOutAction((context) {
+            Navigator.pushReplacementNamed(context, '/');
+          }),
+        ],
+      );
 }
