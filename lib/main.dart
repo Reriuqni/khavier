@@ -1,11 +1,9 @@
-import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/create_app.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/i10n.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/init.dart'
@@ -35,7 +33,7 @@ class AuthenticationGate extends StatelessWidget {
 
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
-          return CreateMaterialApp(auth: auth, routesType: RoutesType.AUTH);
+          return CreateApp(auth: auth, routesType: RoutesType.AUTH);
         }
 
         return MultiProvider(
@@ -45,66 +43,9 @@ class AuthenticationGate extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (context) => TicketsProvider()),
           ],
-          child: CreateMaterialApp(auth: auth, routesType: RoutesType.ADMIN),
+          child: CreateApp(auth: auth, routesType: RoutesType.ADMIN),
         ); // show your app’s home page after login
       },
     );
   }
 }
-
-class CreateMaterialApp extends StatelessWidget {
-  const CreateMaterialApp({
-    Key? key,
-    required this.auth,
-    required this.routesType,
-  }) : super(key: key);
-
-  final FirebaseAuth auth;
-  final RoutesType routesType;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Solve',
-      debugShowCheckedModeBanner: false,
-      theme: getThemeData(context),
-      // initialRoute: auth.currentUser == null ? '/' : '/profile',
-      initialRoute: '/',
-      routes: getRoutes(context, routesType),
-      locale: const Locale('au'),
-      localizationsDelegates: [
-        FlutterFireUILocalizations.withDefaultOverrides(const LabelOverrides()),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        FlutterFireUILocalizations.delegate,
-      ],
-    );
-  }
-}
-
-// Overrides a label for en locale
-// To add localization for a custom language follow the guide here:
-// https://flutter.dev/docs/development/accessibility-and-localization/internationalization#an-alternative-class-for-the-apps-localized-resources
-class LabelOverrides extends DefaultLocalizations {
-  const LabelOverrides();
-
-  @override
-  String get emailInputLabel => 'Enter your email';
-}
-
-ThemeData getThemeData(BuildContext context) {
-  return ThemeData(
-    brightness: Brightness.light,
-    visualDensity: VisualDensity.standard,
-    inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(),
-    ),
-    textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
-        .apply(bodyColor: Colors.black),
-    canvasColor: primaryColor,
-  );
-}
-
-
-
-
