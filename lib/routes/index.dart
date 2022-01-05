@@ -8,12 +8,15 @@ import 'package:flutter/material.dart';
 import 'admin_routes.dart';
 import 'auth_routes.dart';
 
+///  Get routes according to role (rights) of user.
+///  * [getAuthRoutes], authentification routes | login`s routes.
+///  * [getAdminRoutes], administrator routes.
 Map<String, WidgetBuilder> getRoutes(
-    BuildContext context, RoutesType routesType) {
+    BuildContext context, Role routesType) {
   switch (routesType) {
-    case RoutesType.AUTH:
+    case Role.AUTH:
       return getAuthRoutes(context);
-    case RoutesType.ADMIN:
+    case Role.ADMIN:
       return getAdminRoutes(context);
     default:
       return throw 'Unsupported routes type: $routesType';

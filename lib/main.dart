@@ -33,9 +33,10 @@ class AuthenticationGate extends StatelessWidget {
 
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
-          return CreateApp(auth: auth, routesType: RoutesType.AUTH);
+          return CreateApp(auth: auth, routesType: Role.AUTH);
         }
 
+        // show app’s home page after login
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -43,8 +44,8 @@ class AuthenticationGate extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (context) => TicketsProvider()),
           ],
-          child: CreateApp(auth: auth, routesType: RoutesType.ADMIN),
-        ); // show your app’s home page after login
+          child: CreateApp(auth: auth, routesType: Role.ADMIN),
+        );
       },
     );
   }

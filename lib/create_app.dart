@@ -12,7 +12,7 @@ class CreateApp extends StatelessWidget {
   }) : super(key: key);
 
   final FirebaseAuth auth;
-  final RoutesType routesType;
+  final Role routesType;
 
   @override
   Widget build(BuildContext context) {
