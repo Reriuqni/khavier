@@ -1,6 +1,6 @@
 // import 'dart:js';
 
-import 'package:admin/constants.dart';
+import 'package:admin/constants/colors.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';

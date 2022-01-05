@@ -33,7 +33,7 @@ class AuthenticationGate extends StatelessWidget {
 
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
-          return CreateApp(auth: auth, routesType: Role.AUTH);
+          return CreateApp(auth: auth, routesType: Roles.AUTH);
         }
 
         // show app’s home page after login
@@ -44,7 +44,7 @@ class AuthenticationGate extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (context) => TicketsProvider()),
           ],
-          child: CreateApp(auth: auth, routesType: Role.ADMIN),
+          child: CreateApp(auth: auth, routesType: Roles.ADMIN),
         );
       },
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
-import '../../../constants.dart';
+import '../../../constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 double _widthBurger = 0;
@@ -21,8 +21,16 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
 
   @override
   void initState() {
+    super.initState();
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    // DO YOUR STUFF
+  }
+
+  @override
+  void dispose() {
+    // DO YOUR STUFF
+    super.dispose();
   }
 
   void tapBurger() {
@@ -73,8 +81,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                                     icon: AnimatedIcons.menu_close,
                                     progress: controller,
                                     size: 25,
-                                    color: primaryColor
-                                    ),
+                                    color: primaryColor),
                               ),
                               SizedBox(
                                 width: 10,

@@ -1,6 +1,6 @@
 
 /// Type of rights
-enum Role {
+enum Roles {
   AUTH,
   ADMIN,
 }

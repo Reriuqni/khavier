@@ -1,11 +1,10 @@
 import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import '../dashboard/components/header.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/headerResponsive.dart';
 

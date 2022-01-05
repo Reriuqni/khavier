@@ -1,7 +1,8 @@
+import 'package:admin/constants/measurements.dart';
 import 'package:admin/model/ticket.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../constants/colors.dart';
 
 class RecenttTickets extends StatelessWidget {
   const RecenttTickets({

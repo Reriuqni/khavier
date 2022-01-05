@@ -1,3 +1,4 @@
+import 'package:admin/constants/texts.dart';
 import 'package:admin/routes/index.dart';
 import 'package:admin/themes/default.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,12 +13,12 @@ class CreateApp extends StatelessWidget {
   }) : super(key: key);
 
   final FirebaseAuth auth;
-  final Role routesType;
+  final Roles routesType;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Solve',
+      title: PROJECT_NAME,
       debugShowCheckedModeBanner: false,
       theme: getDefaultTheme(context),
       // initialRoute: auth.currentUser == null ? '/' : '/profile',

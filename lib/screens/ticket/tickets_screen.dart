@@ -1,5 +1,5 @@
 import 'package:admin/api/firebase_api.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/constants/measurements.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';

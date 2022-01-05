@@ -1,5 +1,6 @@
 import 'package:admin/auth/decorations.dart';
 import 'package:admin/auth/provider_configs.dart';
+import 'package:admin/constants/texts.dart';
 import 'package:admin/screens/login/my_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -33,8 +34,8 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               action == AuthAction.signIn
-                  ? 'Welcome to My Solve! Please sign in to continue.'
-                  : 'Welcome to My Solve! Please create an account to continue',
+                  ? 'Welcome to $PROJECT_NAME! Please sign in to continue.'
+                  : 'Welcome to $PROJECT_NAME! Please create an account to continue',
             ),
           );
         },

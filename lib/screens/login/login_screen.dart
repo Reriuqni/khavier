@@ -1,6 +1,5 @@
-import 'package:admin/constants.dart';
+import 'package:admin/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,8 +7,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,20 +27,26 @@ class LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class LoginForm extends StatelessWidget {
-  final double? width;
-  final double? height;
-  String email = '';
-  String password = '';
+class LoginForm extends StatefulWidget {
+  final double width;
+  final double height;
 
-  LoginForm({this.width, this.height});
+  LoginForm({required this.width, required this.height});
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  String email = '';
+
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-        width: width,
-        height: height,
+        width: widget.width,
+        height: widget.height,
         decoration: BoxDecoration(color: Colors.black54.withOpacity(0.6)),
         child: Center(
           child: Container(

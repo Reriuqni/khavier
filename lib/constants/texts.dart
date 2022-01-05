@@ -1,0 +1,1 @@
+const PROJECT_NAME = 'My Solve';

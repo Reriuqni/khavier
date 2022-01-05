@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../dashboard/components/header.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/constants/colors.dart';
 
 class TicketPage extends StatefulWidget {
   const TicketPage({Key? key}) : super(key: key);
