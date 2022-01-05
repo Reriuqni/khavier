@@ -3,4 +3,5 @@
 enum Roles {
   AUTH,
   ADMIN,
+  MANAGER,
 }

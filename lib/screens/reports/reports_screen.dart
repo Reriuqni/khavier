@@ -2,6 +2,7 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/constants/measurements.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/main/components/manager_menu.dart';
 import 'package:admin/widgets/scaffold.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:admin/widgets/buttons.dart';
@@ -42,7 +43,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Expanded(
                 // default flex = 1
                 // and it takes 1/6 part of the screen
-                child: SideMenu(),
+                // child: SideMenu(),
+                child: ManagerMenu(),
               ),
             Expanded(
               // It takes 5/6 part of the screen

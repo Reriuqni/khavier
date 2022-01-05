@@ -2,6 +2,7 @@ import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/create_app.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,12 @@ class AuthenticationGate extends StatelessWidget {
 
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
-          return CreateApp(auth: auth, routesType: Roles.AUTH);
+          return CreateApp(auth: auth, userRole: Roles.AUTH);
+        }
+
+        Roles userRole = Roles.ADMIN;
+        if (auth.currentUser?.email == 'manager@mysolve.com') {
+          userRole = Roles.MANAGER;
         }
 
         // show app’s home page after login
@@ -44,7 +50,7 @@ class AuthenticationGate extends StatelessWidget {
             ),
             ChangeNotifierProvider(create: (context) => TicketsProvider()),
           ],
-          child: CreateApp(auth: auth, routesType: Roles.ADMIN),
+          child: CreateApp(auth: auth, userRole: userRole),
         );
       },
     );

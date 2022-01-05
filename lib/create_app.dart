@@ -9,11 +9,11 @@ class CreateApp extends StatelessWidget {
   const CreateApp({
     Key? key,
     required this.auth,
-    required this.routesType,
+    required this.userRole,
   }) : super(key: key);
 
   final FirebaseAuth auth;
-  final Roles routesType;
+  final Roles userRole;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CreateApp extends StatelessWidget {
       theme: getDefaultTheme(context),
       // initialRoute: auth.currentUser == null ? '/' : '/profile',
       initialRoute: '/',
-      routes: getRoutes(context, routesType),
+      routes: getRoutes(context, userRole),
       locale: const Locale('au'),
       localizationsDelegates: [
         FlutterFireUILocalizations.withDefaultOverrides(const LabelOverrides()),
