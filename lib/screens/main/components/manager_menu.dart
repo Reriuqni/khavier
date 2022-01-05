@@ -34,54 +34,63 @@ class ManagerMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Alerts & Reports",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () {
-              Navigator.pushNamed(context, '/reports');
-            },
-          ),
-          DrawerListTile(
-            title: "Ticket system",
-            svgSrc: "assets/icons/menu_task.svg",
-            press: () {
-              Navigator.pushNamed(context, '/tickets');
-            },
-          ),
-          DrawerListTile(
-            title: "Matters",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () {
-              Navigator.pushNamed(context, '/matters');
-            },
-          ),
-          DrawerListTile(
-            title: "Chat",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {
-              Navigator.pushNamed(context, '/chat');
-            },
-          ),
-          DrawerListTile(
-            title: "Notification",
-            svgSrc: "assets/icons/menu_notification.svg",
-            press: () {
-              Navigator.pushNamed(context, '/notification');
-            },
-          ),
-          DrawerListTile(
-            title: "System Settings",
+            title: "Profile",
             svgSrc: "assets/icons/menu_setting.svg",
             press: () {
-              Navigator.pushNamed(context, '/settings');
+              Navigator.pushNamed(context, '/profile');
             },
           ),
-          DrawerListTile(
-            title: "My Account",
-            svgSrc: "assets/icons/menu_profile.svg",
-            press: () {
-              Navigator.pushNamed(context, '/myaccount');
-            },
-          ),          
+
+
+          // DrawerListTile(
+          //   title: "Alerts & Reports",
+          //   svgSrc: "assets/icons/menu_tran.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/reports');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "Ticket system",
+          //   svgSrc: "assets/icons/menu_task.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/tickets');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "Matters",
+          //   svgSrc: "assets/icons/menu_doc.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/matters');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "Chat",
+          //   svgSrc: "assets/icons/menu_store.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/chat');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "Notification",
+          //   svgSrc: "assets/icons/menu_notification.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/notification');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "System Settings",
+          //   svgSrc: "assets/icons/menu_setting.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/settings');
+          //   },
+          // ),
+          // DrawerListTile(
+          //   title: "My Account",
+          //   svgSrc: "assets/icons/menu_profile.svg",
+          //   press: () {
+          //     Navigator.pushNamed(context, '/myaccount');
+          //   },
+          // ),          
         ],
       ),
     );
