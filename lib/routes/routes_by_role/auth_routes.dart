@@ -1,6 +1,7 @@
 import 'package:admin/auth/decorations.dart';
 import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/constants/texts.dart';
+import 'package:admin/routes/custom_auth/custom_phone_input_screen.dart';
 import 'package:admin/screens/login/my_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -56,7 +57,7 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
       );
     },
     '/phone': (context) {
-      return PhoneInputScreen(
+      return CustomPhoneInputScreen(
         actions: [
           SMSCodeRequestedAction((context, action, flowKey, phone) {
             Navigator.of(context).pushReplacementNamed(
@@ -113,3 +114,5 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
     },
   };
 }
+
+

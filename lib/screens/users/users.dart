@@ -1,6 +1,5 @@
 import 'package:admin/api/firebase_api.dart';
 import 'package:admin/constants/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
