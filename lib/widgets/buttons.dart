@@ -11,11 +11,11 @@ class OwnButton extends StatelessWidget{
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: TextButton.styleFrom(
-          backgroundColor: primaryColor,
-          padding: EdgeInsets.all(defaultPadding),
+          backgroundColor: secondaryColor,
+          padding: EdgeInsets.all(5),
         ),
         onPressed: onPressed,
-        child: Text(label!, style: TextStyle(color: iconColor),),
+        child: Text(label!, style: TextStyle(color: primaryColor),),
 
     );
   }
@@ -32,12 +32,12 @@ class OwnButtonWithICon extends StatelessWidget{
     return ElevatedButton.icon(
 
         style: TextButton.styleFrom(
-          backgroundColor: primaryColor,
-          padding: EdgeInsets.all(defaultPadding),
+          backgroundColor: secondaryColor,
+          padding: EdgeInsets.all(5),
         ),
         onPressed: onPressed,
-        icon: Icon(icon, color: iconColor,),
-        label: Text(label!, style: TextStyle(color: iconColor),)
+        icon: Icon(icon, color: primaryColor,),
+        label: Text(label!, style: TextStyle(color: primaryColor),)
 
     );
   }
@@ -50,12 +50,14 @@ class OwnButtonICon extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        splashRadius: 25,
+    return Material(
+      child: IconButton(
+        splashRadius: 20,
         color: iconColor,
         hoverColor: secondaryColor,
         onPressed: onPressed,
         icon: Icon(icon)
+    ),
     );
   }
 }
@@ -73,7 +75,7 @@ class OwnTextButton extends StatelessWidget{
           padding: MaterialStateProperty.all(EdgeInsets.all(10)),
           overlayColor: MaterialStateProperty.all(secondaryColor)
         ),
-        child: Text(label!, style: TextStyle(color: iconColor, fontSize: 16),),
+        child: Text(label!, style: TextStyle(color: primaryColor, fontSize: 16),),
     );
   }
 }

@@ -8,54 +8,16 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/headerResponsive.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class NewUserPage extends StatefulWidget {
+  const NewUserPage({Key? key}) : super(key: key);
   @override
-  _ProfilePage createState() => _ProfilePage();
+  _NewUserPage createState() => _NewUserPage();
 }
 
-class _ProfilePage extends State<ProfilePage>
-    with SingleTickerProviderStateMixin, RestorationMixin {
-  TabController? _tabController;
-
-  final RestorableInt tabIndex = RestorableInt(0);
-
-  @override
-  String get restorationId => 'tab_non_scrollable_demo';
-
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(tabIndex, 'tab_index');
-    _tabController!.index = tabIndex.value;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      initialIndex: 0,
-      length: 4,
-      vsync: this,
-    );
-    _tabController!.addListener(() {
-      // When the tab controller's value is updated, make sure to update the
-      // tab index value, which is state restorable.
-      setState(() {
-        tabIndex.value = _tabController!.index;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController!.dispose();
-    tabIndex.dispose();
-    super.dispose();
-  }
+class _NewUserPage extends State<NewUserPage> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['Info', 'Contact', 'Other', 'Firebase'];
 
     return SafeArea(
       child: Container(
@@ -63,7 +25,7 @@ class _ProfilePage extends State<ProfilePage>
               color: Colors.black,
               image: DecorationImage(
                   colorFilter:
-                      ColorFilter.mode(Colors.black45, BlendMode.dstATop),
+                  ColorFilter.mode(Colors.black45, BlendMode.dstATop),
                   alignment: Responsive.isDesktop(context)
                       ? Alignment.topCenter
                       : Alignment.center,
@@ -84,7 +46,7 @@ class _ProfilePage extends State<ProfilePage>
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('My Profile'),
+                          Text('New User'),
                           Row(
                             children: [
                               OwnButton(onPressed: () {}, label: 'Save')
@@ -92,27 +54,14 @@ class _ProfilePage extends State<ProfilePage>
                           )
                         ],
                       ),
-                      bottom: TabBar(
-                        controller: _tabController,
-                        tabs: [
-                          for (final tab in tabs) Tab(text: tab),
-                        ],
-                      ),
                     ),
-                    body: TabBarView(
-                      controller: _tabController,
+                    body: Column(
                       children: [
-                        InfoTab(),
-                        ContactTab(),
-                        Column(children: [
-                          RowItem(
-                            label: 'Liquidator #',
-                          )
-                        ]),
-                        FirebaseTab(),
+
                       ],
-                    ),
-                  )),
+                    )
+                  )
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,6 +97,7 @@ class RowItem extends StatelessWidget {
               text,
               textAlign: TextAlign.end,
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -179,25 +129,25 @@ class InfoTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-      child: Column(
-        children: [
-          RowItem(text: 'Site:'),
-          RowItem(text: 'Access Level:'),
-          RowItem(text: 'User ID:'),
-          RowItem(text: '* First Name:'),
-          RowItem(text: '* Last Name:'),
-          RowItem(
-            text: '* Password:',
+          child: Column(
+            children: [
+              RowItem(text: 'Site:'),
+              RowItem(text: 'Access Level:'),
+              RowItem(text: 'User ID:'),
+              RowItem(text: '* First Name:'),
+              RowItem(text: '* Last Name:'),
+              RowItem(
+                text: '* Password:',
+              ),
+              RowItem(
+                  text: '* Confirm Password:',
+                  widget: OwnButton(onPressed: () {}, label: 'Generate')),
+              RowItem(
+                  text: '* Preferred OTP',
+                  widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
+            ],
           ),
-          RowItem(
-              text: '* Confirm Password:',
-              widget: OwnButton(onPressed: () {}, label: 'Generate')),
-          RowItem(
-              text: '* Preferred OTP',
-              widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -208,19 +158,19 @@ class ContactTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-      child: Column(
-        children: [
-          RowItem(label: 'Email'),
-          RowItem(label: 'Mobile'),
-          RowItem(label: 'Street Address 1'),
-          RowItem(label: 'Street Address 2'),
-          RowItem(label: 'City'),
-          RowItem(label: 'State'),
-          RowItem(label: 'PostCode'),
-          RowItem(label: 'Country'),
-        ],
-      ),
-    ));
+          child: Column(
+            children: [
+              RowItem(label: 'Email'),
+              RowItem(label: 'Mobile'),
+              RowItem(label: 'Street Address 1'),
+              RowItem(label: 'Street Address 2'),
+              RowItem(label: 'City'),
+              RowItem(label: 'State'),
+              RowItem(label: 'PostCode'),
+              RowItem(label: 'Country'),
+            ],
+          ),
+        ));
   }
 }
 
@@ -229,11 +179,11 @@ class FirebaseTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ProfileScreen(
-        providerConfigs: providerConfigs,
-        actions: [
-          SignedOutAction((context) {
-            Navigator.pushReplacementNamed(context, '/');
-          }),
-        ],
-      );
+    providerConfigs: providerConfigs,
+    actions: [
+      SignedOutAction((context) {
+        Navigator.pushReplacementNamed(context, '/');
+      }),
+    ],
+  );
 }

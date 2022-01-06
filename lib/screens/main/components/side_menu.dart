@@ -51,7 +51,9 @@ class SideMenu extends StatelessWidget {
             DrawerListSubTile(
                 title: 'Users',
                 subTitle: 'Manage your users',
-                press: (){}),
+                press: (){
+                  Navigator.pushNamed(context, '/users');
+                }),
             DrawerListSubTile(
                 title: 'Tags',
                 subTitle: 'Manage tags for system customization',
