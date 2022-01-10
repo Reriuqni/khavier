@@ -72,6 +72,7 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
         ],
         headerBuilder: headerIcon(Icons.phone),
         sideBuilder: sideIcon(Icons.phone),
+        countryCode: 'AU',
       );
     },
     '/sms': (context) {

@@ -27,6 +27,7 @@ class CustomPhoneInputScreen extends StatelessWidget {
   final double? headerMaxExtent;
   final SideBuilder? sideBuilder;
   final TextDirection? desktopLayoutDirection;
+  final String? countryCode;
 
   const CustomPhoneInputScreen({
     Key? key,
@@ -39,6 +40,7 @@ class CustomPhoneInputScreen extends StatelessWidget {
     this.headerMaxExtent,
     this.sideBuilder,
     this.desktopLayoutDirection,
+    this.countryCode,
   }) : super(key: key);
 
   void _next(BuildContext context, AuthAction? action, Object flowKey, _) {
@@ -80,6 +82,7 @@ class CustomPhoneInputScreen extends StatelessWidget {
                   subtitleBuilder: subtitleBuilder,
                   footerBuilder: footerBuilder,
                   flowKey: flowKey,
+                  countryCode: countryCode,
                 ),
                 UniversalButton(
                   text: l.goBackButtonLabel,

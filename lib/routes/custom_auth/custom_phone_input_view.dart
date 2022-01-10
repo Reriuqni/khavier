@@ -7,7 +7,6 @@ import 'package:flutterfire_ui/i10n.dart';
 import 'package:flutterfire_ui/src/auth/widgets/internal/universal_button.dart';
 import 'package:flutterfire_ui/src/auth/widgets/internal/title.dart';
 
-
 typedef SMSCodeRequestedCallback = void Function(
   BuildContext context,
   AuthAction? action,
@@ -25,6 +24,7 @@ class CustomPhoneInputView extends StatefulWidget {
   final PhoneNumberSubmitCallback? onSubmit;
   final WidgetBuilder? subtitleBuilder;
   final WidgetBuilder? footerBuilder;
+  final String? countryCode;
 
   const CustomPhoneInputView({
     Key? key,
@@ -35,6 +35,7 @@ class CustomPhoneInputView extends StatefulWidget {
     this.onSubmit,
     this.subtitleBuilder,
     this.footerBuilder,
+    this.countryCode,
   }) : super(key: key);
 
   @override
@@ -63,8 +64,9 @@ class _CustomPhoneInputViewState extends State<CustomPhoneInputView> {
   @override
   Widget build(BuildContext context) {
     final l = FlutterFireUILocalizations.labelsOf(context);
-    // final countryCode = Localizations.localeOf(context).countryCode;
-    final countryCode = 'AU';
+    final _countryCode = (widget.countryCode != null)
+        ? widget.countryCode
+        : Localizations.localeOf(context).countryCode;
 
     return AuthFlowBuilder<PhoneAuthController>(
       flowKey: widget.flowKey,
@@ -95,7 +97,7 @@ class _CustomPhoneInputViewState extends State<CustomPhoneInputView> {
               widget.subtitleBuilder!(context),
             if (state is AwaitingPhoneNumber || state is SMSCodeRequested) ...[
               PhoneInput(
-                initialCountryCode: countryCode!,
+                initialCountryCode: _countryCode!,
                 onSubmit: onSubmit(ctrl),
                 key: phoneInputKey,
               ),
