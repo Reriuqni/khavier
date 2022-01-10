@@ -86,10 +86,20 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                               SizedBox(
                                 width: 10,
                               ),
-                              Image.asset(
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  shadowColor: MaterialStateProperty.all(Colors.transparent),
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/');
+                                },
+                                child: Image.asset(
                                 'assets/images/logo2.png',
-                                width: 250,
+                                  width: 210,
                                 height: 50,
+                                ),
                               ),
                             ],
                           ),

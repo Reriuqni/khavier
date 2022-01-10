@@ -81,8 +81,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             onPressed: () async {
                               Navigator.pushNamed(
                                 context,
-                                '/addUser',
-                                arguments: ScreenArguments(),
+                                '/profile',
+                                arguments: 'newUser',
                               );
                             },
                             icon: Icons.add,

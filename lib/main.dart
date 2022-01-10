@@ -2,7 +2,7 @@ import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/create_app.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +42,8 @@ class AuthenticationGate extends StatelessWidget {
           userRole = Roles.MANAGER;
         }
 
+        // getRole(id: '115885384621082789849');
+
         // show app’s home page after login
         return MultiProvider(
           providers: [
@@ -55,4 +57,9 @@ class AuthenticationGate extends StatelessWidget {
       },
     );
   }
+
+  /// {@id description:Firebase authentication user 'id'.}
+  // Future getRole({required String id}) async {
+  //   final docUser = FirebaseFirestore.instance.collection('users').doc(id);
+  // }
 }

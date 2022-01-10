@@ -1,12 +1,15 @@
 import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import '../dashboard/components/header.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/headerResponsive.dart';
+
+dynamic args;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -56,6 +59,7 @@ class _ProfilePage extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     final tabs = ['Info', 'Contact', 'Other', 'Firebase'];
+    args = ModalRoute.of(context)!.settings.arguments;
 
     return SafeArea(
       child: Container(
@@ -84,10 +88,15 @@ class _ProfilePage extends State<ProfilePage>
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          if (args == 'newUser')
+                            Text('New User'),
+                          if(args != 'newUser')
                           Text('My Profile'),
                           Row(
                             children: [
-                              OwnButton(onPressed: () {}, label: 'Save')
+                              OwnButton(onPressed: () {
+                                print(args);
+                              }, label: 'Save')
                             ],
                           )
                         ],
@@ -102,13 +111,23 @@ class _ProfilePage extends State<ProfilePage>
                     body: TabBarView(
                       controller: _tabController,
                       children: [
-                        InfoTab(),
-                        ContactTab(),
-                        Column(children: [
-                          RowItem(
-                            label: 'Liquidator #',
+                        Center(
+                          child: InfoTab(),
+                        ),
+                        Center(
+                          child: ContactTab(),
+                        ),
+                        TabsMainContainer(
+                            children: [
+                              Wrap(
+                                children: [
+                                  if(args == 'newUser')
+                                    RowItem(text: 'Tags:'),
+                                  RowItem(label: 'Liquidator #'),
+                                ],
                           )
-                        ]),
+                            ],
+                        ),
                         FirebaseTab(),
                       ],
                     ),
@@ -127,6 +146,24 @@ class _ProfilePage extends State<ProfilePage>
   }
 }
 
+class TabsMainContainer extends StatelessWidget{
+  final List<Widget> children;
+  TabsMainContainer({this.children = const []});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        child: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+            children: children
+          ),
+        )
+    );
+  }
+}
+
 class RowItem extends StatelessWidget {
   final String text;
   final String label;
@@ -139,10 +176,12 @@ class RowItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.end,
+        children: [
+          Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
             width: 300,
             child: Text(
               text,
@@ -160,9 +199,12 @@ class RowItem extends StatelessWidget {
               labelText: label,
             ),
           ),
+
+            ],
+          ),
           Container(
               padding: EdgeInsets.all(5),
-              width: 175,
+              width: widget == const Text('') ? 0  : 175,
               child: Container(
                 child: widget,
               ))
@@ -177,27 +219,49 @@ class InfoTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Container(
-      child: Column(
+    return TabsMainContainer(
+      children: [
+        if(args == 'newUser')
+          Wrap(
+            children: [
+              RowItem(text: '* Organization:'),
+              RowItem(text: '*  Account Type:'),
+            ],
+          ),
+        Wrap(
         children: [
           RowItem(text: 'Site:'),
           RowItem(text: 'Access Level:'),
+          ],
+        ),
           RowItem(text: 'User ID:'),
+        Wrap(
+          children: [
           RowItem(text: '* First Name:'),
           RowItem(text: '* Last Name:'),
+          ],
+        ),
+        Wrap(
+          children: [
           RowItem(
             text: '* Password:',
           ),
           RowItem(
               text: '* Confirm Password:',
               widget: OwnButton(onPressed: () {}, label: 'Generate')),
+          ],
+        ),
+        Wrap(
+          children: [
           RowItem(
               text: '* Preferred OTP',
               widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
+            if(args == 'newUser')
+              RowItem(text: 'Language:'),
         ],
       ),
-    ));
+      ],
+    );
   }
 }
 
@@ -206,21 +270,38 @@ class ContactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Container(
-      child: Column(
+    return TabsMainContainer(
+      children: [
+        Wrap(
         children: [
           RowItem(label: 'Email'),
           RowItem(label: 'Mobile'),
+          ],
+        ),
+        Wrap(
+          children: [
           RowItem(label: 'Street Address 1'),
           RowItem(label: 'Street Address 2'),
+          ],
+        ),
+        Wrap(
+          children: [
           RowItem(label: 'City'),
           RowItem(label: 'State'),
+
+          ],
+        ),
+        Wrap(
+          children: [
           RowItem(label: 'PostCode'),
           RowItem(label: 'Country'),
         ],
       ),
-    ));
+        if(args == 'newUser')
+          RowItem(text: 'Time Zone:'),
+
+      ],
+    );
   }
 }
 

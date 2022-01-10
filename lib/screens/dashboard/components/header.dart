@@ -79,10 +79,20 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset(
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              shadowColor: MaterialStateProperty.all(Colors.transparent),
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/');
+                            },
+                            child: Image.asset(
                             'assets/images/logo2.png',
                             width: 280,
                             height: 54,
+                            ),
                           ),
                           OwnAnimatedTextButton(
                             fontSize: 20,
