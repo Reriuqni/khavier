@@ -16,6 +16,8 @@ typedef SMSCodeRequestedCallback = void Function(
 
 typedef PhoneNumberSubmitCallback = void Function(String phoneNumber);
 
+/// flutterfire_ui: ^0.3.0 does not support localization so that the country code of the soaking phone number can be set.
+/// Thats way we needed override library`s code 'PhoneInputView' by add param 'countryCode'
 class CustomPhoneInputView extends StatefulWidget {
   final FirebaseAuth? auth;
   final AuthAction? action;
