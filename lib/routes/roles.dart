@@ -1,7 +1,8 @@
 
 /// Type of rights
 enum Roles {
-  AUTH,
+  AUTH,       // User is not signed in - show a sign-in screen
   ADMIN,
   MANAGER,
+  USER,
 }

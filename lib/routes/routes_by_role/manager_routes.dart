@@ -11,6 +11,7 @@ import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:admin/screens/ticket/add_ticket.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
@@ -29,7 +30,15 @@ Map<String, WidgetBuilder> getManagerRoutes(BuildContext context) {
     '/addticket': (context) => AddTicket(),
     '/editticket': (context) => AddTicket(),
     // '/profile': (context) => ProfilePage(),
+    // '/profile': (context) => MyAccountScreen(),
     '/profile': (context) {
+      // FirebaseAuth.instance.signOut();
+      // Navigator.pushReplacementNamed(context, '/');
+
+      // return SizedBox.shrink();
+
+      // return AuthExit();
+
       return ProfileScreen(
         providerConfigs: providerConfigs,
         actions: [
@@ -41,3 +50,14 @@ Map<String, WidgetBuilder> getManagerRoutes(BuildContext context) {
     },
   };
 }
+
+
+// class AuthExit extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       // initialRoute: auth.currentUser == null ? '/' : '/profile',
+//       home:Navigator.pushReplacementNamed(context, '/');,
+//     );
+//   }
+// }

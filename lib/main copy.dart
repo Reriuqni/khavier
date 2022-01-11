@@ -1,5 +1,3 @@
-import 'package:admin/auth/provider_configs.dart';
-import 'package:admin/constants/texts.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/create_app.dart';
 import 'package:admin/provider/TicketsProvider.dart';
@@ -7,7 +5,6 @@ import 'package:admin/routes/index.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/init.dart'
@@ -28,6 +25,8 @@ class AuthenticationGate extends StatefulWidget {
 }
 
 class _AuthenticationGateState extends State<AuthenticationGate> {
+  bool isLoadedUser = false;
+
   @override
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
@@ -39,98 +38,124 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        
+
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
           return CreateApp(auth: auth, userRole: Roles.AUTH);
         }
+/*
+        Roles userRole = Roles.ADMIN;
+        if (auth.currentUser?.email == 'manager@mysolve.com') {
+          userRole = Roles.MANAGER;
+        }
 
-        // show app’s home page after login
-        return FutureBuilder(
-          future: readUser(id: '9tMYuHMJZzSkbA3z8sDk'),
-          builder:
-              (BuildContext context, AsyncSnapshot<MySolveUser> userSnapshot) {
-            if (userSnapshot.hasData) {
-              // MySolveUser? mySolveUser = userSnapshot.data;
-              final mySolveUser = userSnapshot.data;
+        // getRole(id: '115885384621082789849');
 
-              print(mySolveUser);
+        late Future<MySolveUser> mySolveUser;
+        late MySolveUser aa;
 
-              if (mySolveUser == null) {
-                return Center(child: Text('No User'));
+        if (!isLoadedUser) {
+          mySolveUser = readUser(id: '9tMYuHMJZzSkbA3z8sDk');
+
+          // print(mySolveUser);
+          aa = mySolveUser as MySolveUser;
+          print(aa.role);
+        }
+*/
+        if (isLoadedUser) {
+          // show app’s home page after login
+          return FutureBuilder(
+            future: readUser(id: '9tMYuHMJZzSkbA3z8sDk'),
+            builder: (BuildContext context,
+                AsyncSnapshot<MySolveUser> userSnapshot) {
+
+                  print('FutureBuilder');
+
+              if (userSnapshot.hasData) {
+                // MySolveUser? mySolveUser = userSnapshot.data;
+                final mySolveUser = userSnapshot.data;
+
+                print(mySolveUser);
+
+                if (mySolveUser == null) {
+                  return Center(child: Text('No User'));
+                } else {
+                  print('-----mySolveUser.role');
+                  print(mySolveUser.role);
+
+
+                  return MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (context) => MenuController(),
+                      ),
+                      ChangeNotifierProvider(
+                          create: (context) => TicketsProvider()),
+                    ],
+                    child: CreateApp(auth: auth, userRole: mySolveUser.role),
+                  );
+                }
               } else {
-                print(mySolveUser.role);
-
-                return MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(
-                      create: (context) => MenuController(),
-                    ),
-                    ChangeNotifierProvider(
-                        create: (context) => TicketsProvider()),
+                 print('22');
+                return Column(
+                  children: [
+                    Center(child: CircularProgressIndicator()),
+                    Text('???  22'),
                   ],
-                  child: CreateApp(auth: auth, userRole: mySolveUser.role),
                 );
               }
-            } else {
-              print('Loading User Data...');
+            },
+          );
 
-              return MaterialApp(
-                title: PROJECT_NAME,
-                debugShowCheckedModeBanner: false,
-                home: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(top: 25),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text("Loading User Data...",
-                            style:
-                                TextStyle(fontSize: 22, color: Colors.black87),
-                            textAlign: TextAlign.center,
-                            textDirection: TextDirection.ltr),
-                        CircularProgressIndicator(),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-
-              return Center(
-                  child: Column(
-                children: [
-                  // CircularProgressIndicator(),
-                  // Text('Loading User Data...'),
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusColor: Colors.teal,
-                      label: Text('User ID / Email',
-                          style: TextStyle(color: Colors.teal)),
-                    ),
-                  ),
-                ],
-              ));
-            }
-          },
-        );
+          // return MultiProvider(
+          //   providers: [
+          //     ChangeNotifierProvider(
+          //       create: (context) => MenuController(),
+          //     ),
+          //     ChangeNotifierProvider(create: (context) => TicketsProvider()),
+          //   ],
+          //   child: CreateApp(auth: auth, userRole: userRole),
+          // );
+        } else {
+          print('111');
+          return Text('??? 11');
+                return Column(
+                  children: [
+                    // Center(child: CircularProgressIndicator()),
+                    Text('??? 11'),
+                  ],
+                );
+        }
       },
     );
   }
+
+  // FutureBuilder<MySolveUser> readUser2({required String id}) {
+  //   return FutureBuilder<MySolveUser>(
+  //     future: readUser(id: id),
+  //     builder: (context, fbSnapshot) {
+  //       if (fbSnapshot.hasData) {
+  //         return fbSnapshot.data;
+  //       } else  {
+  //         return MySolveUser();
+  //       }
+  //     },
+  //   );
+  // }
 
   /// {@id description:Firebase authentication user 'id'.}
   Future<MySolveUser> readUser({required String id}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(id);
     final snapshot = await docUser.get();
 
-    MySolveUser result = MySolveUser(id: 'User is not exist', role: Roles.USER);
-
     if (snapshot.exists) {
-      result = MySolveUser.fromJson(snapshot.data()!);
+      setState(() {
+        isLoadedUser = true;
+      });
+      return MySolveUser.fromJson(snapshot.data()!);
     }
 
-    return result;
+    return MySolveUser(id: 'User is not exist', role: Roles.USER);
   }
 }
 
