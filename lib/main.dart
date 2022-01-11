@@ -1,13 +1,12 @@
-import 'package:admin/auth/provider_configs.dart';
-import 'package:admin/constants/texts.dart';
+import 'package:admin/apps/shimmer_app_loading.dart';
 import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/create_app.dart';
+import 'package:admin/apps/create_app.dart';
+import 'package:admin/model/solve_user.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/init.dart'
@@ -39,28 +38,32 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        
+
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
           return CreateApp(auth: auth, userRole: Roles.AUTH);
         }
 
+        String _uid = snapshot.data?.uid ?? 'No user id';
+
         // show app’s home page after login
         return FutureBuilder(
-          future: readUser(id: '9tMYuHMJZzSkbA3z8sDk'),
+          // future: readUser(id: (snapshot.data?.uid ?? 'no uid')),
+          future: readUser(uid: _uid),
           builder:
-              (BuildContext context, AsyncSnapshot<MySolveUser> userSnapshot) {
+              (BuildContext context, AsyncSnapshot<SolveUser?> userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              return ShimmerLoading(
+                  text: 'Loading User Data...', subText: _uid);
+            }
+
             if (userSnapshot.hasData) {
-              // MySolveUser? mySolveUser = userSnapshot.data;
-              final mySolveUser = userSnapshot.data;
+              final solveUser = userSnapshot.data;
 
-              print(mySolveUser);
-
-              if (mySolveUser == null) {
-                return Center(child: Text('No User'));
+              if (solveUser == null) {
+                // return Center(child: Text('No User'));
+                return CreateApp(auth: auth, userRole: Roles.AUTH);
               } else {
-                print(mySolveUser.role);
-
                 return MultiProvider(
                   providers: [
                     ChangeNotifierProvider(
@@ -69,49 +72,12 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                     ChangeNotifierProvider(
                         create: (context) => TicketsProvider()),
                   ],
-                  child: CreateApp(auth: auth, userRole: mySolveUser.role),
+                  child: CreateApp(auth: auth, userRole: solveUser.role),
                 );
               }
             } else {
-              print('Loading User Data...');
-
-              return MaterialApp(
-                title: PROJECT_NAME,
-                debugShowCheckedModeBanner: false,
-                home: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(top: 25),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text("Loading User Data...",
-                            style:
-                                TextStyle(fontSize: 22, color: Colors.black87),
-                            textAlign: TextAlign.center,
-                            textDirection: TextDirection.ltr),
-                        CircularProgressIndicator(),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-
-              return Center(
-                  child: Column(
-                children: [
-                  // CircularProgressIndicator(),
-                  // Text('Loading User Data...'),
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusColor: Colors.teal,
-                      label: Text('User ID / Email',
-                          style: TextStyle(color: Colors.teal)),
-                    ),
-                  ),
-                ],
-              ));
+              return ShimmerLoading(
+                  text: 'Unfortunately No Such User. Please, first create User in DB', subText: _uid, isShimEnabled: false);
             }
           },
         );
@@ -119,78 +85,18 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
     );
   }
 
+  /// Get User from firebase collection
   /// {@id description:Firebase authentication user 'id'.}
-  Future<MySolveUser> readUser({required String id}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(id);
+  Future<SolveUser?> readUser({required String uid}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
     final snapshot = await docUser.get();
 
-    MySolveUser result = MySolveUser(id: 'User is not exist', role: Roles.USER);
-
     if (snapshot.exists) {
-      result = MySolveUser.fromJson(snapshot.data()!);
+      print('User exist. uid $uid');
+      print(SolveUser.fromJson(snapshot.data()!));
+      return SolveUser.fromJson(snapshot.data()!);
+    } else {
+      print('User is not exist. uid $uid');
     }
-
-    return result;
   }
-}
-
-class MySolveUser {
-  String body;
-  String date;
-  String executorId;
-  String id;
-  String name;
-  String owner;
-  String priority;
-  String status;
-  String subject;
-  String tag;
-  String type;
-  Roles role;
-
-  MySolveUser({
-    this.body = '',
-    this.date = '',
-    this.executorId = '',
-    required this.id,
-    this.name = '',
-    this.owner = '',
-    this.priority = '',
-    this.status = '',
-    this.subject = '',
-    this.tag = '',
-    this.type = '',
-    this.role = Roles.USER,
-  });
-
-  Map<String, dynamic> tyJson() => {
-        'body': body,
-        'date': date,
-        'executorId': executorId,
-        'id': id,
-        'name': name,
-        'owner': owner,
-        'priority': priority,
-        'status': status,
-        'subject': subject,
-        'tag': tag,
-        'type': type,
-        'role': role.name,
-      };
-
-  static MySolveUser fromJson(Map<String, dynamic> json) => MySolveUser(
-        body: json['body'],
-        date: json['date'],
-        executorId: json['executorId'],
-        id: json['id'],
-        name: json['name'],
-        owner: json['owner'],
-        priority: json['priority'],
-        status: json['status'],
-        subject: json['subject'],
-        tag: json['tag'],
-        type: json['type'],
-        // role: Roles[json['role']],
-        role: Roles.values.firstWhere((e) => e.name == json['role']),
-      );
 }
