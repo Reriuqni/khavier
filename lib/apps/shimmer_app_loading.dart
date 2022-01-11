@@ -1,8 +1,11 @@
 import 'package:admin/constants/colors.dart';
 import 'package:admin/constants/texts.dart';
 import 'package:admin/screens/main/components/manager_menu.dart';
+import 'package:admin/widgets/buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerLoading extends StatelessWidget {
@@ -11,11 +14,13 @@ class ShimmerLoading extends StatelessWidget {
     this.text = 'Loading...',
     this.subText = '',
     this.isShimEnabled = true,
+    this.isShowSignOut = false,
   }) : super(key: key);
 
   final String text;
   final String? subText;
   final bool isShimEnabled;
+  final bool isShowSignOut;
 
   @override
   Widget build(BuildContext context) {
@@ -49,24 +54,37 @@ class ShimmerLoading extends StatelessWidget {
                       enabled: isShimEnabled,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Text(
-                        'uid: ' + (subText ?? 'no uid'),
-                        style: TextStyle(
-                          fontSize: 16,
-                          // color: primaryColor,
-                          color: Colors.black,
-                        ),
+                        padding: const EdgeInsets.all(24),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                              child: OwnButtonWithICon(
+                                onPressed: () {
+                                  Clipboard.setData(ClipboardData(text: subText));
+                                },
+                                icon: FontAwesomeIcons.copy,
+                                label: "Copy your uid",
+                              ),
+                            ),
+                            SelectableText(
+                              (subText ?? 'no uid'),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                    if (isShowSignOut) ...[
+                      OwnButtonWithICon(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushNamed(context, '/');
+                        },
+                        icon: FontAwesomeIcons.signOutAlt,
+                        label: "SignOut",
                       ),
-                    ),
-                    DrawerListTile(
-                      title: "SignOut",
-                      svgSrc: "assets/icons/sign-out.svg",
-                      press: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pushNamed(context, '/');
-                      },
-                    ),
+                    ],
                   ],
                 ),
               ],

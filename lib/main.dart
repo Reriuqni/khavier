@@ -77,7 +77,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
               }
             } else {
               return ShimmerLoading(
-                  text: 'Unfortunately No Such User. Please, first create User in DB', subText: _uid, isShimEnabled: false);
+                  text: 'Unfortunately No Such User in DB. Please, ask admin to create User', subText: _uid, isShimEnabled: false, isShowSignOut: true);
             }
           },
         );
