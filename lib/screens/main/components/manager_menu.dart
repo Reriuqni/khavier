@@ -1,3 +1,6 @@
+import 'package:admin/constants/colors.dart';
+import 'package:admin/widgets/buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,14 +19,16 @@ class ManagerMenu extends StatelessWidget {
             child: DrawerHeader(
               margin: EdgeInsets.all(0.0),
               padding: EdgeInsets.all(0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('My Solve',
-                style: TextStyle(fontSize: 30),),
-              ],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'My Solve',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ],
+              ),
             ),
-          ),
           ),
 
           DrawerListTile(
@@ -38,6 +43,14 @@ class ManagerMenu extends StatelessWidget {
             svgSrc: "assets/icons/menu_setting.svg",
             press: () {
               Navigator.pushNamed(context, '/profile');
+            },
+          ),
+          DrawerListTile(
+            title: "SignOut",
+            svgSrc: "assets/icons/sign-out.svg",
+            press: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushNamed(context, '/');
             },
           ),
 
@@ -90,7 +103,7 @@ class ManagerMenu extends StatelessWidget {
           //   press: () {
           //     Navigator.pushNamed(context, '/myaccount');
           //   },
-          // ),          
+          // ),
         ],
       ),
     );
