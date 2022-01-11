@@ -1,7 +1,6 @@
 import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import '../dashboard/components/header.dart';
