@@ -48,8 +48,8 @@ class ManagerMenu extends StatelessWidget {
           DrawerListTile(
             title: "SignOut",
             svgSrc: "assets/icons/sign-out.svg",
-            press: () {
-              FirebaseAuth.instance.signOut();
+            press: () async {
+              await FirebaseAuth.instance.signOut();
               Navigator.pushNamed(context, '/');
             },
           ),

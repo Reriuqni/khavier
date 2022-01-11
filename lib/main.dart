@@ -39,6 +39,11 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
+        
+        // User is not signed in - show a sign-in screen
+        if (!snapshot.hasData) {
+          return CreateApp(auth: auth, userRole: Roles.AUTH);
+        }
 
         // show app’s home page after login
         return FutureBuilder(
