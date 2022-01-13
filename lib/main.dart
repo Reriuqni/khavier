@@ -48,7 +48,6 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
 
         // show app’s home page after login
         return FutureBuilder(
-          // future: readUser(id: (snapshot.data?.uid ?? 'no uid')),
           future: readUser(uid: _uid),
           builder:
               (BuildContext context, AsyncSnapshot<SolveUser?> userSnapshot) {
@@ -61,7 +60,6 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
               final solveUser = userSnapshot.data;
 
               if (solveUser == null) {
-                // return Center(child: Text('No User'));
                 return CreateApp(auth: auth, userRole: Roles.AUTH);
               } else {
                 return MultiProvider(
