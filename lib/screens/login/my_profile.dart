@@ -3,10 +3,11 @@ import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import '../dashboard/components/header.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/headerResponsive.dart';
+import 'package:admin/screens/main/main_screen.dart';
+import 'package:admin/model/Storage.dart';
+
 
 dynamic args;
 
@@ -127,18 +128,13 @@ class _ProfilePage extends State<ProfilePage>
                           )
                             ],
                         ),
+                        if(args != 'newUser')
                         FirebaseTab(),
                       ],
                     ),
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (Responsive.isDesktop(context)) Header(),
-                  if (!Responsive.isDesktop(context)) HeaderResponsive(),
-                ],
+                  )
               ),
+              StackHeader()
             ],
           )),
     );
@@ -167,8 +163,9 @@ class RowItem extends StatelessWidget {
   final String text;
   final String label;
   final Widget widget;
+  final dynamic controller;
   RowItem(
-      {this.text = '', this.label = 'Default', this.widget = const Text('')});
+      {this.text = '', this.label = 'Default', this.controller, this.widget = const Text('')});
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +192,7 @@ class RowItem extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
             width: 300,
             child: OwnTextField(
+                  controller: controller,
               labelText: label,
             ),
           ),
@@ -213,13 +211,33 @@ class RowItem extends StatelessWidget {
   }
 }
 
-class InfoTab extends StatelessWidget {
+class InfoTab extends StatefulWidget {
   InfoTab();
+
+  @override
+  State<InfoTab> createState() => _InfoTabState();
+}
+
+class _InfoTabState extends State<InfoTab> {
 
   @override
   Widget build(BuildContext context) {
     return TabsMainContainer(
       children: [
+        Row(
+          children: [
+            Text('UserPhoto:'),
+            // Image(image: NetworkImage(userImage), width: 50, height: 50,),
+            OwnButtonICon(
+              onPressed: () async {
+                setState(() {
+                  imagePicker();
+                });
+              },
+              icon: Icons.add,
+            ),
+          ],
+        ),
         if(args == 'newUser')
           Wrap(
             children: [

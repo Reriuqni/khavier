@@ -3,7 +3,6 @@ import 'package:admin/constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/provider/TicketsProvider.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
 import 'package:admin/widgets/buttons.dart';
@@ -11,8 +10,7 @@ import 'package:admin/widgets/textField.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:admin/screens/dashboard/components/headerResponsive.dart';
-import '../dashboard/components/header.dart';
+import 'package:admin/screens/main/main_screen.dart';
 
 class UsersPage extends StatefulWidget {
   @override
@@ -154,15 +152,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                 ],
               ),
             ),
-
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (Responsive.isDesktop(context)) Header(),
-                if (!Responsive.isDesktop(context)) HeaderResponsive(),
-              ],
-            ),
+            StackHeader()
           ],
         ),
       )

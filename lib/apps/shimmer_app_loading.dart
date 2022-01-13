@@ -1,6 +1,4 @@
-import 'package:admin/constants/colors.dart';
 import 'package:admin/constants/texts.dart';
-import 'package:admin/screens/main/components/manager_menu.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

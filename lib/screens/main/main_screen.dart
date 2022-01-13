@@ -38,9 +38,21 @@ class _MainScreen extends State<MainScreen>
                       : BoxFit.fitHeight,
                   image: NetworkImage("assets/assets/images/home.jpg"))),
           child:Stack(
-            alignment: AlignmentDirectional.center,
             children: [
-              Column(
+              StackHeader()
+            ],
+          )
+      ),
+    );
+  }
+}
+
+//Responsive header for stack in any pages
+class StackHeader extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,9 +61,6 @@ class _MainScreen extends State<MainScreen>
                   if (!Responsive.isDesktop(context))
                     HeaderResponsive()
                 ],
-              ),
-            ]
-            )),
     );
   }
 }

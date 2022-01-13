@@ -11,7 +11,6 @@ import 'package:admin/screens/settings/settings_screen.dart';
 import 'package:admin/screens/ticket/add_ticket.dart';
 import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
