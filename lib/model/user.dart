@@ -1,45 +1,94 @@
-import 'package:admin/model/baseClass.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'Status.dart';
-
-class NewUser extends BaseClass {
-  String? subject = '';
-  String? body = '';
-  String? priority = '';
-  String? executorId = '';
-  List<String> executorHelpers = [];
-  // List comments = [];
-  List<Status> history = [];
-
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> baseObj = super.toMap();
-    Map<String, dynamic> ticObj = {
-      'subject': subject,
-      'body': body,
-      'priority': priority,
-      'executorId': executorId,
-    };
-
-    ticObj.addAll(baseObj);
-
-    return ticObj;
-  }
-
-  void fromMap(Map<String, dynamic> m) {
-    super.fromMap(m);
-    this.subject = m.containsKey('subject') ? m['subject'] : '';
-    this.body = m.containsKey('body') ? m['body'] : '';
-    this.priority = m.containsKey('priority') ? m['priority'] : '';
-    this.executorId = m.containsKey('executorId') ? m['executorId'] : '';
-  }
-
-
-  void fromJsonQueryDocumentSnapshot(QueryDocumentSnapshot m) {
-    // super.fromJsonQueryDocumentSnapshot(m);
-    this.subject = m['subject'] == null ? '' : m['subject'];
-    this.body = m['body'] == null ? '' : m['body'];
-    this.priority = m['priority'] == null ? '' : m['priority'];
-    this.executorId = m['executorId'] == null ? '' : m['executorId'];
-  }
+class UserField {
+  static const date = 'date';
 }
+
+class Users {
+  String? organization;
+  String? accountType;
+  String? userId;
+  String? firstName;
+  String? lastName;
+  String? password;
+  String? preferredOTP;
+  String? language;
+  String? country;
+  String? timeZone;
+  String? streetAddress1;
+  String? streetAddress2;
+  String? city;
+  String? state;
+  String? postCode;
+  String? email;
+  String? mobile;
+  String? tags;
+  String? liquidatorId;
+
+
+  Users({
+    this.organization = '',
+    this.accountType = '',
+    this.userId = '',
+    this.firstName = '',
+    this.lastName = '',
+    this.password = '',
+    this.preferredOTP = '',
+    this.language = '',
+    this.country = '',
+    this.timeZone = '',
+    this.streetAddress1 = '',
+    this.streetAddress2 = '',
+    this.city = '',
+    this.state = '',
+    this.postCode = '',
+    this.email = '',
+    this.mobile = '',
+    this.tags = '',
+    this.liquidatorId = '',
+
+  });
+
+  static Users fromJson(Map<String, dynamic> json) => Users(
+      organization: json['organization'],
+      accountType: json['accountType'],
+      userId: json['userId'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      password: json['password'],
+      preferredOTP: json['preferredOTP'],
+      language: json['language'],
+      country: json['country'],
+      timeZone: json['timeZone'],
+      streetAddress1: json['streetAddress1'],
+      streetAddress2: json['streetAddress2'],
+      city: json['city'],
+      state: json['state'],
+      postCode: json['postCode'],
+      email: json['email'],
+      mobile: json['mobile'],
+      tags: json['tags'],
+      liquidatorId: json['liquidatorId'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'organization': organization,
+    'accountType': accountType,
+    'userId': userId,
+    'firstName': firstName,
+    'lastName': lastName,
+    'password': password,
+    'preferredOTP': preferredOTP,
+    'language': language,
+    'country': country,
+    'timeZone': timeZone,
+    'streetAddress1': streetAddress1,
+    'streetAddress2': streetAddress2,
+    'city': city,
+    'state': state,
+    'postCode': postCode,
+    'email': email,
+    'mobile': mobile,
+    'tags': tags,
+    'liquidatorId': liquidatorId,
+  };
+}
+

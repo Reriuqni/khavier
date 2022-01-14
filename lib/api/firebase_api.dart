@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:admin/model/user.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/utils.dart';
 
@@ -33,4 +34,16 @@ class FirebaseApi {
 
     await docTicket.delete();
   }
+
+
+  static Future<String> createUser(Users user) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc();
+
+    user.userId = docUser.id;
+    await docUser.set(user.toJson());
+    print(user);
+    print(docUser.id);
+
+    return docUser.id;
+  }  
 }
