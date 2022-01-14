@@ -26,13 +26,15 @@ class Utils {
       StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
           List<T>>.fromHandlers(
         handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
-          // return 
+          // return
           // [{priority: , body: , status: , date: Timestamp(seconds=1636668000, nanoseconds=0), subject: , id: id2, owner: , executorId: , tag: , name: 3, type: }, {tag: , executorId: ,status: , date: Timestamp(seconds=1637272800, nanoseconds=0), subject: , id: id1, name: 4, body: , priority: , owner: , type: }]
           final snaps = data.docs.map((doc) => doc.data()).toList();
 
           // return
           // [Instance of 'Ticket', Instance of 'Ticket']
-          final objects = snaps.map((json) => fromJson(json as Map<String, dynamic>)).toList();
+          final objects = snaps
+              .map((json) => fromJson(json as Map<String, dynamic>))
+              .toList();
 
           sink.add(objects);
         },

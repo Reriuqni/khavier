@@ -5,14 +5,15 @@ import 'package:admin/model/user.dart';
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/utils.dart';
 
-String collectionName = 'tickets';
+String ticketCollection = 'tickets';
+String usersCollection = 'users';
 
 class FirebaseApi {
   // Processing Tickets
 
   static Future<String> createTicket(Ticket ticket) async {
     final docTicket =
-        FirebaseFirestore.instance.collection(collectionName).doc();
+        FirebaseFirestore.instance.collection(ticketCollection).doc();
 
     ticket.id = docTicket.id;
     await docTicket.set(ticket.toJson());
@@ -21,7 +22,7 @@ class FirebaseApi {
   }
 
   static Stream<List<Ticket>> readTickets() => FirebaseFirestore.instance
-      .collection(collectionName)
+      .collection(ticketCollection)
       // .orderBy(TicketField.date, descending: true)
       .snapshots()
       .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<
@@ -29,14 +30,14 @@ class FirebaseApi {
 
   static Future updateTicket(Ticket ticket) async {
     final docTicket =
-        FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
+        FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
 
     await docTicket.update(ticket.toJson());
   }
 
   static Future deleteTicket(Ticket ticket) async {
     final docTicket =
-        FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
+        FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
 
     await docTicket.delete();
   }
@@ -49,16 +50,20 @@ class FirebaseApi {
   ///
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
-  static Future<User?> readOrCreateUser({required String uid, required User user}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
+  static Future<User?> readOrCreateUser(
+      {required String uid, required User user}) async {
+    final docUser =
+        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     final snapshot = await docUser.get();
 
     if (snapshot.exists) {
       print('User exist. uid $uid');
-      // print(User.fromJson(snapshot.data()!));
+
+      // docUser.update({'lastSignInTime': user.lastSignInTime});
+
       return User.fromJson(snapshot.data()!);
     } else {
-      // print('User is not exist. uid $uid');
+      print('User is not exist. uid $uid');
 
       await createUser(uid: uid, user: user);
       return user;
@@ -67,7 +72,8 @@ class FirebaseApi {
 
   static Future<User> createUser(
       {required String uid, required User user}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
+    final docUser =
+        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     await docUser.set(user.toJson());
 
     final snapshot = await docUser.get();
@@ -77,10 +83,30 @@ class FirebaseApi {
     return User.fromJson(snapshot.data()!);
   }
 
-  static Future<String> createUserNotUsed(User user) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc();
+  static Stream<List<User>> readUsers() => FirebaseFirestore.instance
+      .collection(usersCollection)
+      // .orderBy(UserField.date, descending: true)
+      .snapshots()
+      .transform(Utils.transformer(User.fromJson) as StreamTransformer<
+          QuerySnapshot<Map<String, dynamic>>, List<User>>);
 
-    user.userId = docUser.id;
+  static Future<void> updateAccountType(
+      {required String uid, required String accountType}) async {
+    final docUser =
+        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+
+    await docUser
+        .update({'accountType': accountType})
+        .then((_) => print('Role success update to $accountType'))
+        .catchError((error) => print('Failed: $error'));
+    ;
+  }
+
+  static Future<String> createUserNotUsed(User user) async {
+    final docUser =
+        FirebaseFirestore.instance.collection(usersCollection).doc();
+
+    user.id = docUser.id;
     await docUser.set(user.toJson());
     print(user);
     print(docUser.id);

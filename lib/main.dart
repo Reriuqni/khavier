@@ -3,6 +3,7 @@ import 'package:admin/apps/shimmer_app_loading.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/apps/create_app.dart';
 import 'package:admin/model/user.dart' as SolveUser;
+import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,12 +45,14 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
           return CreateApp(userRole: Roles.AUTH);
         }
 
-        String _uid = snapshot.data?.uid ?? 'No user id';
-        SolveUser.User newSolveUser = SolveUser.User();
-
-        newSolveUser.firstName = snapshot.data?.displayName ?? '';
-        newSolveUser.email = snapshot.data?.email ?? '';
-        newSolveUser.mobile = snapshot.data?.phoneNumber ?? '';
+        String _uid = snapshot.data!.uid;
+        SolveUser.User newSolveUser = SolveUser.User(
+          id: _uid,
+          lastSignInTime: snapshot.data!.metadata.lastSignInTime,
+          firstName: snapshot.data?.displayName ?? '',
+          email: snapshot.data?.email ?? '',
+          mobile: snapshot.data?.phoneNumber ?? '',
+        );
 
         // show app’s home page after login
         return FutureBuilder(
@@ -74,6 +77,8 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                     ),
                     ChangeNotifierProvider(
                         create: (context) => TicketsProvider()),
+                    ChangeNotifierProvider(
+                        create: (context) => NewVersionUserProvider()),
                   ],
                   child: CreateApp(userRole: solveUser.accountType),
                 );

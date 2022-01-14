@@ -63,7 +63,7 @@ class ShimmerLoading extends StatelessWidget {
                                   Clipboard.setData(ClipboardData(text: subText));
                                 },
                                 icon: FontAwesomeIcons.copy,
-                                label: "Copy your uid",
+                                label: "uid",
                               ),
                             ),
                             SelectableText(
