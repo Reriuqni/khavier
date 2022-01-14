@@ -55,26 +55,27 @@ class FirebaseApi {
 
     if (snapshot.exists) {
       print('User exist. uid $uid');
-      print(User.fromJson(snapshot.data()!));
+      // print(User.fromJson(snapshot.data()!));
       return User.fromJson(snapshot.data()!);
     } else {
-      print('User is not exist. uid $uid');
+      // print('User is not exist. uid $uid');
 
-      createUser(docId: uid, user: User());
-      print('Created new User, docId = uid = $uid');
+      User user = User();
+      await createUser(uid: uid, user: user);
+      return user;
     }
   }
 
-  static Future<String> createUser(
-      {required String docId, required User user}) async {
-    final docUser = FirebaseFirestore.instance.collection('users').doc(docId);
-
-    user.userId = docUser.id;
+  static Future<User> createUser(
+      {required String uid, required User user}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
     await docUser.set(user.toJson());
-    print(user);
-    print(docUser.id);
 
-    return docUser.id;
+    final snapshot = await docUser.get();
+    String docID = snapshot.id;
+    print('Created new User, docId = uid = $docID');
+
+    return User.fromJson(snapshot.data()!);
   }
 
   static Future<String> createUserNotUsed(User user) async {
