@@ -6,7 +6,9 @@ class UserField {
 
 class User {
   String organization;
+  // 2do: Давайте переназвемо поле accountType в role?
   Roles accountType;
+  // 2do: У нас є код документа. Навіщо його дублювати в userId?
   String userId;
   String firstName;
   String lastName;

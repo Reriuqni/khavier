@@ -67,6 +67,17 @@ class FirebaseApi {
 
   static Future<String> createUser(
       {required String docId, required User user}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(docId);
+
+    user.userId = docUser.id;
+    await docUser.set(user.toJson());
+    print(user);
+    print(docUser.id);
+
+    return docUser.id;
+  }
+
+  static Future<String> createUserNotUsed(User user) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     user.userId = docUser.id;
