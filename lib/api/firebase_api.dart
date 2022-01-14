@@ -49,7 +49,7 @@ class FirebaseApi {
   ///
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
-  static Future<User?> readOrCreateUser({required String uid}) async {
+  static Future<User?> readOrCreateUser({required String uid, required User user}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
     final snapshot = await docUser.get();
 
@@ -60,7 +60,6 @@ class FirebaseApi {
     } else {
       // print('User is not exist. uid $uid');
 
-      User user = User();
       await createUser(uid: uid, user: user);
       return user;
     }

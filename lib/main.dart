@@ -45,10 +45,15 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
         }
 
         String _uid = snapshot.data?.uid ?? 'No user id';
+        SolveUser.User newSolveUser = SolveUser.User();
+
+        newSolveUser.firstName = snapshot.data?.displayName ?? '';
+        newSolveUser.email = snapshot.data?.email ?? '';
+        newSolveUser.mobile = snapshot.data?.phoneNumber ?? '';
 
         // show app’s home page after login
         return FutureBuilder(
-          future: FirebaseApi.readOrCreateUser(uid: _uid),
+          future: FirebaseApi.readOrCreateUser(uid: _uid, user: newSolveUser),
           builder: (BuildContext context,
               AsyncSnapshot<SolveUser.User?> userSnapshot) {
             if (userSnapshot.connectionState == ConnectionState.waiting) {
