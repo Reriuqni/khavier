@@ -27,7 +27,7 @@ class SolveUser {
     this.subject = '',
     this.tag = '',
     this.type = '',
-    this.role = Roles.USER,
+    this.role = Roles.ROLE_NOT_FOUND,
   });
 
   Map<String, dynamic> tyJson() => {
@@ -57,7 +57,6 @@ class SolveUser {
         subject: json['subject'],
         tag: json['tag'],
         type: json['type'],
-        // role: Roles[json['role']],
-        role: Roles.values.firstWhere((e) => e.name == json['role']),
+        role: Roles.values.firstWhere((e) => e.name == json['role'], orElse: () => Roles.ROLE_NOT_FOUND),
       );
 }
