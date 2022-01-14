@@ -12,7 +12,7 @@ import 'package:admin/api/firebase_api.dart';
 
 
 dynamic args;
-Users? _user = Users();
+User? _user = User();
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

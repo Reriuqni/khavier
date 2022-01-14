@@ -8,8 +8,11 @@ import 'package:admin/utils.dart';
 String collectionName = 'tickets';
 
 class FirebaseApi {
+  // Processing Tickets
+
   static Future<String> createTicket(Ticket ticket) async {
-    final docTicket = FirebaseFirestore.instance.collection(collectionName).doc();
+    final docTicket =
+        FirebaseFirestore.instance.collection(collectionName).doc();
 
     ticket.id = docTicket.id;
     await docTicket.set(ticket.toJson());
@@ -21,22 +24,45 @@ class FirebaseApi {
       .collection(collectionName)
       // .orderBy(TicketField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
+      .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<
+          QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
 
   static Future updateTicket(Ticket ticket) async {
-    final docTicket = FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
+    final docTicket =
+        FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
 
     await docTicket.update(ticket.toJson());
   }
 
   static Future deleteTicket(Ticket ticket) async {
-    final docTicket = FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
+    final docTicket =
+        FirebaseFirestore.instance.collection(collectionName).doc(ticket.id);
 
     await docTicket.delete();
   }
 
+  // Processing Tickets
 
-  static Future<String> createUser(Users user) async {
+  // Processing Users
+
+  /// Get User from firebase collection
+  /// 
+  /// `@uid` Firebase authentication user uid.
+  /// {@comment example}
+  static Future<User?> readUser({required String uid}) async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
+    final snapshot = await docUser.get();
+
+    if (snapshot.exists) {
+      print('User exist. uid $uid');
+      print(User.fromJson(snapshot.data()!));
+      return User.fromJson(snapshot.data()!);
+    } else {
+      print('User is not exist. uid $uid');
+    }
+  }
+
+  static Future<String> createUser(User user) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     user.userId = docUser.id;
@@ -45,5 +71,7 @@ class FirebaseApi {
     print(docUser.id);
 
     return docUser.id;
-  }  
+  }
+
+  // Processing Users
 }
