@@ -99,7 +99,9 @@ class _ProfilePage extends State<ProfilePage>
                             children: [
                               OwnButton(
                                   onPressed: () {
-                                    FirebaseApi.createUser(_user!);
+                                    // Бізнес логіка: чи можна створювати порожнього юзера без прив'язки до uid FirebaseAuth?
+                                    // Поки, що коментую рядок
+                                    // FirebaseApi.createUser(_user!);
                                   },
                                   label: 'Save')
                             ],

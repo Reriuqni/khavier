@@ -2,11 +2,9 @@ import 'package:admin/api/firebase_api.dart';
 import 'package:admin/apps/shimmer_app_loading.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/apps/create_app.dart';
-// import 'package:admin/model/solve_user.dart';
 import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,9 +48,9 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
 
         // show app’s home page after login
         return FutureBuilder(
-          future: FirebaseApi.readUser(uid: _uid),
-          builder:
-              (BuildContext context, AsyncSnapshot<SolveUser.User?> userSnapshot) {
+          future: FirebaseApi.readOrCreateUser(uid: _uid),
+          builder: (BuildContext context,
+              AsyncSnapshot<SolveUser.User?> userSnapshot) {
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return ShimmerLoading(
                   text: 'Loading User Data...', subText: _uid);
@@ -77,7 +75,11 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
               }
             } else {
               return ShimmerLoading(
-                  text: 'Unfortunately No Such User in DB. Please, ask admin to create User', subText: _uid, isShimEnabled: false, isShowSignOut: true);
+                  text:
+                      'Unfortunately No Such User in DB. Please, ask admin to create User',
+                  subText: _uid,
+                  isShimEnabled: false,
+                  isShowSignOut: true);
             }
           },
         );

@@ -46,10 +46,10 @@ class FirebaseApi {
   // Processing Users
 
   /// Get User from firebase collection
-  /// 
+  ///
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
-  static Future<User?> readUser({required String uid}) async {
+  static Future<User?> readOrCreateUser({required String uid}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
     final snapshot = await docUser.get();
 
@@ -59,10 +59,14 @@ class FirebaseApi {
       return User.fromJson(snapshot.data()!);
     } else {
       print('User is not exist. uid $uid');
+
+      createUser(docId: uid, user: User());
+      print('Created new User, docId = uid = $uid');
     }
   }
 
-  static Future<String> createUser(User user) async {
+  static Future<String> createUser(
+      {required String docId, required User user}) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     user.userId = docUser.id;
