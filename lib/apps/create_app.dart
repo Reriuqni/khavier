@@ -1,18 +1,15 @@
 import 'package:admin/constants/texts.dart';
 import 'package:admin/routes/index.dart';
 import 'package:admin/themes/default.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/i10n.dart';
 
 class CreateApp extends StatelessWidget {
   const CreateApp({
     Key? key,
-    required this.auth,
     required this.userRole,
   }) : super(key: key);
 
-  final FirebaseAuth auth;
   final Roles userRole;
 
   @override
@@ -21,7 +18,6 @@ class CreateApp extends StatelessWidget {
       title: PROJECT_NAME,
       debugShowCheckedModeBanner: false,
       theme: getDefaultTheme(context),
-      // initialRoute: auth.currentUser == null ? '/' : '/profile',
       initialRoute: '/',
       routes: getRoutes(context, userRole),
       locale: const Locale('au'),

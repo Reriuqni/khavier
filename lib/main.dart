@@ -43,7 +43,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
 
         // User is not signed in - show a sign-in screen
         if (!snapshot.hasData) {
-          return CreateApp(auth: auth, userRole: Roles.AUTH);
+          return CreateApp(userRole: Roles.AUTH);
         }
 
         String _uid = snapshot.data?.uid ?? 'No user id';
@@ -62,7 +62,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
               final solveUser = userSnapshot.data;
 
               if (solveUser == null) {
-                return CreateApp(auth: auth, userRole: Roles.AUTH);
+                return CreateApp(userRole: Roles.AUTH);
               } else {
                 return MultiProvider(
                   providers: [
@@ -72,7 +72,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                     ChangeNotifierProvider(
                         create: (context) => TicketsProvider()),
                   ],
-                  child: CreateApp(auth: auth, userRole: solveUser.accountType),
+                  child: CreateApp(userRole: solveUser.accountType),
                 );
               }
             } else {
