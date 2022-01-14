@@ -1,5 +1,7 @@
 import 'package:admin/routes/roles.dart';
 
+import '../utils.dart';
+
 class UserField {
   static const date = 'date';
 }
@@ -8,8 +10,8 @@ class User {
   String organization;
   // 2do: Давайте переназвемо поле accountType в role?
   Roles accountType;
-  // 2do: У нас є код документа. Навіщо його дублювати в userId?
-  String userId;
+  // 2do: У нас є код документа. Дублюємо в id. Подумати, може прибрати це поле?..
+  String id;
   String firstName;
   String lastName;
   String password;
@@ -26,11 +28,12 @@ class User {
   String mobile;
   String tags;
   String liquidatorId;
+  DateTime? lastSignInTime;
 
   User({
     this.organization = '',
     this.accountType = Roles.ROLE_NOT_FOUND,
-    this.userId = '',
+    required this.id,
     this.firstName = '',
     this.lastName = '',
     this.password = '',
@@ -47,12 +50,13 @@ class User {
     this.mobile = '',
     this.tags = '',
     this.liquidatorId = '',
+    required this.lastSignInTime,
   });
 
   static User fromJson(Map<String, dynamic> json) => User(
         organization: json['organization'],
         accountType: Roles.values.firstWhere((e) => e.name == json['accountType'], orElse: () => Roles.ROLE_NOT_FOUND),
-        userId: json['userId'],
+        id: json['id'],
         firstName: json['firstName'],
         lastName: json['lastName'],
         password: json['password'],
@@ -69,12 +73,13 @@ class User {
         mobile: json['mobile'],
         tags: json['tags'],
         liquidatorId: json['liquidatorId'],
+        lastSignInTime: Utils.toDateTime(json['lastSignInTime']),
       );
 
   Map<String, dynamic> toJson() => {
         'organization': organization,
         'accountType': accountType.name,
-        'userId': userId,
+        'id': id,
         'firstName': firstName,
         'lastName': lastName,
         'password': password,
@@ -91,5 +96,6 @@ class User {
         'mobile': mobile,
         'tags': tags,
         'liquidatorId': liquidatorId,
+        'lastSignInTime': Utils.fromDateTimeToJson(lastSignInTime),
       };
 }

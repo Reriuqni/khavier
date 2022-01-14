@@ -8,11 +8,11 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/model/Storage.dart';
 import 'package:admin/model/user.dart';
-import 'package:admin/api/firebase_api.dart';
-
 
 dynamic args;
-User? _user = User();
+User? _user = User(id: 'mock id', 
+lastSignInTime: DateTime.now()
+);
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -91,10 +91,8 @@ class _ProfilePage extends State<ProfilePage>
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          if (args == 'newUser')
-                            Text('New User'),
-                          if(args != 'newUser')
-                          Text('My Profile'),
+                          if (args == 'newUser') Text('New User'),
+                          if (args != 'newUser') Text('My Profile'),
                           Row(
                             children: [
                               OwnButton(
@@ -125,32 +123,28 @@ class _ProfilePage extends State<ProfilePage>
                           child: ContactTab(),
                         ),
                         TabsMainContainer(
-                            children: [
-                              Wrap(
-                                children: [
-                                  if(args == 'newUser')
-                                    RowItem(
-                                        text: 'Tags:',
-                                        onChanged: (body) {
-                                          _user!.tags = body;
-                                        }
-                                    ),
+                          children: [
+                            Wrap(
+                              children: [
+                                if (args == 'newUser')
                                   RowItem(
-                                      label: 'Liquidator #',
+                                      text: 'Tags:',
                                       onChanged: (body) {
-                                        _user!.liquidatorId = body;
-                                      }
-                                  ),
-                                ],
-                          )
-                            ],
+                                        _user!.tags = body;
+                                      }),
+                                RowItem(
+                                    label: 'Liquidator #',
+                                    onChanged: (body) {
+                                      _user!.liquidatorId = body;
+                                    }),
+                              ],
+                            )
+                          ],
                         ),
-                        if(args != 'newUser')
-                          FirebaseTab(),
+                        if (args != 'newUser') FirebaseTab(),
                       ],
                     ),
-                  )
-              ),
+                  )),
               StackHeader()
             ],
           )),
@@ -158,7 +152,7 @@ class _ProfilePage extends State<ProfilePage>
   }
 }
 
-class TabsMainContainer extends StatelessWidget{
+class TabsMainContainer extends StatelessWidget {
   final List<Widget> children;
   TabsMainContainer({this.children = const []});
 
@@ -166,13 +160,10 @@ class TabsMainContainer extends StatelessWidget{
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-            children: children
-          ),
-        )
-    );
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, children: children),
+    ));
   }
 }
 
@@ -182,7 +173,10 @@ class RowItem extends StatelessWidget {
   final Widget widget;
   final dynamic onChanged;
   RowItem(
-      {this.text = '', this.label = 'Default', this.onChanged, this.widget = const Text('')});
+      {this.text = '',
+      this.label = 'Default',
+      this.onChanged,
+      this.widget = const Text('')});
 
   @override
   Widget build(BuildContext context) {
@@ -213,16 +207,15 @@ class RowItem extends StatelessWidget {
                   labelText: label,
                 ),
               ),
-
             ],
-            ),
-            Container(
-                padding: EdgeInsets.all(5),
-                width: widget == const Text('') ? 0  : 175,
-                child: Container(
-                  child: widget,
-                ))
-          ],
+          ),
+          Container(
+              padding: EdgeInsets.all(5),
+              width: widget == const Text('') ? 0 : 175,
+              child: Container(
+                child: widget,
+              ))
+        ],
       ),
     );
   }
@@ -236,7 +229,6 @@ class InfoTab extends StatefulWidget {
 }
 
 class _InfoTabState extends State<InfoTab> {
-
   @override
   Widget build(BuildContext context) {
     return TabsMainContainer(
@@ -255,83 +247,78 @@ class _InfoTabState extends State<InfoTab> {
             ),
           ],
         ),
-        if(args == 'newUser')
+        if (args == 'newUser')
           Wrap(
             children: [
               RowItem(
-                text: '* Organization:',
-                onChanged: (body) {
-                  _user!.organization = body;
-                }
-              ),
+                  text: '* Organization:',
+                  onChanged: (body) {
+                    _user!.organization = body;
+                  }),
               RowItem(
                   text: '*  Account Type:',
                   onChanged: (body) {
                     _user!.accountType = body;
-                  }
-              ),
+                  }),
             ],
           ),
-        if(args != 'newUser')
+        if (args != 'newUser')
           Wrap(
-          children: [
-            RowItem(
+            children: [
+              RowItem(
                 text: 'Site:',
-            ),
-            RowItem(
+              ),
+              RowItem(
                 text: 'Access Level:',
-            ),
+              ),
             ],
           ),
         RowItem(
             text: 'User ID:',
             onChanged: (body) {
-              _user!.userId = body;
-            }
-        ),
+              _user!.id = body;
+            }),
         Wrap(
           children: [
-          RowItem(
-              text: '* First Name:',
-              onChanged: (body) {
-                _user!.firstName = body;
-              }
-          ),
-          RowItem(
-              text: '* Last Name:',
-              onChanged: (body) {
-                _user!.lastName = body;
-              }
-          ),
+            RowItem(
+                text: '* First Name:',
+                onChanged: (body) {
+                  _user!.firstName = body;
+                }),
+            RowItem(
+                text: '* Last Name:',
+                onChanged: (body) {
+                  _user!.lastName = body;
+                }),
           ],
         ),
         Wrap(
           children: [
-          RowItem(
-            text: '* Password:',
-          ),
-          RowItem(
-              text: '* Confirm Password:',
-              widget: OwnButton(onPressed: () {}, label: 'Generate')),
+            RowItem(
+              text: '* Password:',
+            ),
+            RowItem(
+                text: '* Confirm Password:',
+                widget: OwnButton(onPressed: () {}, label: 'Generate')),
           ],
         ),
         Wrap(
           children: [
-          RowItem(
-              text: '* Preferred OTP',
-              onChanged: (body) {
-                _user!.preferredOTP = body;
-              },
-              widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
-            if(args == 'newUser')
+            RowItem(
+                text: '* Preferred OTP',
+                onChanged: (body) {
+                  _user!.preferredOTP = body;
+                },
+                widget:
+                    OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
+            if (args == 'newUser')
               RowItem(
                   text: 'Language:',
                   onChanged: (body) {
                     _user!.language = body;
-                  }
-              ),
-        ],
-      ),
+                  }),
+          ],
+        ),
       ],
     );
   }
@@ -345,78 +332,67 @@ class ContactTab extends StatelessWidget {
     return TabsMainContainer(
       children: [
         Wrap(
-        children: [
-          RowItem(
-            label: 'Email',
-              onChanged: (body) {
-                _user!.email = body;
-              }
-          ),
-          RowItem(
-              label: 'Mobile',
-              onChanged: (body) {
-                _user!.mobile = body;
-              }
-          ),
+          children: [
+            RowItem(
+                label: 'Email',
+                onChanged: (body) {
+                  _user!.email = body;
+                }),
+            RowItem(
+                label: 'Mobile',
+                onChanged: (body) {
+                  _user!.mobile = body;
+                }),
           ],
         ),
         Wrap(
           children: [
-          RowItem(
-              label: 'Street Address 1',
-              onChanged: (body) {
-                _user!.streetAddress1 = body;
-              }
-          ),
-          RowItem(
-              label: 'Street Address 2',
-              onChanged: (body) {
-                _user!.streetAddress2 = body;
-              }
-          ),
+            RowItem(
+                label: 'Street Address 1',
+                onChanged: (body) {
+                  _user!.streetAddress1 = body;
+                }),
+            RowItem(
+                label: 'Street Address 2',
+                onChanged: (body) {
+                  _user!.streetAddress2 = body;
+                }),
           ],
         ),
         Wrap(
           children: [
-          RowItem(
-              label: 'City',
-              onChanged: (body) {
-                _user!.city = body;
-              }
-          ),
-          RowItem(
-              label: 'State',
-              onChanged: (body) {
-                _user!.state = body;
-              }
-          ),
-
+            RowItem(
+                label: 'City',
+                onChanged: (body) {
+                  _user!.city = body;
+                }),
+            RowItem(
+                label: 'State',
+                onChanged: (body) {
+                  _user!.state = body;
+                }),
           ],
         ),
         Wrap(
           children: [
-          RowItem(
-              label: 'PostCode',
-              onChanged: (body) {
-                _user!.postCode = body;
-              }
-          ),
-          RowItem(
-              label: 'Country',
-              onChanged: (body) {
-                _user!.country = body;
-              }
-          ),
-        ],
-      ),
-        if(args == 'newUser')
+            RowItem(
+                label: 'PostCode',
+                onChanged: (body) {
+                  _user!.postCode = body;
+                }),
+            RowItem(
+                label: 'Country',
+                onChanged: (body) {
+                  _user!.country = body;
+                }),
+          ],
+        ),
+        if (args == 'newUser')
           RowItem(
               text: 'Time Zone:',
               onChanged: (body) {
                 _user!.timeZone = body;
-              }
-          ),
-
+              }),
       ],
     );
   }
