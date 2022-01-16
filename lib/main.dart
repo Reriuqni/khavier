@@ -8,6 +8,7 @@ import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/routes/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/init.dart'
@@ -71,15 +72,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                 return CreateApp(userRole: Roles.AUTH);
               } else {
                 return MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(
-                      create: (context) => MenuController(),
-                    ),
-                    ChangeNotifierProvider(
-                        create: (context) => TicketsProvider()),
-                    ChangeNotifierProvider(
-                        create: (context) => NewVersionUserProvider()),
-                  ],
+                  providers: listProviders,
                   child: CreateApp(userRole: solveUser.accountType),
                 );
               }
@@ -95,5 +88,15 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
         );
       },
     );
+  }
+
+  List<SingleChildWidget> get listProviders {
+    return [
+      ChangeNotifierProvider(
+        create: (context) => MenuController(),
+      ),
+      ChangeNotifierProvider(create: (context) => TicketsProvider()),
+      ChangeNotifierProvider(create: (context) => NewVersionUserProvider()),
+    ];
   }
 }
