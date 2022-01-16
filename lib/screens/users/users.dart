@@ -217,14 +217,14 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               final provider = Provider.of<NewVersionUserProvider>(context);
               provider.setUsers(users);
 
-              return getTicketsView(provider);
+              return getView(provider);
             }
         }
       },
     );
   }
 
-  Widget getTicketsView(provider) {
+  Widget getView(provider) {
     List<PlutoColumn> columns = [
       /// Text Column definition
       PlutoColumn(
@@ -296,7 +296,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
     ];
 
     return provider.tickets.isEmpty // tickets.isEmpty
-        ? Center(child: Text('No Tickets', style: TextStyle(fontSize: 20)))
+        ? Center(child: Text('No Users', style: TextStyle(fontSize: 20)))
         : Container(
             padding: const EdgeInsets.all(30),
             child: Material(
@@ -329,14 +329,19 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                           'select_field_account_type': PlutoCell(
                               value: Roles.values.firstWhere(
                                   (e) =>
-                                      e.name ==
-                                      (provider.tickets[index].accountType
-                                              as Roles)
-                                          .name,
+                                      e.name == (provider.tickets[index].accountType as Roles).name,
                                   orElse: () => Roles.ROLE_NOT_FOUND)),
 
                           // 'date_field_lastSignInTime': PlutoCell(
                           //     value: provider.users[index].lastSignInTime),
+
+
+                          // 'date_field_lastSignInTime': PlutoCell(
+                          //     value: provider.users[index].lastSignInTime.toString()),
+
+
+                          // 'date_field_lastSignInTime': PlutoCell(
+                          //     value: (provider.users[index].lastSignInTime as DateTime).toString()),
 
                           // 'date_field_lastSignInTime':
                           //     PlutoCell(value: '2020-08-06'),
