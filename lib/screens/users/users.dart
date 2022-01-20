@@ -309,7 +309,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                                       (provider.tickets[index].accountType
                                               as Roles)
                                           .name,
-                                  orElse: () => Roles.ROLE_NOT_FOUND).name),
+                                  orElse: () => Roles.NEW_USER).name),
                           'manage_user': PlutoCell(
                               value: 'editUser'
                           ),

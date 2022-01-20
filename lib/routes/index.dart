@@ -20,7 +20,7 @@ Map<String, WidgetBuilder> getRoutes(
     case Roles.ADMIN:
       return getAdminRoutes(context);
     case Roles.MANAGER:
-    case Roles.ROLE_NOT_FOUND:
+    case Roles.NEW_USER:
       return getNewUserRoutes(context);
     default:
       return throw 'Unsupported routes type: $userRole';

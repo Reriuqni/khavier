@@ -32,7 +32,7 @@ class User {
 
   User({
     this.organization = '',
-    this.accountType = Roles.ROLE_NOT_FOUND,
+    this.accountType = Roles.NEW_USER,
     required this.id,
     this.firstName = '',
     this.lastName = '',
@@ -55,7 +55,7 @@ class User {
 
   static User fromJson(Map<String, dynamic> json) => User(
         organization: json['organization'],
-        accountType: Roles.values.firstWhere((e) => e.name == json['accountType'], orElse: () => Roles.ROLE_NOT_FOUND),
+        accountType: Roles.values.firstWhere((e) => e.name == json['accountType'], orElse: () => Roles.NEW_USER),
         id: json['id'],
         firstName: json['firstName'],
         lastName: json['lastName'],
