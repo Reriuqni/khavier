@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
-// import 'package:admin/provider/UserProvider.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:provider/provider.dart';
-
+import 'package:admin/constants/globals.dart' as globals;
 import '../../../constants/colors.dart';
 
-double _width = 0;
 
 class Header extends StatefulWidget {
   final void Function()? tapCog;
@@ -52,7 +49,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                   HeaderIcons(
                     tapCog: () {
                       setState(() {
-                        _width = _width == 0 ? 260 : 0;
+                        globals.width = globals.width == 0 ? 260 : 0;
                       });
                     },
                     tapSquare: () {},
@@ -110,6 +107,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                             type: MaterialType.transparency,
                             child: TextFormField(
                               decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: 17, horizontal: 10),
                                   labelText: 'Search',
                                   labelStyle: TextStyle(color: primaryColor)),
                               style: TextStyle(color: primaryColor),
@@ -131,7 +129,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
               ],
             )),
         SideMenuContainer(
-          width: _width,
+          width: globals.width,
           height: MediaQuery.of(context).size.height - 134,
         )
       ],
@@ -177,6 +175,9 @@ class _HeaderIcons extends State<HeaderIcons> {
               context,
               '/profile',
             );
+            setState(() {
+              globals.width = 0;
+            });
           },
           child: FaIcon(
             FontAwesomeIcons.user,
@@ -204,7 +205,8 @@ class _HeaderIcons extends State<HeaderIcons> {
 class SideMenuContainer extends StatelessWidget {
   final double width;
   final double height;
-  SideMenuContainer({required this.width, required this.height});
+  final Color color;
+  SideMenuContainer({required this.width, required this.height, this.color = const Color(0xB2000000)});
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +216,9 @@ class SideMenuContainer extends StatelessWidget {
         duration: Duration(milliseconds: 200),
         child: Material(
           type: MaterialType.transparency,
-          child: SideMenu(),
+          child: SideMenu(
+            color: color,
+          ),
         ));
   }
 }

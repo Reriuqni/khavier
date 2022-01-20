@@ -3,17 +3,19 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/model/user.dart';
 import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/routes/roles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/utils.dart';
 import 'package:admin/widgets/buttons.dart';
-import 'package:admin/widgets/textField.dart';
+import 'package:admin/widgets/textFields.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:admin/screens/main/main_screen.dart';
-import 'package:data_table_2/data_table_2.dart';
+import '../main/components/screenWithHeaderAndSideMenu.dart';
+
+
 
 class UsersPage extends StatefulWidget {
   @override
@@ -45,26 +47,28 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
     return Material(
         type: MaterialType.transparency,
         child: SafeArea(
-          child: Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.88,
-                height: MediaQuery.of(context).size.height * 0.81,
-                child: Column(
+          child: HeaderAndSideMenu(
+            widget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
                       children: [
-                        Text(
+                    Container(
+                      width: 200,
+                      child: Text(
                           'Users',
                           style: TextStyle(
                               color: iconColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w600),
                         ),
-                        Row(
+                    ),
+                    SizedBox(width: 50,),
+                    Container(
+                      width: 301,
+                      child: Row(
                           children: [
                             Checkbox(
                                 activeColor: secondaryColor,
@@ -85,7 +89,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             Container(
                               padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
                               child: OwnButton(
-                                onPressed: () {},
+                              onPressed: () {
+                              },
                                 label: 'Invite',
                               ),
                             ),
@@ -100,20 +105,26 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                               icon: Icons.add,
                             ),
                           ],
+                      ),
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                SizedBox(height: 10,),
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                    Container(
+                      width: 300,
                           child: DropdownButtonFormField(
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(15)
+                        ),
                             hint: Text('Organization'),
                             onChanged: (String? newValue) {
                               setState(() {
                                 // _type = newValue;
-                              });
+                          }
+                          );
                             },
                             //тимчасові айтеми
                             items: <String>[
@@ -130,17 +141,18 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             }).toList(),
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                    SizedBox(width: 20, height: 20,),
+                    Container(
+                      width: 300,
                           child: OwnTextFieldWithIcons(
                             labelText: 'Jim',
                             prefixIcon: FontAwesomeIcons.search,
                           ),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
+                    SizedBox(width: 30,),
+                    Container(
+                      width: 300,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Checkbox(
                                   value: archivedCheckBox.value,
@@ -162,18 +174,15 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         ),
                       ],
                     ),
-                    // Expanded(child: RecentFiles()),
                     Expanded(
                       // child: getTicketsView(),
                       child: getConsumerUserView(),
                     ),
                   ],
                 ),
-              ),
-              StackHeader()
-            ],
-          ),
-        ));
+          )
+        )
+    );
   }
 
   Widget getConsumerUserView() {
@@ -274,7 +283,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
     return provider.tickets.isEmpty // tickets.isEmpty
         ? Center(child: Text('No Tickets', style: TextStyle(fontSize: 20)))
         : Container(
-            padding: const EdgeInsets.all(30),
+            padding: EdgeInsets.only(top: 30),
             child: Material(
               child: PlutoGrid(
                   columns: columns,

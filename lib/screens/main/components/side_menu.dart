@@ -1,17 +1,30 @@
 import 'package:admin/constants/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
+import 'package:admin/constants/globals.dart' as globals;
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
-    Key? key,
-  }) : super(key: key);
+class SideMenu extends StatefulWidget {
+  final Color color;
+  const SideMenu({this.color = const Color(0xB2000000)});
+
+  @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+
+
+  void closeSideMenu() {
+    setState(() {
+      globals.width = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Color(0xB2000000),
+        color: widget.color,
         child:
         ListView(
           shrinkWrap: true,
@@ -45,14 +58,18 @@ class SideMenu extends StatelessWidget {
                 title: 'Access',
             ),
             DrawerListSubTile(
-                title: 'User Groups',
+                title: 'Organization',
                 subTitle: 'Manage your business entities',
-                press: (){}),
+                press: (){
+                  Navigator.pushNamed(context, '/organizations');
+                  closeSideMenu();
+                }),
             DrawerListSubTile(
                 title: 'Users',
                 subTitle: 'Manage your users',
                 press: (){
                   Navigator.pushNamed(context, '/users');
+                  closeSideMenu();
                 }),
             DrawerListSubTile(
                 title: 'Tags',
@@ -83,78 +100,6 @@ class SideMenu extends StatelessWidget {
         ),
       )
     );
-          // Container(
-          //   height: 77.0,
-          //   color: secondaryColor,
-          //   child: DrawerHeader(
-          //     margin: EdgeInsets.all(15.0),
-          //     padding: EdgeInsets.all(0.0),
-          //     child:  Image.asset("assets/images/logo.png"),
-          // ),
-          // ),
-          // DrawerListTile(
-          //   title: "Admin panel",
-          //   svgSrc: "assets/icons/menu_dashbord.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Alerts & Reports",
-          //   svgSrc: "assets/icons/menu_tran.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/reports');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Ticket system",
-          //   svgSrc: "assets/icons/menu_task.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/tickets');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Ticket system PG",
-          //   svgSrc: "assets/icons/menu_task.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/tickets_pluto_grid');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Matters",
-          //   svgSrc: "assets/icons/menu_doc.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/matters');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Chat",
-          //   svgSrc: "assets/icons/menu_store.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/chat');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "Notification",
-          //   svgSrc: "assets/icons/menu_notification.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/notification');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "System Settings",
-          //   svgSrc: "assets/icons/menu_setting.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/settings');
-          //   },
-          // ),
-          // DrawerListTile(
-          //   title: "My Account",
-          //   svgSrc: "assets/icons/menu_profile.svg",
-          //   press: () {
-          //     Navigator.pushNamed(context, '/myaccount');
-          //   },
-          // ),
   }
 }
 

@@ -80,6 +80,7 @@ class OwnTextFieldWithIcons extends StatelessWidget{
       decoration: InputDecoration(
         hintStyle: TextStyle(color: iconColor),
         labelStyle: TextStyle(color: iconColor),
+        contentPadding: EdgeInsets.all(17),
         labelText: labelText,
         hintText: hintText,
         fillColor: bgColor,

@@ -42,14 +42,6 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: GestureDetector(
-            onTap: () {
-              setState(() {
-                _width = 0;
-                _heightIcons = 0;
-                tapBurger();
-              });
-            },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,6 +124,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                           Visibility(
                             visible: _burger ? false : true,
                             child: SideMenuContainer(
+                              color: headerColor,
                               width: _width,
                               height: MediaQuery.of(context).size.height - 70,
                             ),
@@ -168,7 +161,8 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                           )),
                     ]),
               ],
-            )));
+            )
+    );
   }
 }
 

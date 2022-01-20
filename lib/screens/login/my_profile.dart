@@ -10,6 +10,7 @@ import 'package:admin/model/Storage.dart';
 import 'package:admin/model/user.dart';
 
 import '../../api/firebase_api.dart';
+import '../../constants/tabView.dart';
 import '../ticket/screen_arguments.dart';
 
 dynamic args;
@@ -65,9 +66,11 @@ class _ProfilePage extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['Info', 'Contact', 'Other', 'Firebase'];
+
+    List tabs = ['Info', 'Contact', 'Other', 'Firebase'];
     args = ModalRoute.of(context)!.settings.arguments;
-    if (args != 'newUser') {
+
+    if (args != 'newUser' && args != null) {
       args = args as ScreenArguments?;
       if (args.user != null) {
         _user = args.user;
@@ -111,7 +114,8 @@ class _ProfilePage extends State<ProfilePage>
                                   onPressed: () {
                                     // 2do: чи маєм право створювати порожнього юзера без прив'язки до uid FirebaseAuth?
                                     // Поки, що коментую рядок
-                                    FirebaseApi.createUser(user: _user!, uid: _user!.id);
+                                    // FirebaseApi.createUser(user: _user!, uid: _user!.id);
+                                    Navigator.pushNamed(context, '/');
                                   },
                                   label: 'Save')
                             ],
@@ -119,6 +123,7 @@ class _ProfilePage extends State<ProfilePage>
                         ],
                       ),
                       bottom: TabBar(
+                        isScrollable: true,
                         controller: _tabController,
                         tabs: [
                           for (final tab in tabs) Tab(text: tab),
@@ -128,15 +133,12 @@ class _ProfilePage extends State<ProfilePage>
                     body: TabBarView(
                       controller: _tabController,
                       children: [
-                        Center(
-                          child: InfoTab(),
-                        ),
-                        Center(
-                          child: ContactTab(),
-                        ),
+                        InfoTab(),
+                        ContactTab(),
                         TabsMainContainer(
                           children: [
                             Wrap(
+                              alignment: WrapAlignment.spaceBetween,
                               children: [
                                 if (args == 'newUser')
                                   RowItem(
@@ -164,78 +166,6 @@ class _ProfilePage extends State<ProfilePage>
   }
 }
 
-class TabsMainContainer extends StatelessWidget {
-  final List<Widget> children;
-  TabsMainContainer({this.children = const []});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Container(
-      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, children: children),
-    ));
-  }
-}
-
-class RowItem extends StatelessWidget {
-  final String text;
-  final String label;
-  final Widget widget;
-  final dynamic onChanged;
-  final dynamic initialValue;
-  RowItem(
-      {this.text = '',
-      this.label = 'Default',
-      this.onChanged,
-      this.widget = const Text(''),
-        this.initialValue
-      });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.end,
-        children: [
-          Column(
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
-                width: 300,
-                child: Text(
-                  text,
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                width: 300,
-                child: OwnTextField(
-                  onChanged: onChanged,
-                  labelText: label,
-                  initialValue: initialValue,
-                ),
-              ),
-            ],
-          ),
-          Container(
-              padding: EdgeInsets.all(5),
-              width: widget == const Text('') ? 0 : 175,
-              child: Container(
-                child: widget,
-              ))
-        ],
-      ),
-    );
-  }
-}
 
 class InfoTab extends StatefulWidget {
   InfoTab();
@@ -265,6 +195,7 @@ class _InfoTabState extends State<InfoTab> {
         ),
         if (args == 'newUser')
           Wrap(
+            alignment: WrapAlignment.spaceBetween,
             children: [
               RowItem(
                   text: '* Organization:',
@@ -280,6 +211,7 @@ class _InfoTabState extends State<InfoTab> {
           ),
         if (args != 'newUser')
           Wrap(
+            alignment: WrapAlignment.spaceBetween,
             children: [
               RowItem(
                 text: 'Site:',
@@ -294,8 +226,10 @@ class _InfoTabState extends State<InfoTab> {
             initialValue: _user!.id,
             onChanged: (body) {
               _user!.id = body;
-            }),
+            }
+        ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 text: '* First Name:',
@@ -310,6 +244,7 @@ class _InfoTabState extends State<InfoTab> {
           ],
         ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
               text: '* Password:',
@@ -320,6 +255,7 @@ class _InfoTabState extends State<InfoTab> {
           ],
         ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 text: '* Preferred OTP',
@@ -349,6 +285,7 @@ class ContactTab extends StatelessWidget {
     return TabsMainContainer(
       children: [
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 label: 'Email',
@@ -363,6 +300,7 @@ class ContactTab extends StatelessWidget {
           ],
         ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 label: 'Street Address 1',
@@ -377,6 +315,7 @@ class ContactTab extends StatelessWidget {
           ],
         ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 label: 'City',
@@ -391,6 +330,7 @@ class ContactTab extends StatelessWidget {
           ],
         ),
         Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
                 label: 'PostCode',

@@ -5,4 +5,5 @@ enum Roles {
   ADMIN,
   MANAGER,
   NEW_USER,
+  ROLE_NOT_FOUND,
 }
