@@ -13,6 +13,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:admin/screens/main/main_screen.dart';
+import 'package:data_table_2/data_table_2.dart';
 
 class UsersPage extends StatefulWidget {
   @override
@@ -164,7 +165,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                     // Expanded(child: RecentFiles()),
                     Expanded(
                       // child: getTicketsView(),
-                      child: getConsumerTicketView(),
+                      child: getConsumerUserView(),
                     ),
                   ],
                 ),
@@ -175,31 +176,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         ));
   }
 
-  // Widget getConsumerTicketView() {
-  //   return StreamBuilder<List<Ticket>>(
-  //     stream: FirebaseApi.readTickets(),
-  //     builder: (context, snapshot) {
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.waiting:
-  //           print('ConnectionState.waiting');
-  //           return Center(child: CircularProgressIndicator());
-  //         default:
-  //           if (snapshot.hasError) {
-  //             return buildText('Something Went Wrong Try later');
-  //           } else {
-  //             final tickets = snapshot.data;
-
-  //             final provider = Provider.of<TicketsProvider>(context);
-  //             provider.setTickets(tickets);
-
-  //             return getTicketsView(provider);
-  //           }
-  //       }
-  //     },
-  //   );
-  // }
-
-  Widget getConsumerTicketView() {
+  Widget getConsumerUserView() {
     return StreamBuilder<List<User>>(
       stream: FirebaseApi.readUsers(),
       builder: (context, snapshot) {
@@ -209,7 +186,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
-              print(snapshot.error);
               return buildText('Something Went Wrong Try later');
             } else {
               final users = snapshot.data;
@@ -217,14 +193,14 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               final provider = Provider.of<NewVersionUserProvider>(context);
               provider.setUsers(users);
 
-              return getView(provider);
+              return getTicketsView(provider);
             }
         }
       },
     );
   }
 
-  Widget getView(provider) {
+  Widget getTicketsView(provider) {
     List<PlutoColumn> columns = [
       /// Text Column definition
       PlutoColumn(
@@ -268,11 +244,11 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         // type: PlutoColumnType.select(Roles.values.toList()),
         type: PlutoColumnType.select(Roles.values.map((e) => e.name).toList()),
       ),
-      // PlutoColumn(
-      //   title: 'Account Type',
-      //   field: 'select_field_ex',
-      //   type: PlutoColumnType.select(['item1', 'item2', 'item3']),
-      // ),
+      PlutoColumn(
+        title: 'Manage',
+        field: 'manage_user',
+        type: PlutoColumnType.select(['Edit']),
+      ),
 
       /// Datetime Column definition
       // PlutoColumn(
@@ -296,7 +272,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
     ];
 
     return provider.tickets.isEmpty // tickets.isEmpty
-        ? Center(child: Text('No Users', style: TextStyle(fontSize: 20)))
+        ? Center(child: Text('No Tickets', style: TextStyle(fontSize: 20)))
         : Container(
             padding: const EdgeInsets.all(30),
             child: Material(
@@ -329,19 +305,18 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                           'select_field_account_type': PlutoCell(
                               value: Roles.values.firstWhere(
                                   (e) =>
-                                      e.name == (provider.tickets[index].accountType as Roles).name,
+                                      e.name ==
+                                      (provider.tickets[index].accountType
+                                              as Roles)
+                                          .name,
                                   orElse: () => Roles.ROLE_NOT_FOUND)),
+                          'manage_user': PlutoCell(
+                              value: 'editUser'
+                          ),
+
 
                           // 'date_field_lastSignInTime': PlutoCell(
                           //     value: provider.users[index].lastSignInTime),
-
-
-                          // 'date_field_lastSignInTime': PlutoCell(
-                          //     value: provider.users[index].lastSignInTime.toString()),
-
-
-                          // 'date_field_lastSignInTime': PlutoCell(
-                          //     value: (provider.users[index].lastSignInTime as DateTime).toString()),
 
                           // 'date_field_lastSignInTime':
                           //     PlutoCell(value: '2020-08-06'),
@@ -353,8 +328,14 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                       );
                     },
                   ),
-                  onRowDoubleTap: (event) {
+                  onRowDoubleTap: (event) async{
                     print(event);
+                    PlutoCell? cell = event.row!.cells['text_field_id'];
+                    String _uid = cell!.value;
+                    User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+
+                    editUser(user: user);
+
                   },
                   onChanged: (PlutoGridOnChangedEvent event) {
                     print(event);
@@ -368,60 +349,23 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   },
                   onLoaded: (PlutoGridOnLoadedEvent event) {
                     print(event);
-                  }),
-            ));
+                  },
+                 onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async{
+                   PlutoCell? cell = event.row!.cells['text_field_id'];
+                   String _uid = cell!.value;
+                   User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+
+                   editUser(user: user);
+                  },
+            ),
+            )
+    );
   }
 
-  DataRow recentTicketDataRow(data) {
-    return DataRow(
-      cells: [
-        DataCell(Text(data.id)),
-        DataCell(Text(data.name)),
-        DataCell(Text(data.status)),
-        DataCell(Text(data.type)),
-        // DataCell(Text(data.date)),
-        DataCell(Text(Utils.fromDateTimeToJson(data.date).toString())),
-        DataCell(Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Material(
-              type: MaterialType.transparency,
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/editticket',
-                        // arguments: ScreenArguments(ticketId: data.id));
-                        arguments: ScreenArguments(ticket: data));
-                  },
-                  icon: Icon(Icons.edit, color: Colors.blue),
-                  hoverColor: Colors.blue[50]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-            ),
-            Material(
-              type: MaterialType.transparency,
-              child: IconButton(
-                onPressed: () async {
-                  final provider =
-                      Provider.of<TicketsProvider>(context, listen: false);
-                  provider.removeTicket(data);
-                },
-                icon: Icon(Icons.delete, color: Colors.blue),
-                hoverColor: Colors.blue[50],
-              ),
-            ),
-          ],
-        )),
-      ],
-      // onSelectChanged: (isSelected) {
-      //   if (isSelected) {
-      //     Navigator.pushNamed(context, '/editticket',
+  void editUser({required User? user}) {
+    Navigator.pushNamed(context, '/profile',
       //         arguments: ScreenArguments(ticketId: data.id));
-      //     setState(() {});
-      //   }
-      // }
-    );
+        arguments: ScreenArguments(user: user));
   }
 }
 

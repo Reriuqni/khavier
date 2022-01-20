@@ -3,9 +3,9 @@ import 'package:image_picker_web/image_picker_web.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:path/path.dart';
 
-imagePicker() {
+imagePicker({required String uid}) {
   return ImagePickerWeb.getImageInfo.then((MediaInfo mediaInfo) {
-    uploadFile(mediaInfo, 'images', mediaInfo.fileName);
+    uploadFile(mediaInfo, uid, mediaInfo.fileName);
   });
 }
 uploadFile(MediaInfo mediaInfo, String ref, String? fileName) {

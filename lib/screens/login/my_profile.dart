@@ -9,6 +9,9 @@ import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/model/Storage.dart';
 import 'package:admin/model/user.dart';
 
+import '../../api/firebase_api.dart';
+import '../ticket/screen_arguments.dart';
+
 dynamic args;
 User? _user = User(id: 'mock id', 
 lastSignInTime: DateTime.now()
@@ -51,6 +54,7 @@ class _ProfilePage extends State<ProfilePage>
       });
     });
   }
+  bool isAddUser = true;
 
   @override
   void dispose() {
@@ -63,6 +67,14 @@ class _ProfilePage extends State<ProfilePage>
   Widget build(BuildContext context) {
     final tabs = ['Info', 'Contact', 'Other', 'Firebase'];
     args = ModalRoute.of(context)!.settings.arguments;
+    if (args != 'newUser') {
+      args = args as ScreenArguments?;
+      if (args.user != null) {
+        _user = args.user;
+        isAddUser = false;
+      }
+    }
+
 
     return SafeArea(
       child: Container(
@@ -99,7 +111,7 @@ class _ProfilePage extends State<ProfilePage>
                                   onPressed: () {
                                     // 2do: чи маєм право створювати порожнього юзера без прив'язки до uid FirebaseAuth?
                                     // Поки, що коментую рядок
-                                    // FirebaseApi.createUser(_user!);
+                                    FirebaseApi.createUser(user: _user!, uid: _user!.id);
                                   },
                                   label: 'Save')
                             ],
@@ -172,11 +184,14 @@ class RowItem extends StatelessWidget {
   final String label;
   final Widget widget;
   final dynamic onChanged;
+  final dynamic initialValue;
   RowItem(
       {this.text = '',
       this.label = 'Default',
       this.onChanged,
-      this.widget = const Text('')});
+      this.widget = const Text(''),
+        this.initialValue
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -205,6 +220,7 @@ class RowItem extends StatelessWidget {
                 child: OwnTextField(
                   onChanged: onChanged,
                   labelText: label,
+                  initialValue: initialValue,
                 ),
               ),
             ],
@@ -240,7 +256,7 @@ class _InfoTabState extends State<InfoTab> {
             OwnButtonICon(
               onPressed: () async {
                 setState(() {
-                  imagePicker();
+                  imagePicker(uid: _user!.id);
                 });
               },
               icon: Icons.add,
@@ -275,6 +291,7 @@ class _InfoTabState extends State<InfoTab> {
           ),
         RowItem(
             text: 'User ID:',
+            initialValue: _user!.id,
             onChanged: (body) {
               _user!.id = body;
             }),
