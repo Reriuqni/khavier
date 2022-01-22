@@ -99,7 +99,6 @@ class FirebaseApi {
         .update({'accountType': accountType})
         .then((_) => print('Role success update to $accountType'))
         .catchError((error) => print('Failed: $error'));
-    ;
   }
 
   static Future<String> createUserNotUsed(User user) async {
