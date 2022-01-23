@@ -28,8 +28,8 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
             Navigator.pushReplacementNamed(context, '/email-link-sign-in');
           }),
         ],
-        headerBuilder: headerImage('assets/images/flutterfire_logo.png'),
-        sideBuilder: sideImage('assets/images/flutterfire_logo.png'),
+        headerBuilder: headerImage('assets/images/auth_screen/auth_logo.png'),
+        sideBuilder: sideImage('assets/images/auth_screen/auth_logo.png'),
         subtitleBuilder: (context, action) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),

@@ -86,7 +86,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                               Navigator.pushNamed(context, '/');
                             },
                             child: Image.asset(
-                            'assets/images/logo2.png',
+                            'assets/images/header_logo_white.png',
                             width: 280,
                             height: 54,
                             ),

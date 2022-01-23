@@ -88,7 +88,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                                   Navigator.pushNamed(context, '/');
                                 },
                                 child: Image.asset(
-                                'assets/images/logo2.png',
+                                'assets/images/header_logo_white.png',
                                   width: 210,
                                 height: 50,
                                 ),

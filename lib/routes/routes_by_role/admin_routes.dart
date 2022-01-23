@@ -1,6 +1,5 @@
 import 'package:admin/screens/chat/chat_screen.dart';
 import 'package:admin/screens/login/my_profile.dart';
-import 'package:admin/screens/login/phone_screen.dart';
 import 'package:admin/screens/users/users.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/screens/users/add_user.dart';
@@ -28,7 +27,6 @@ Map<String, WidgetBuilder> getAdminRoutes(BuildContext context) {
     '/notification': (context) => NotificationScreen(),
     '/settings': (context) => SettingsScreen(),
     '/myaccount': (context) => MyAccountScreen(),
-    '/singin': (context) => PhoneScreen(),
     '/addticket': (context) => AddTicket(),
     '/editticket': (context) => AddTicket(),
     '/profile': (context) => ProfilePage(),

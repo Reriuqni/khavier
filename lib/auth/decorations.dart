@@ -8,7 +8,7 @@ HeaderBuilder headerImage(String assetName) {
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
                 fit: BoxFit.cover,
-                image: NetworkImage("assets/assets/images/team.jpg"))),
+                image: NetworkImage("assets/assets/images/auth_screen/auth_bg.jpg"))),
         child: Container(
         // width: 600,
         // height: 600,
@@ -33,7 +33,7 @@ SideBuilder sideImage(String assetName) {
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
                 fit: BoxFit.cover,
-                image: NetworkImage("assets/assets/images/team.jpg"))),
+                image: NetworkImage("assets/assets/images/auth_screen/auth_bg.jpg"))),
         child: Container(
         // width: 600,
         // height: 600,

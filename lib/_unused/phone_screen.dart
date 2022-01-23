@@ -6,7 +6,7 @@ import 'package:admin/widgets/textFields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
-import '../dashboard/components/header.dart';
+import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/constants/colors.dart';
 
 class PhoneScreen extends StatefulWidget {
