@@ -6,6 +6,21 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
+/*
+  /// example of used
+  // #1
+    return ShimmerLoading(
+      text:
+          'Unfortunately No Such User in DB. Please, ask admin to create User',
+      subText: _uid,
+      isShimEnabled: false,
+      isShowSignOut: true);
+
+  // #2
+  return ShimmerLoading(
+  text: 'Loading User Data...', subText: _uid);
+*/
+
 class ShimmerLoading extends StatelessWidget {
   const ShimmerLoading({
     Key? key,
@@ -60,7 +75,8 @@ class ShimmerLoading extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                               child: OwnButtonWithICon(
                                 onPressed: () {
-                                  Clipboard.setData(ClipboardData(text: subText));
+                                  Clipboard.setData(
+                                      ClipboardData(text: subText));
                                 },
                                 icon: FontAwesomeIcons.copy,
                                 label: "uid",

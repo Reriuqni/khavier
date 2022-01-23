@@ -1,5 +1,5 @@
 import 'package:admin/api/firebase_api.dart';
-import 'package:admin/apps/preloader_app.dart';
+import 'package:admin/apps/shimmer_app_loading.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/apps/create_app.dart';
 import 'package:admin/model/user.dart' as SolveUser;
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/init.dart'
+import '../auth/init.dart'
     if (dart.library.html) 'auth/web_init.dart'
     if (dart.library.io) 'auth/io_init.dart';
 
@@ -60,6 +60,11 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
           future: FirebaseApi.readOrCreateUser(uid: _uid, user: newSolveUser),
           builder: (BuildContext context,
               AsyncSnapshot<SolveUser.User?> userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
+              return ShimmerLoading(
+                  text: 'Loading User Data...', subText: _uid);
+            }
+
             if (userSnapshot.hasData) {
               final solveUser = userSnapshot.data;
 
@@ -71,8 +76,14 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                   child: CreateApp(userRole: solveUser.accountType),
                 );
               }
-            } else
-              return Preloader();
+            } else {
+              return ShimmerLoading(
+                  text:
+                      'Unfortunately No Such User in DB. Please, ask admin to create User',
+                  subText: _uid,
+                  isShimEnabled: false,
+                  isShowSignOut: true);
+            }
           },
         );
       },
