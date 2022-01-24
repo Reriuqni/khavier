@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:admin/constants/globals.dart' as globals;
 import '../../../constants/colors.dart';
 
-
 class Header extends StatefulWidget {
   final void Function()? tapCog;
   final void Function()? tapSquare;
@@ -78,17 +77,20 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                         children: [
                           ElevatedButton(
                             style: ButtonStyle(
-                              shadowColor: MaterialStateProperty.all(Colors.transparent),
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                              shadowColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
                             ),
                             onPressed: () {
                               Navigator.pushNamed(context, '/');
                             },
                             child: Image.asset(
-                            'assets/images/header_logo_white.png',
-                            width: 280,
-                            height: 54,
+                              'assets/images/header_logo_white.png',
+                              width: 280,
+                              height: 54,
                             ),
                           ),
                           OwnAnimatedTextButton(
@@ -107,7 +109,8 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                             type: MaterialType.transparency,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 17, horizontal: 10),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 17, horizontal: 10),
                                   labelText: 'Search',
                                   labelStyle: TextStyle(color: primaryColor)),
                               style: TextStyle(color: primaryColor),
@@ -206,7 +209,10 @@ class SideMenuContainer extends StatelessWidget {
   final double width;
   final double height;
   final Color color;
-  SideMenuContainer({required this.width, required this.height, this.color = const Color(0xB2000000)});
+  SideMenuContainer(
+      {required this.width,
+      required this.height,
+      this.color = const Color(0xB2000000)});
 
   @override
   Widget build(BuildContext context) {

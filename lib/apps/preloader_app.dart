@@ -19,7 +19,7 @@ class Preloader extends StatelessWidget {
                 // Logo
                 SizedBox(
                     width: 300,
-                    child: Image.asset('images/preloader_logo.png')),
+                    child: Image.asset('assets/images/preloader_logo.png')),
                 // Padding
                 Padding(padding: const EdgeInsets.only(top: 20)),
                 // Cirecle
