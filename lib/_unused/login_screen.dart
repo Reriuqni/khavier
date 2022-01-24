@@ -16,7 +16,7 @@ class LoginScreenState extends State<LoginScreen> {
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
                 fit: BoxFit.cover,
-                image: NetworkImage("assets/images/_unused/logo.png"))),
+                image: const NetworkImage("assets/assets/images/_unused/logo.png"))),
         child: Center(
             child: LoginForm(
           width: 600,

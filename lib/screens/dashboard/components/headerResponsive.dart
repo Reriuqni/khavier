@@ -90,11 +90,19 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                         onPressed: () {
                           Navigator.pushNamed(context, '/');
                         },
-                        child: Image.asset(
-                          'assets/images/header_logo_white.png',
+                        child: const Image(
+                          image: AssetImage('assets/images/header_logo_white.png'),
                           width: 210,
                           height: 50,
                         ),
+                        /* 
+                          // working analog is:
+                          child: Image.asset(
+                            'assets/images/header_logo_white.png',
+                            width: 210,
+                            height: 50,
+                          ), 
+                        */
                       ),
                     ],
                   ),

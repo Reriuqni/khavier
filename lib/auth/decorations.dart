@@ -21,8 +21,9 @@ Center getBgWithLogo(String assetName, {bool isSide = false}) {
                   colorFilter:
                       ColorFilter.mode(Colors.black54, BlendMode.darken),
                   fit: BoxFit.cover,
-                  image:
-                      NetworkImage("assets/images/auth_screen/auth_bg.jpg"))),
+                  image: AssetImage('assets/images/auth_screen/auth_bg.jpg'))),
+                  // result the same as:
+                  // image: const NetworkImage("assets/assets/images/auth_screen/auth_bg.jpg"))),
           child: Container(
             child: Center(
                 child: Container(

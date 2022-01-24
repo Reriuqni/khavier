@@ -36,7 +36,7 @@ class _MainScreen extends State<MainScreen>
                   fit: Responsive.isDesktop(context)
                       ? BoxFit.cover
                       : BoxFit.fitHeight,
-                  image: NetworkImage("assets/assets/images/home.jpg"))),
+                  image: AssetImage("assets/images/home.jpg"))),
           child:Stack(
             children: [
               StackHeader()
