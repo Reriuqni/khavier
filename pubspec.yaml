@@ -70,8 +70,9 @@ flutter:
   # assets:
   #   - images/ # in root Flutter-Responsive-Admin-Panel-or-Dashboard must be folder images
   assets:
-    - assets/images/
     - assets/icons/
+    - assets/images/
+    - assets/images/auth_screen/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
