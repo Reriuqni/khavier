@@ -338,7 +338,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                     print(event);
                     PlutoCell? cell = event.row!.cells['text_field_id'];
                     String _uid = cell!.value;
-                    User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                    // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                    User? user = await FirebaseApi.readUser(uid: _uid);
 
                     editUser(user: user);
 
@@ -359,7 +360,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                  onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async{
                    PlutoCell? cell = event.row!.cells['text_field_id'];
                    String _uid = cell!.value;
-                   User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                  //  User? user = await FirebaseApi.readUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                   User? user = await FirebaseApi.readUser(uid: _uid);
 
                    editUser(user: user);
                   },

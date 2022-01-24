@@ -57,7 +57,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
 
         // show app’s home page after login
         return FutureBuilder(
-          future: FirebaseApi.readOrCreateUser(uid: _uid, user: newSolveUser),
+          future: FirebaseApi.readOrCreateUser(uid: _uid, solveUser: newSolveUser, authUser: snapshot.data!),
           builder: (BuildContext context,
               AsyncSnapshot<SolveUser.User?> userSnapshot) {
             if (userSnapshot.hasData) {
