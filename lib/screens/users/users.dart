@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../main/components/screenWithHeaderAndSideMenu.dart';
 
-
-
 class UsersPage extends StatefulWidget {
   @override
   _UsersPageState createState() => _UsersPageState();
@@ -44,142 +42,146 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
     return Material(
         type: MaterialType.transparency,
         child: SafeArea(
-          child: HeaderAndSideMenu(
-            widget: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                      children: [
-                    Container(
-                      width: 200,
-                      child: Text(
-                          'Users',
-                          style: TextStyle(
-                              color: iconColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        ),
+            child: HeaderAndSideMenu(
+          widget: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 200,
+                    child: Text(
+                      'Users',
+                      style: TextStyle(
+                          color: iconColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(width: 50,),
-                    Container(
-                      width: 301,
-                      child: Row(
-                          children: [
-                            Checkbox(
-                                activeColor: secondaryColor,
-                                value: inviteCheckBox.value,
-                                onChanged: (value) {
-                                  setState(() {
-                                    inviteCheckBox.value = value;
-                                  });
-                                }),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('Show Invites',
-                                style: TextStyle(
-                                  color: iconColor,
-                                  fontSize: 16,
-                                )),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
-                              child: OwnButton(
-                              onPressed: () {
-                              },
-                                label: 'Invite',
-                              ),
-                            ),
-                            OwnButtonICon(
-                              onPressed: () async {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/profile',
-                                  arguments: 'newUser',
-                                );
-                              },
-                              icon: Icons.add,
-                            ),
-                          ],
-                      ),
-                        )
-                      ],
-                    ),
-                SizedBox(height: 10,),
-                Wrap(
-                  alignment: WrapAlignment.spaceBetween,
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Container(
+                    width: 301,
+                    child: Row(
                       children: [
-                    Container(
-                      width: 300,
-                          child: DropdownButtonFormField(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(15)
-                        ),
-                            hint: Text('Organization'),
-                            onChanged: (String? newValue) {
+                        Checkbox(
+                            activeColor: secondaryColor,
+                            value: inviteCheckBox.value,
+                            onChanged: (value) {
                               setState(() {
-                                // _type = newValue;
-                          }
-                          );
-                            },
-                            //тимчасові айтеми
-                            items: <String>[
-                              '',
-                              'Need',
-                              'Maybe',
-                              'Whatelse',
-                              'Forgoted'
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                                inviteCheckBox.value = value;
+                              });
+                            }),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('Show Invites',
+                            style: TextStyle(
+                              color: iconColor,
+                              fontSize: 16,
+                            )),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
+                          child: OwnButton(
+                            onPressed: () {},
+                            label: 'Invite',
                           ),
                         ),
-                    SizedBox(width: 20, height: 20,),
-                    Container(
-                      width: 300,
-                          child: OwnTextFieldWithIcons(
-                            labelText: 'Jim',
-                            prefixIcon: FontAwesomeIcons.search,
-                          ),
-                        ),
-                    SizedBox(width: 30,),
-                    Container(
-                      width: 300,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: archivedCheckBox.value,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      archivedCheckBox.value = value;
-                                    });
-                                  }),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('Show Archived',
-                                  style: TextStyle(
-                                    color: iconColor,
-                                    fontSize: 16,
-                                  )),
-                            ],
-                          ),
+                        OwnButtonICon(
+                          onPressed: () async {
+                            Navigator.pushNamed(
+                              context,
+                              '/profile',
+                              arguments: 'newUser',
+                            );
+                          },
+                          icon: Icons.add,
                         ),
                       ],
                     ),
-                    Expanded(
-                      // child: getTicketsView(),
-                      child: getConsumerUserView(),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 300,
+                    child: DropdownButtonFormField(
+                      decoration:
+                          InputDecoration(contentPadding: EdgeInsets.all(15)),
+                      hint: Text('Organization'),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          // _type = newValue;
+                        });
+                      },
+                      //тимчасові айтеми
+                      items: <String>[
+                        '',
+                        'Need',
+                        'Maybe',
+                        'Whatelse',
+                        'Forgoted'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                  ],
-                ),
-          )
-        )
-    );
+                  ),
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                  ),
+                  Container(
+                    width: 300,
+                    child: OwnTextFieldWithIcons(
+                      labelText: 'Jim',
+                      prefixIcon: FontAwesomeIcons.search,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Container(
+                    width: 300,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                            value: archivedCheckBox.value,
+                            onChanged: (value) {
+                              setState(() {
+                                archivedCheckBox.value = value;
+                              });
+                            }),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('Show Archived',
+                            style: TextStyle(
+                              color: iconColor,
+                              fontSize: 16,
+                            )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                // child: getTicketsView(),
+                child: getConsumerUserView(),
+              ),
+            ],
+          ),
+        )));
   }
 
   Widget getConsumerUserView() {
@@ -283,96 +285,94 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
             padding: EdgeInsets.only(top: 30),
             child: Material(
               child: PlutoGrid(
-                  columns: columns,
-                  // rows: rows,
-                  rows: List.generate(
-                    provider.tickets.length,
-                    (index) {
-                      // print(provider.tickets[index].lastSignInTime);
-                      return PlutoRow(
-                        cells: {
-                          'text_field_id':
-                              PlutoCell(value: provider.tickets[index].id),
-                          'text_field_firstName': PlutoCell(
-                              value: provider.tickets[index].firstName),
-                          'text_field_email':
-                              PlutoCell(value: provider.tickets[index].email),
-                          'text_field_mobile':
-                              PlutoCell(value: provider.tickets[index].mobile),
-                          // 'text_field_accountType': PlutoCell(
-                          //     value: provider.tickets[index].accountType),
-                          // 'number_field': PlutoCell(value: 2020),
-                          // 'select_field_ex': PlutoCell(value: 'item1'),
+                columns: columns,
+                // rows: rows,
+                rows: List.generate(
+                  provider.tickets.length,
+                  (index) {
+                    // print(provider.tickets[index].lastSignInTime);
+                    return PlutoRow(
+                      cells: {
+                        'text_field_id':
+                            PlutoCell(value: provider.tickets[index].id),
+                        'text_field_firstName':
+                            PlutoCell(value: provider.tickets[index].firstName),
+                        'text_field_email':
+                            PlutoCell(value: provider.tickets[index].email),
+                        'text_field_mobile':
+                            PlutoCell(value: provider.tickets[index].mobile),
+                        // 'text_field_accountType': PlutoCell(
+                        //     value: provider.tickets[index].accountType),
+                        // 'number_field': PlutoCell(value: 2020),
+                        // 'select_field_ex': PlutoCell(value: 'item1'),
 
-                          // 'select_field_account_type': PlutoCell(
-                          //     value:
-                          //             (provider.tickets[index].accountType as Roles).name),
+                        // 'select_field_account_type': PlutoCell(
+                        //     value:
+                        //             (provider.tickets[index].accountType as Roles).name),
 
-                          'select_field_account_type': PlutoCell(
-                              value: Roles.values.firstWhere(
-                                  (e) =>
-                                      e.name ==
-                                      (provider.tickets[index].accountType
-                                              as Roles)
-                                          .name,
-                                  orElse: () => Roles.NEW_USER).name),
-                          'manage_user': PlutoCell(
-                              value: 'editUser'
-                          ),
+                        'select_field_account_type': PlutoCell(
+                            value: Roles.values
+                                .firstWhere(
+                                    (e) =>
+                                        e.name ==
+                                        (provider.tickets[index].accountType
+                                                as Roles)
+                                            .name,
+                                    orElse: () => Roles.NEW_USER)
+                                .name),
+                        'manage_user': PlutoCell(value: 'editUser'),
 
+                        // 'date_field_lastSignInTime': PlutoCell(
+                        //     value: provider.users[index].lastSignInTime),
 
-                          // 'date_field_lastSignInTime': PlutoCell(
-                          //     value: provider.users[index].lastSignInTime),
+                        // 'date_field_lastSignInTime':
+                        //     PlutoCell(value: '2020-08-06'),
 
-                          // 'date_field_lastSignInTime':
-                          //     PlutoCell(value: '2020-08-06'),
-
-                          // 'time_field_lastSignInTime': PlutoCell(
-                          //     value: provider.users[index]
-                          //         .lastSignInTime), // 'time_field': PlutoCell(value: '12:30'),
-                        },
-                      );
-                    },
-                  ),
-                  onRowDoubleTap: (event) async{
-                    print(event);
-                    PlutoCell? cell = event.row!.cells['text_field_id'];
-                    String _uid = cell!.value;
-                    // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
-                    User? user = await FirebaseApi.readUser(uid: _uid);
-
-                    editUser(user: user);
-
+                        // 'time_field_lastSignInTime': PlutoCell(
+                        //     value: provider.users[index]
+                        //         .lastSignInTime), // 'time_field': PlutoCell(value: '12:30'),
+                      },
+                    );
                   },
-                  onChanged: (PlutoGridOnChangedEvent event) {
-                    print(event);
+                ),
+                onRowDoubleTap: (event) async {
+                  print(event);
+                  PlutoCell? cell = event.row!.cells['text_field_id'];
+                  String _uid = cell!.value;
+                  // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                  User? user = await FirebaseApi.readUser(uid: _uid);
 
-                    PlutoCell? cell = event.row!.cells['text_field_id'];
-                    String _uid = cell!.value;
-                    if (event.columnIdx == 4) {
-                      FirebaseApi.updateAccountType(
-                          uid: _uid, accountType: event.value);
-                    }
-                  },
-                  onLoaded: (PlutoGridOnLoadedEvent event) {
-                    print(event);
-                  },
-                 onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async{
-                   PlutoCell? cell = event.row!.cells['text_field_id'];
-                   String _uid = cell!.value;
+                  editUser(user: user);
+                },
+                onChanged: (PlutoGridOnChangedEvent event) {
+                  print(event);
+
+                  PlutoCell? cell = event.row!.cells['text_field_id'];
+                  String _uid = cell!.value;
+                  if (event.columnIdx == 4) {
+                    FirebaseApi.updateAccountType(
+                        uid: _uid, accountType: event.value);
+                  }
+                },
+                onLoaded: (PlutoGridOnLoadedEvent event) {
+                  print(event);
+                },
+                onRowSecondaryTap:
+                    (PlutoGridOnRowSecondaryTapEvent event) async {
+                  PlutoCell? cell = event.row!.cells['text_field_id'];
+                  String _uid = cell!.value;
                   //  User? user = await FirebaseApi.readUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
-                   User? user = await FirebaseApi.readUser(uid: _uid);
+                  User? user = await FirebaseApi.readUser(uid: _uid);
 
-                   editUser(user: user);
-                  },
-            ),
-            )
-    );
+                  editUser(user: user);
+                },
+              ),
+            ));
   }
 
   void editUser({required User? user}) {
     Navigator.pushNamed(context, '/profile',
-      //         arguments: ScreenArguments(ticketId: data.id));
+        //         arguments: ScreenArguments(ticketId: data.id));
         arguments: ScreenArguments(user: user));
   }
 }
