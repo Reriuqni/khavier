@@ -1,17 +1,9 @@
-import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
-import 'package:admin/widgets/textFields.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/main/main_screen.dart';
-import 'package:admin/model/Storage.dart';
-import 'package:admin/model/user.dart';
 
-import '../../api/firebase_api.dart';
-import '../../constants/tabView.dart';
 import '../ticket/screen_arguments.dart';
 
 dynamic args;
@@ -88,7 +80,7 @@ class _OrganizationsEdit extends State<OrganizationsEdit>
                   fit: Responsive.isDesktop(context)
                       ? BoxFit.cover
                       : BoxFit.fitHeight,
-                  image: NetworkImage("assets/assets/images/home.jpg"))),
+                  image: AssetImage("assets/images/home.jpg"))),
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [

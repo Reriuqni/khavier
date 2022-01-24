@@ -3,11 +3,8 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/model/user.dart';
 import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/routes/roles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:admin/provider/TicketsProvider.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
-import 'package:admin/utils.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -341,7 +338,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                     print(event);
                     PlutoCell? cell = event.row!.cells['text_field_id'];
                     String _uid = cell!.value;
-                    User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                    // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                    User? user = await FirebaseApi.readUser(uid: _uid);
 
                     editUser(user: user);
 
@@ -362,7 +360,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                  onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async{
                    PlutoCell? cell = event.row!.cells['text_field_id'];
                    String _uid = cell!.value;
-                   User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                  //  User? user = await FirebaseApi.readUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
+                   User? user = await FirebaseApi.readUser(uid: _uid);
 
                    editUser(user: user);
                   },

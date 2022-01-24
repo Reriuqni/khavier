@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../dashboard/components/header.dart';
+import 'package:admin/screens/dashboard/components/header.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

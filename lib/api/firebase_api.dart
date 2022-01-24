@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:admin/model/user.dart';
+import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 String ticketCollection = 'tickets';
 String usersCollection = 'users';
@@ -50,8 +51,8 @@ class FirebaseApi {
   ///
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
-  static Future<User?> readOrCreateUser(
-      {required String uid, required User user}) async {
+  static Future<SolveUser.User?> readOrCreateUser(
+      {required String uid, required SolveUser.User solveUser, required User authUser}) async {
     final docUser =
         FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     final snapshot = await docUser.get();
@@ -61,34 +62,41 @@ class FirebaseApi {
 
       // docUser.update({'lastSignInTime': user.lastSignInTime});
 
-      return User.fromJson(snapshot.data()!);
+      return SolveUser.User.fromJson(snapshot.data()!);
     } else {
       print('User is not exist. uid $uid');
 
-      await createUser(uid: uid, user: user);
-      return user;
+      await createUser(uid: uid, solveUser: solveUser);
+      return solveUser;
     }
   }
 
-  static Future<User> createUser(
-      {required String uid, required User user}) async {
+  static Future<SolveUser.User> readUser({required String uid}) async {
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+    final snapshot = await docUser.get();
+
+    return SolveUser.User.fromJson(snapshot.data()!);
+  }
+
+  static Future<SolveUser.User> createUser(
+      {required String uid, required SolveUser.User solveUser}) async {
     final docUser =
         FirebaseFirestore.instance.collection(usersCollection).doc(uid);
-    await docUser.set(user.toJson());
+    await docUser.set(solveUser.toJson());
 
     final snapshot = await docUser.get();
     String docID = snapshot.id;
     print('Created new User, docId = uid = $docID');
 
-    return User.fromJson(snapshot.data()!);
+    return SolveUser.User.fromJson(snapshot.data()!);
   }
 
-  static Stream<List<User>> readUsers() => FirebaseFirestore.instance
+  static Stream<List<SolveUser.User>> readUsers() => FirebaseFirestore.instance
       .collection(usersCollection)
       // .orderBy(UserField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(User.fromJson) as StreamTransformer<
-          QuerySnapshot<Map<String, dynamic>>, List<User>>);
+      .transform(Utils.transformer(SolveUser.User.fromJson) as StreamTransformer<
+          QuerySnapshot<Map<String, dynamic>>, List<SolveUser.User>>);
 
   static Future<void> updateAccountType(
       {required String uid, required String accountType}) async {
@@ -99,10 +107,9 @@ class FirebaseApi {
         .update({'accountType': accountType})
         .then((_) => print('Role success update to $accountType'))
         .catchError((error) => print('Failed: $error'));
-    ;
   }
 
-  static Future<String> createUserNotUsed(User user) async {
+  static Future<String> createUserNotUsed(SolveUser.User user) async {
     final docUser =
         FirebaseFirestore.instance.collection(usersCollection).doc();
 

@@ -1,11 +1,11 @@
 import 'package:admin/api/firebase_api.dart';
-import 'package:admin/apps/shimmer_app_loading.dart';
+import 'package:admin/apps/preloader_app.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/apps/create_app.dart';
 import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/provider/TicketsProvider.dart';
-import 'package:admin/routes/index.dart';
+import 'package:admin/routes/roles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nested/nested.dart';
@@ -57,14 +57,9 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
 
         // show app’s home page after login
         return FutureBuilder(
-          future: FirebaseApi.readOrCreateUser(uid: _uid, user: newSolveUser),
+          future: FirebaseApi.readOrCreateUser(uid: _uid, solveUser: newSolveUser, authUser: snapshot.data!),
           builder: (BuildContext context,
               AsyncSnapshot<SolveUser.User?> userSnapshot) {
-            if (userSnapshot.connectionState == ConnectionState.waiting) {
-              return ShimmerLoading(
-                  text: 'Loading User Data...', subText: _uid);
-            }
-
             if (userSnapshot.hasData) {
               final solveUser = userSnapshot.data;
 
@@ -76,14 +71,8 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
                   child: CreateApp(userRole: solveUser.accountType),
                 );
               }
-            } else {
-              return ShimmerLoading(
-                  text:
-                      'Unfortunately No Such User in DB. Please, ask admin to create User',
-                  subText: _uid,
-                  isShimEnabled: false,
-                  isShowSignOut: true);
-            }
+            } else
+              return Preloader();
           },
         );
       },

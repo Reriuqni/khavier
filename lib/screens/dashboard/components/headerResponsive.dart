@@ -42,127 +42,137 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    color: headerColor,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              OwnAnimatedButton(
-                                width: 35,
-                                onTap: () {
-                                  setState(() {
-                                    _burger = !_burger;
-                                    _burger
-                                        ? controller.forward()
-                                        : controller.reverse();
-                                    _widthBurger = _widthBurger == 0 ? 200 : 0;
-                                    _heightIcons = 0;
-                                    _width = 0;
-                                  });
-                                },
-                                child: AnimatedIcon(
-                                    icon: AnimatedIcons.menu_close,
-                                    progress: controller,
-                                    size: 25,
-                                    color: primaryColor),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  shadowColor: MaterialStateProperty.all(Colors.transparent),
-                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                  backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                                ),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/');
-                                },
-                                child: Image.asset(
-                                'assets/images/logo2.png',
-                                  width: 210,
-                                height: 50,
-                                ),
-                              ),
-                            ],
-                          ),
-                          OwnAnimatedButton(
-                            width: 35,
-                            onTap: () {
-                              setState(() {
-                                _heightIcons = _heightIcons == 0 ? 100 : 0;
-                                _width = 0;
-                                tapBurger();
-                              });
-                            },
-                            child: Icon(
-                              Icons.more_vert,
-                              color: primaryColor,
-                              size: 25,
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+            color: headerColor,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
                     children: [
-                      Flex(
-                        direction: Axis.horizontal,
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          Visibility(
-                            visible: _burger ? false : true,
-                            child: SideMenuContainer(
-                              color: headerColor,
-                              width: _width,
-                              height: MediaQuery.of(context).size.height - 70,
-                            ),
-                          ),
-                          BurgerMenuContainer(),
-                        ],
+                      OwnAnimatedButton(
+                        width: 35,
+                        onTap: () {
+                          setState(() {
+                            _burger = !_burger;
+                            _burger
+                                ? controller.forward()
+                                : controller.reverse();
+                            _widthBurger = _widthBurger == 0 ? 200 : 0;
+                            _heightIcons = 0;
+                            _width = 0;
+                          });
+                        },
+                        child: AnimatedIcon(
+                            icon: AnimatedIcons.menu_close,
+                            progress: controller,
+                            size: 25,
+                            color: primaryColor),
                       ),
-                      AnimatedContainer(
-                          width: 200,
-                          height: _heightIcons,
-                          decoration: BoxDecoration(
-                            border: Border(
-                                top: BorderSide(
-                                    color: _heightIcons == 0
-                                        ? Colors.transparent
-                                        : primaryColor,
-                                    width: 1)),
-                            color: headerColor,
-                          ),
-                          duration: Duration(milliseconds: 200),
-                          child: Visibility(
-                            visible: _heightIcons == 0 ? false : true,
-                            child: HeaderIcons(
-                              tapCog: () {
-                                setState(() {
-                                  _width = _width == 0 ? 200 : 0;
-                                  _heightIcons = 0;
-                                  tapBurger();
-                                });
-                              },
-                              tapUser: () {},
-                              tapSquare: () {},
-                            ),
-                          )),
-                    ]),
-              ],
-            )
-    );
+                      SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shadowColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          overlayColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: const Image(
+                          image: AssetImage('assets/images/header_logo_white.png'),
+                          width: 210,
+                          height: 50,
+                        ),
+                        /* 
+                          // working analog is:
+                          child: Image.asset(
+                            'assets/images/header_logo_white.png',
+                            width: 210,
+                            height: 50,
+                          ), 
+                        */
+                      ),
+                    ],
+                  ),
+                  OwnAnimatedButton(
+                    width: 35,
+                    onTap: () {
+                      setState(() {
+                        _heightIcons = _heightIcons == 0 ? 100 : 0;
+                        _width = 0;
+                        tapBurger();
+                      });
+                    },
+                    child: Icon(
+                      Icons.more_vert,
+                      color: primaryColor,
+                      size: 25,
+                    ),
+                  )
+                ],
+              ),
+            )),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flex(
+                direction: Axis.horizontal,
+                textDirection: TextDirection.rtl,
+                children: [
+                  Visibility(
+                    visible: _burger ? false : true,
+                    child: SideMenuContainer(
+                      color: headerColor,
+                      width: _width,
+                      height: MediaQuery.of(context).size.height - 70,
+                    ),
+                  ),
+                  BurgerMenuContainer(),
+                ],
+              ),
+              AnimatedContainer(
+                  width: 200,
+                  height: _heightIcons,
+                  decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(
+                            color: _heightIcons == 0
+                                ? Colors.transparent
+                                : primaryColor,
+                            width: 1)),
+                    color: headerColor,
+                  ),
+                  duration: Duration(milliseconds: 200),
+                  child: Visibility(
+                    visible: _heightIcons == 0 ? false : true,
+                    child: HeaderIcons(
+                      tapCog: () {
+                        setState(() {
+                          _width = _width == 0 ? 200 : 0;
+                          _heightIcons = 0;
+                          tapBurger();
+                        });
+                      },
+                      tapUser: () {},
+                      tapSquare: () {},
+                    ),
+                  )),
+            ]),
+      ],
+    ));
   }
 }
 

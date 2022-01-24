@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
 Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
+  String authLogo = 'assets/images/auth_screen/auth_logo.png';
+
   return {
     '/': (context) {
       return SignInScreen(
@@ -28,8 +30,8 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
             Navigator.pushReplacementNamed(context, '/email-link-sign-in');
           }),
         ],
-        headerBuilder: headerImage('assets/images/flutterfire_logo.png'),
-        sideBuilder: sideImage('assets/images/flutterfire_logo.png'),
+        headerBuilder: headerImage(authLogo),
+        sideBuilder: sideImage(authLogo),
         subtitleBuilder: (context, action) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -115,5 +117,3 @@ Map<String, WidgetBuilder> getAuthRoutes(BuildContext context) {
     },
   };
 }
-
-

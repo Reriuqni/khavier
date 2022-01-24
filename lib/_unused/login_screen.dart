@@ -16,7 +16,7 @@ class LoginScreenState extends State<LoginScreen> {
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
                 fit: BoxFit.cover,
-                image: NetworkImage("assets/assets/images/team.jpg"))),
+                image: const NetworkImage("assets/assets/images/_unused/logo.png"))),
         child: Center(
             child: LoginForm(
           width: 600,
@@ -58,7 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(
-                      "assets/images/logo2.png",
+                      "assets/images/header_logo_white.png",
                       width: 200,
                       height: 50,
                     ),

@@ -43,7 +43,7 @@ dependencies:
   firebase_auth: ^3.3.5
   firebase_core: ^1.11.0
   cloud_firestore: ^3.1.6
-  shimmer: ^2.0.0
+  # shimmer: ^2.0.0
 
   # slidable
   flutter_slidable: ^1.1.0  
@@ -67,9 +67,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/ # in root Flutter-Responsive-Admin-Panel-or-Dashboard must be folder images
   assets:
-    - assets/images/
     - assets/icons/
+    - assets/images/
+    - assets/images/auth_screen/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
