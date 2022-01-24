@@ -250,7 +250,11 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         field: 'select_field_account_type',
         // type: PlutoColumnType.select(['item1', 'item2', 'item3']),
         // type: PlutoColumnType.select(Roles.values.toList()),
-        type: PlutoColumnType.select(Roles.values.map((e) => e.name).toList()),
+        type: PlutoColumnType.select(Roles.values
+            .where((e) => ![Roles.AUTH, Roles.ROLE_NOT_FOUND].contains(e))
+            .map((e) => e.name)
+            .toList()),
+        // type: PlutoColumnType.select(Roles.values.map((e) => e.name).toList().where((element) => element != Roles.AUTH.name || element != Roles.ROLE_NOT_FOUND.name)),
       ),
       PlutoColumn(
         title: 'Manage',
