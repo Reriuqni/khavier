@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
-import 'package:admin/screens/dashboard/components/header.dart';
 import '../../../constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../widgets/containers.dart';
 
 double _widthBurger = 0;
 bool _burger = false;

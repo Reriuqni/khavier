@@ -1,6 +1,5 @@
 import 'package:admin/constants/colors.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:admin/constants/globals.dart' as globals;
 
 class SideMenu extends StatefulWidget {
@@ -25,6 +24,7 @@ class _SideMenuState extends State<SideMenu> {
     return SafeArea(
       child: Container(
         color: widget.color,
+        height: MediaQuery.of(context).size.height - 134,
         child:
         ListView(
           shrinkWrap: true,

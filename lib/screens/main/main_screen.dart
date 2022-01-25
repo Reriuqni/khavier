@@ -1,8 +1,7 @@
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/dashboard/components/headerResponsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../widgets/containers.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -47,20 +46,3 @@ class _MainScreen extends State<MainScreen>
   }
 }
 
-//Responsive header for stack in any pages
-class StackHeader extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (Responsive.isDesktop(context))
-                    Header(),
-                  if (!Responsive.isDesktop(context))
-                    HeaderResponsive()
-                ],
-    );
-  }
-}

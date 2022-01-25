@@ -1,8 +1,8 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../constants/colors.dart';
 import '../../widgets/buttons.dart';
+import '../../widgets/containers.dart';
 import '../../widgets/textFields.dart';
-import '../main/components/screenWithHeaderAndSideMenu.dart';
 import 'package:flutter/material.dart';
 
 

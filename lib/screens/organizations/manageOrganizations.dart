@@ -2,8 +2,7 @@ import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/main/main_screen.dart';
-
+import '../../widgets/containers.dart';
 import '../ticket/screen_arguments.dart';
 
 dynamic args;

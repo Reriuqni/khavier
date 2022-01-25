@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:admin/screens/main/components/side_menu.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:admin/constants/globals.dart' as globals;
 import '../../../constants/colors.dart';
+import '../../../widgets/containers.dart';
+
 
 class Header extends StatefulWidget {
   final void Function()? tapCog;
@@ -140,91 +140,3 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   }
 }
 
-class HeaderIcons extends StatefulWidget {
-  final void Function()? tapCog;
-  final void Function()? tapSquare;
-  final void Function()? tapUser;
-
-  HeaderIcons({this.tapCog, this.tapSquare, this.tapUser});
-
-  @override
-  State<HeaderIcons> createState() => _HeaderIcons();
-}
-
-class _HeaderIcons extends State<HeaderIcons> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        OwnAnimatedButton(
-          onTap: () {},
-          child: FaIcon(
-            FontAwesomeIcons.exclamationTriangle,
-            size: 17,
-            color: primaryColor,
-          ),
-        ),
-        OwnAnimatedButton(
-          onTap: widget.tapCog,
-          child: FaIcon(
-            FontAwesomeIcons.cog,
-            size: 17,
-            color: primaryColor,
-          ),
-        ),
-        OwnAnimatedButton(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              '/profile',
-            );
-            setState(() {
-              globals.width = 0;
-            });
-          },
-          child: FaIcon(
-            FontAwesomeIcons.user,
-            size: 17,
-            color: primaryColor,
-          ),
-        ),
-        OwnAnimatedButton(
-          onTap: () {
-            FirebaseAuth.instance.signOut();
-            // userProvider.signOut();
-            // Navigator.pushNamed(context, '/login');
-          },
-          child: FaIcon(
-            FontAwesomeIcons.signOutAlt,
-            size: 17,
-            color: primaryColor,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SideMenuContainer extends StatelessWidget {
-  final double width;
-  final double height;
-  final Color color;
-  SideMenuContainer(
-      {required this.width,
-      required this.height,
-      this.color = const Color(0xB2000000)});
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-        width: width,
-        height: height,
-        duration: Duration(milliseconds: 200),
-        child: Material(
-          type: MaterialType.transparency,
-          child: SideMenu(
-            color: color,
-          ),
-        ));
-  }
-}
