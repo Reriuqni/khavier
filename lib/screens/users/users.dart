@@ -259,19 +259,33 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         type: PlutoColumnType.select(['Edit']),
       ),
 
+      /// Time Column definition
+      // PlutoColumn(
+      //   title: 'Last Refresh',
+      //   field: 'time_field_lastAccessToFirebase_format_by_intl',
+      //   type: PlutoColumnType.text(),
+      // ),
+
+      /// Time Column definition
+      PlutoColumn(
+        title: 'Last Refresh',
+        field: 'time_field_lastAccessToFirebase',
+        type: PlutoColumnType.text(),
+      ),
+
       /// Datetime Column definition
       PlutoColumn(
-        title: 'Date',
+        title: 'Auth SignIn',
         field: 'date_field_lastSignInTime',
         type: PlutoColumnType.date(),
       ),
 
       /// Time Column definition
-      PlutoColumn(
-        title: 'Time',
-        field: 'time_field_lastSignInTime',
-        type: PlutoColumnType.time(),
-      ),
+      // PlutoColumn(
+      //   title: 'Time SignIn',
+      //   field: 'time_field_lastSignInTime',
+      //   type: PlutoColumnType.time(),
+      // ),
 
       // PlutoColumn(
       //   title: 'Opt column',
@@ -291,8 +305,13 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                 rows: List.generate(
                   provider.tickets.length,
                   (index) {
-                    DateTime d = provider.tickets[index].lastSignInTime;
+                    DateTime d;
+                    d = provider.tickets[index].lastSignInTime;
                     DateTime lastSignInTime = DateTime.utc(
+                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+
+                    d = provider.tickets[index].lastAccessToFirebase;
+                    DateTime lastAccessToFirebase = DateTime.utc(
                         d.year, d.month, d.day, d.hour, d.minute, d.second);
 
                     return PlutoRow(
@@ -326,15 +345,24 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                                 .name),
                         'manage_user': PlutoCell(value: 'editUser'),
 
+                        // 'time_field_lastAccessToFirebase_format_by_intl': PlutoCell(
+                        //     value: DateFormat('yyyy-MM-dd KK:mm:ss')
+                        //         .format(lastAccessToFirebase)),
+
+                        'time_field_lastAccessToFirebase': PlutoCell(
+                            value:
+                                "${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')} ${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}:${d.second.toString().padLeft(2, '0')}"),
+
+                        // 'time_field_lastAccessToFirebase':
+                        //     PlutoCell(value: lastAccessToFirebase),
 
                         'date_field_lastSignInTime':
                             PlutoCell(value: lastSignInTime),
-                        'time_field_lastSignInTime':
-                            PlutoCell(value: lastSignInTime),
 
-                        // 'time_field_lastSignInTime': PlutoCell(
-                        //     value: provider.users[index]
-                        //         .lastSignInTime), // 'time_field': PlutoCell(value: '12:30'),
+                        // 'time_field_lastSignInTime':
+                        //     PlutoCell(value: lastSignInTime),// 'time_field': PlutoCell(value: '12:30'),
+
+
                       },
                     );
                   },

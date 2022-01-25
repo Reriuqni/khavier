@@ -63,8 +63,10 @@ class FirebaseApi {
     if (snapshot.exists) {
       print('User exist. uid $_uid');
 
-      docUser
-          .update({'lastSignInTime': authUser.data!.metadata.lastSignInTime});
+      docUser.update({
+        'lastSignInTime': authUser.data!.metadata.lastSignInTime,
+        'lastAccessToFirebase': DateTime.now()
+      });
 
       return SolveUser.User.fromJson(snapshot.data()!);
     } else {
@@ -73,6 +75,7 @@ class FirebaseApi {
       SolveUser.User newSolveUser = SolveUser.User(
         id: _uid,
         lastSignInTime: authUser.data!.metadata.lastSignInTime,
+        lastAccessToFirebase: DateTime.now(),
         firstName: authUser.data?.displayName ?? '',
         email: authUser.data?.email ?? '',
         mobile: authUser.data?.phoneNumber ?? '',

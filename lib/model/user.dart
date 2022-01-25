@@ -29,6 +29,7 @@ class User {
   String tags;
   String liquidatorId;
   DateTime? lastSignInTime;
+  DateTime? lastAccessToFirebase;
 
   User({
     this.organization = '',
@@ -51,6 +52,7 @@ class User {
     this.tags = '',
     this.liquidatorId = '',
     required this.lastSignInTime,
+    required this.lastAccessToFirebase,
   });
 
   static User fromJson(Map<String, dynamic> json) => User(
@@ -76,6 +78,7 @@ class User {
         tags: json['tags'],
         liquidatorId: json['liquidatorId'],
         lastSignInTime: Utils.toDateTime(json['lastSignInTime']),
+        lastAccessToFirebase: Utils.toDateTime(json['lastAccessToFirebase']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,5 +102,6 @@ class User {
         'tags': tags,
         'liquidatorId': liquidatorId,
         'lastSignInTime': Utils.fromDateTimeToJson(lastSignInTime),
+        'lastAccessToFirebase': Utils.fromDateTimeToJson(lastAccessToFirebase),
       };
 }

@@ -11,7 +11,7 @@ import '../ticket/screen_arguments.dart';
 
 dynamic args;
 User? _user = User(id: 'mock id', 
-lastSignInTime: DateTime.now()
+lastSignInTime: DateTime.now(), lastAccessToFirebase: DateTime.now()
 );
 
 class ProfilePage extends StatefulWidget {
