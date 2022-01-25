@@ -5,6 +5,7 @@ import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/model/ticket_static.dart';
 import 'package:admin/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 String ticketCollection = 'tickets';
 String usersCollection = 'users';
@@ -52,27 +53,39 @@ class FirebaseApi {
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
   static Future<SolveUser.User?> readOrCreateUser(
-      {required String uid, required SolveUser.User solveUser, required User authUser}) async {
+      {required AsyncSnapshot<User?> authUser}) async {
+    String _uid = authUser.data!.uid;
+
     final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+        FirebaseFirestore.instance.collection(usersCollection).doc(_uid);
     final snapshot = await docUser.get();
 
     if (snapshot.exists) {
-      print('User exist. uid $uid');
+      print('User exist. uid $_uid');
 
-      // docUser.update({'lastSignInTime': user.lastSignInTime});
+      docUser
+          .update({'lastSignInTime': authUser.data!.metadata.lastSignInTime});
 
       return SolveUser.User.fromJson(snapshot.data()!);
     } else {
-      print('User is not exist. uid $uid');
+      print('User is not exist. uid $_uid');
 
-      await createUser(uid: uid, solveUser: solveUser);
-      return solveUser;
+      SolveUser.User newSolveUser = SolveUser.User(
+        id: _uid,
+        lastSignInTime: authUser.data!.metadata.lastSignInTime,
+        firstName: authUser.data?.displayName ?? '',
+        email: authUser.data?.email ?? '',
+        mobile: authUser.data?.phoneNumber ?? '',
+      );
+
+      await createUser(uid: _uid, solveUser: newSolveUser);
+      return newSolveUser;
     }
   }
 
   static Future<SolveUser.User> readUser({required String uid}) async {
-    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+    final docUser =
+        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     final snapshot = await docUser.get();
 
     return SolveUser.User.fromJson(snapshot.data()!);
@@ -95,8 +108,9 @@ class FirebaseApi {
       .collection(usersCollection)
       // .orderBy(UserField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(SolveUser.User.fromJson) as StreamTransformer<
-          QuerySnapshot<Map<String, dynamic>>, List<SolveUser.User>>);
+      .transform(Utils.transformer(SolveUser.User.fromJson)
+          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
+              List<SolveUser.User>>);
 
   static Future<void> updateAccountType(
       {required String uid, required String accountType}) async {

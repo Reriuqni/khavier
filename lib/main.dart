@@ -46,18 +46,9 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
           return CreateApp(userRole: Roles.AUTH);
         }
 
-        String _uid = snapshot.data!.uid;
-        SolveUser.User newSolveUser = SolveUser.User(
-          id: _uid,
-          lastSignInTime: snapshot.data!.metadata.lastSignInTime,
-          firstName: snapshot.data?.displayName ?? '',
-          email: snapshot.data?.email ?? '',
-          mobile: snapshot.data?.phoneNumber ?? '',
-        );
-
         // show app’s home page after login
         return FutureBuilder(
-          future: FirebaseApi.readOrCreateUser(uid: _uid, solveUser: newSolveUser, authUser: snapshot.data!),
+          future: FirebaseApi.readOrCreateUser(authUser: snapshot),
           builder: (BuildContext context,
               AsyncSnapshot<SolveUser.User?> userSnapshot) {
             if (userSnapshot.hasData) {

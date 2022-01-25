@@ -190,7 +190,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            print('ConnectionState.waiting');
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
@@ -249,12 +248,10 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         title: 'Account Type',
         field: 'select_field_account_type',
         // type: PlutoColumnType.select(['item1', 'item2', 'item3']),
-        // type: PlutoColumnType.select(Roles.values.toList()),
         type: PlutoColumnType.select(Roles.values
             .where((e) => ![Roles.AUTH, Roles.ROLE_NOT_FOUND].contains(e))
             .map((e) => e.name)
             .toList()),
-        // type: PlutoColumnType.select(Roles.values.map((e) => e.name).toList().where((element) => element != Roles.AUTH.name || element != Roles.ROLE_NOT_FOUND.name)),
       ),
       PlutoColumn(
         title: 'Manage',
@@ -263,18 +260,18 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       ),
 
       /// Datetime Column definition
-      // PlutoColumn(
-      //   title: 'Date',
-      //   field: 'date_field_lastSignInTime',
-      //   type: PlutoColumnType.date(),
-      // ),
+      PlutoColumn(
+        title: 'Date',
+        field: 'date_field_lastSignInTime',
+        type: PlutoColumnType.date(),
+      ),
 
-      // /// Time Column definition
-      // PlutoColumn(
-      //   title: 'time column',
-      //   field: 'time_field_lastSignInTime',
-      //   type: PlutoColumnType.time(),
-      // ),
+      /// Time Column definition
+      PlutoColumn(
+        title: 'Time',
+        field: 'time_field_lastSignInTime',
+        type: PlutoColumnType.time(),
+      ),
 
       // PlutoColumn(
       //   title: 'Opt column',
@@ -294,7 +291,10 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                 rows: List.generate(
                   provider.tickets.length,
                   (index) {
-                    // print(provider.tickets[index].lastSignInTime);
+                    DateTime d = provider.tickets[index].lastSignInTime;
+                    DateTime lastSignInTime = DateTime.utc(
+                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+
                     return PlutoRow(
                       cells: {
                         'text_field_id':
@@ -326,11 +326,11 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                                 .name),
                         'manage_user': PlutoCell(value: 'editUser'),
 
-                        // 'date_field_lastSignInTime': PlutoCell(
-                        //     value: provider.users[index].lastSignInTime),
 
-                        // 'date_field_lastSignInTime':
-                        //     PlutoCell(value: '2020-08-06'),
+                        'date_field_lastSignInTime':
+                            PlutoCell(value: lastSignInTime),
+                        'time_field_lastSignInTime':
+                            PlutoCell(value: lastSignInTime),
 
                         // 'time_field_lastSignInTime': PlutoCell(
                         //     value: provider.users[index]
@@ -359,7 +359,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   }
                 },
                 onLoaded: (PlutoGridOnLoadedEvent event) {
-                  print(event);
+                  // print(event);  // Instance of 'PlutoGridOnLoadedEvent'
                 },
                 onRowSecondaryTap:
                     (PlutoGridOnRowSecondaryTapEvent event) async {
