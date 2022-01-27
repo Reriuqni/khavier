@@ -10,9 +10,10 @@ import '../../widgets/containers.dart';
 import '../ticket/screen_arguments.dart';
 
 dynamic args;
-User? _user = User(id: 'mock id', 
-lastSignInTime: DateTime.now(), lastAccessToFirebase: DateTime.now()
-);
+User? _user = User(
+    id: 'mock id',
+    lastSignInTime: DateTime.now(),
+    lastAccessToFirebase: DateTime.now());
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -51,6 +52,7 @@ class _ProfilePage extends State<ProfilePage>
       });
     });
   }
+
   bool isAddUser = true;
 
   @override
@@ -62,7 +64,6 @@ class _ProfilePage extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-
     List tabs = ['Info', 'Contact', 'Other', 'Firebase'];
     args = ModalRoute.of(context)!.settings.arguments;
 
@@ -73,7 +74,6 @@ class _ProfilePage extends State<ProfilePage>
         isAddUser = false;
       }
     }
-
 
     return SafeArea(
       child: Container(
@@ -162,7 +162,6 @@ class _ProfilePage extends State<ProfilePage>
   }
 }
 
-
 class InfoTab extends StatefulWidget {
   InfoTab();
 
@@ -222,8 +221,7 @@ class _InfoTabState extends State<InfoTab> {
             initialValue: _user!.id,
             onChanged: (body) {
               _user!.id = body;
-            }
-        ),
+            }),
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [

@@ -361,8 +361,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
                         // 'time_field_lastSignInTime':
                         //     PlutoCell(value: lastSignInTime),// 'time_field': PlutoCell(value: '12:30'),
-
-
                       },
                     );
                   },
@@ -371,7 +369,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   print(event);
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
-                  // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
                   User? user = await FirebaseApi.readUser(uid: _uid);
 
                   editUser(user: user);
@@ -386,14 +383,11 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         uid: _uid, accountType: event.value);
                   }
                 },
-                onLoaded: (PlutoGridOnLoadedEvent event) {
-                  // print(event);  // Instance of 'PlutoGridOnLoadedEvent'
-                },
                 onRowSecondaryTap:
                     (PlutoGridOnRowSecondaryTapEvent event) async {
+                  print('onRowSecondaryTap');
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
-                  //  User? user = await FirebaseApi.readUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
                   User? user = await FirebaseApi.readUser(uid: _uid);
 
                   editUser(user: user);
@@ -404,7 +398,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
   void editUser({required User? user}) {
     Navigator.pushNamed(context, '/profile',
-        //         arguments: ScreenArguments(ticketId: data.id));
         arguments: ScreenArguments(user: user));
   }
 }

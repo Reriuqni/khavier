@@ -86,6 +86,7 @@ class FirebaseApi {
     }
   }
 
+  /// 2do: if snapshot.exists = false
   static Future<SolveUser.User> readUser({required String uid}) async {
     final docUser =
         FirebaseFirestore.instance.collection(usersCollection).doc(uid);
