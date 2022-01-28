@@ -1,3 +1,4 @@
+import 'package:admin/api/firebase_api.dart';
 import 'package:admin/auth/provider_configs.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,8 @@ import '../../widgets/containers.dart';
 import '../ticket/screen_arguments.dart';
 
 dynamic args;
-User? _user = User(
-    id: 'mock id',
-    lastSignInTime: DateTime.now(),
-    lastAccessToFirebase: DateTime.now());
+User? _user =
+    User(id: 'mock id', lastSignInTime: DateTime.now(), lastAccessToFirebase: DateTime.now());
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -80,14 +79,9 @@ class _ProfilePage extends State<ProfilePage>
           decoration: BoxDecoration(
               color: Colors.black,
               image: DecorationImage(
-                  colorFilter:
-                      ColorFilter.mode(Colors.black45, BlendMode.dstATop),
-                  alignment: Responsive.isDesktop(context)
-                      ? Alignment.topCenter
-                      : Alignment.center,
-                  fit: Responsive.isDesktop(context)
-                      ? BoxFit.cover
-                      : BoxFit.fitHeight,
+                  colorFilter: ColorFilter.mode(Colors.black45, BlendMode.dstATop),
+                  alignment: Responsive.isDesktop(context) ? Alignment.topCenter : Alignment.center,
+                  fit: Responsive.isDesktop(context) ? BoxFit.cover : BoxFit.fitHeight,
                   image: AssetImage("assets/images/home.jpg"))),
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
@@ -111,7 +105,8 @@ class _ProfilePage extends State<ProfilePage>
                                     // 2do: чи маєм право створювати порожнього юзера без прив'язки до uid FirebaseAuth?
                                     // Поки, що коментую рядок
                                     // FirebaseApi.createUser(user: _user!, uid: _user!.id);
-                                    Navigator.pushNamed(context, '/');
+                                    FirebaseApi.updateUser(user: _user!);
+                                    Navigator.pushNamed(context, '/users');
                                   },
                                   label: 'Save')
                             ],
@@ -131,26 +126,7 @@ class _ProfilePage extends State<ProfilePage>
                       children: [
                         InfoTab(),
                         ContactTab(),
-                        TabsMainContainer(
-                          children: [
-                            Wrap(
-                              alignment: WrapAlignment.spaceBetween,
-                              children: [
-                                if (args == 'newUser')
-                                  RowItem(
-                                      text: 'Tags:',
-                                      onChanged: (body) {
-                                        _user!.tags = body;
-                                      }),
-                                RowItem(
-                                    label: 'Liquidator #',
-                                    onChanged: (body) {
-                                      _user!.liquidatorId = body;
-                                    }),
-                              ],
-                            )
-                          ],
-                        ),
+                        OtherTab(),
                         if (args != 'newUser') FirebaseTab(),
                       ],
                     ),
@@ -158,6 +134,35 @@ class _ProfilePage extends State<ProfilePage>
               StackHeader()
             ],
           )),
+    );
+  }
+}
+
+class OtherTab extends StatelessWidget {
+  const OtherTab({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TabsMainContainer(
+      children: [
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          children: [
+            if (args == 'newUser')
+              RowItem(
+                text: 'Tags:',
+                onChanged: (_) => _user!.tags = _,
+              ),
+            RowItem(
+              label: 'Liquidator #',
+              initialValue: _user!.liquidatorId,
+              onChanged: (_) => _user!.liquidatorId = _,
+            ),
+          ],
+        )
+      ],
     );
   }
 }
@@ -193,15 +198,15 @@ class _InfoTabState extends State<InfoTab> {
             alignment: WrapAlignment.spaceBetween,
             children: [
               RowItem(
-                  text: '* Organization:',
-                  onChanged: (body) {
-                    _user!.organization = body;
-                  }),
+                text: '* Organization:',
+                initialValue: _user!.organization,
+                onChanged: (_) => _user!.organization = _,
+              ),
               RowItem(
-                  text: '*  Account Type:',
-                  onChanged: (body) {
-                    _user!.accountType = body;
-                  }),
+                text: '*  Account Type:',
+                initialValue: _user!.accountType,
+                onChanged: (_) => _user!.accountType = _,
+              ),
             ],
           ),
         if (args != 'newUser')
@@ -217,30 +222,30 @@ class _InfoTabState extends State<InfoTab> {
             ],
           ),
         RowItem(
-            text: 'User ID:',
-            initialValue: _user!.id,
-            onChanged: (body) {
-              _user!.id = body;
-            }),
+          text: 'User ID:',
+          initialValue: _user!.id,
+          onChanged: (_) => _user!.id = _,
+        ),
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
-                text: '* First Name:',
-                onChanged: (body) {
-                  _user!.firstName = body;
-                }),
+              text: '* First Name:',
+              initialValue: _user!.firstName,
+              onChanged: (_) => _user!.firstName = _,
+            ),
             RowItem(
-                text: '* Last Name:',
-                onChanged: (body) {
-                  _user!.lastName = body;
-                }),
+              text: '* Last Name:',
+              initialValue: _user!.lastName,
+              onChanged: (_) => _user!.lastName = _,
+            ),
           ],
         ),
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
+              // 2do: we have firebase auth. Do we need password field?
               text: '* Password:',
             ),
             RowItem(
@@ -252,18 +257,19 @@ class _InfoTabState extends State<InfoTab> {
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
-                text: '* Preferred OTP',
-                onChanged: (body) {
-                  _user!.preferredOTP = body;
-                },
-                widget:
-                    OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
+              // 2do: what is that? What is OTP? We have Firabes auth.
+              text: '* Preferred OTP',
+              initialValue: _user!.preferredOTP,
+              onChanged: (_) => _user!.preferredOTP = _,
+              widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth'),
+            ),
             if (args == 'newUser')
+              // 2do: Can we change language only for new user?
               RowItem(
-                  text: 'Language:',
-                  onChanged: (body) {
-                    _user!.language = body;
-                  }),
+                text: 'Language:',
+                initialValue: _user!.language,
+                onChanged: (_) => _user!.language = _,
+              ),
           ],
         ),
       ],
@@ -282,68 +288,60 @@ class ContactTab extends StatelessWidget {
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
-                label: 'Email',
-                onChanged: (body) {
-                  _user!.email = body;
-                }),
+              label: 'Email',
+              initialValue: _user!.email,
+              onChanged: (_) => _user!.email = _,
+            ),
             RowItem(
-                label: 'Mobile',
-                onChanged: (body) {
-                  _user!.mobile = body;
-                }),
+              label: 'Mobile',
+              initialValue: _user!.mobile,
+              onChanged: (_) => _user!.mobile = _,
+            ),
           ],
         ),
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
-                label: 'Street Address 1',
-                onChanged: (body) {
-                  _user!.streetAddress1 = body;
-                }),
+              label: 'Street Address 1',
+              initialValue: _user!.streetAddress1,
+              onChanged: (_) => _user!.streetAddress1 = _,
+            ),
             RowItem(
-                label: 'Street Address 2',
-                onChanged: (body) {
-                  _user!.streetAddress2 = body;
-                }),
+              label: 'Street Address 2',
+              initialValue: _user!.streetAddress2,
+              onChanged: (_) => _user!.streetAddress2 = _,
+            ),
+          ],
+        ),
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          children: [
+            RowItem(label: 'City', initialValue: _user!.city, onChanged: (_) => _user!.city = _),
+            RowItem(label: 'State', initialValue: _user!.state, onChanged: (_) => _user!.state = _),
           ],
         ),
         Wrap(
           alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
-                label: 'City',
-                onChanged: (body) {
-                  _user!.city = body;
-                }),
+              label: 'PostCode',
+              initialValue: _user!.postCode,
+              onChanged: (_) => _user!.postCode = _,
+            ),
             RowItem(
-                label: 'State',
-                onChanged: (body) {
-                  _user!.state = body;
-                }),
-          ],
-        ),
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          children: [
-            RowItem(
-                label: 'PostCode',
-                onChanged: (body) {
-                  _user!.postCode = body;
-                }),
-            RowItem(
-                label: 'Country',
-                onChanged: (body) {
-                  _user!.country = body;
-                }),
+              label: 'Country',
+              initialValue: _user!.country,
+              onChanged: (_) => _user!.country = _,
+            ),
           ],
         ),
         if (args == 'newUser')
           RowItem(
-              text: 'Time Zone:',
-              onChanged: (body) {
-                _user!.timeZone = body;
-              }),
+            text: 'Time Zone:',
+            initialValue: _user!.timeZone,
+            onChanged: (_) => _user!.timeZone = _,
+          ),
       ],
     );
   }

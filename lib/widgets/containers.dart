@@ -16,11 +16,12 @@ class HeaderAndSideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack (
+    return Stack(
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(top: Responsive.isDesktop(context) ? 134 : 60),
+          padding:
+              EdgeInsets.only(top: Responsive.isDesktop(context) ? 134 : 60),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -30,7 +31,7 @@ class HeaderAndSideMenu extends StatelessWidget {
                     width: 260,
                     child: SideMenu()),
               Container(
-                  width: MediaQuery.of(context).size.width-260,
+                  width: MediaQuery.of(context).size.width - 260,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: widget,
@@ -45,17 +46,14 @@ class HeaderAndSideMenu extends StatelessWidget {
 }
 
 class StackHeader extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (Responsive.isDesktop(context))
-          Header(),
-        if (!Responsive.isDesktop(context))
-          HeaderResponsive()
+        if (Responsive.isDesktop(context)) Header(),
+        if (!Responsive.isDesktop(context)) HeaderResponsive()
       ],
     );
   }
@@ -130,7 +128,10 @@ class SideMenuContainer extends StatelessWidget {
   final double width;
   final double height;
   final Color color;
-  SideMenuContainer({required this.width, required this.height, this.color = const Color(0xB2000000)});
+  SideMenuContainer(
+      {required this.width,
+      required this.height,
+      this.color = const Color(0xB2000000)});
 
   @override
   Widget build(BuildContext context) {
@@ -155,16 +156,20 @@ class TabsMainContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: children
-          ),
-        ));
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children),
+    ));
   }
 }
 
+/// label: this is placeholder
+/// 
+/// text: this is label
+/// 
+/// initialValue: this is // input text
 class RowItem extends StatelessWidget {
   final String text;
   final String label;
@@ -173,11 +178,10 @@ class RowItem extends StatelessWidget {
   final dynamic initialValue;
   RowItem(
       {this.text = '',
-        this.label = 'Default',
-        this.onChanged,
-        this.widget = const Text(''),
-        this.initialValue
-      });
+      this.label = 'Default',
+      this.onChanged,
+      this.widget = const Text(''),
+      this.initialValue});
 
   @override
   Widget build(BuildContext context) {
@@ -222,6 +226,3 @@ class RowItem extends StatelessWidget {
     );
   }
 }
-
-
-

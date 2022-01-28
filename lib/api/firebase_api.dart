@@ -108,6 +108,11 @@ class FirebaseApi {
     return SolveUser.User.fromJson(snapshot.data()!);
   }
 
+  static Future<void> updateUser({required SolveUser.User user}) async {
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(user.id);
+    await docUser.update(user.toJson());
+  }
+
   static Stream<List<SolveUser.User>> readUsers() => FirebaseFirestore.instance
       .collection(usersCollection)
       // .orderBy(UserField.date, descending: true)

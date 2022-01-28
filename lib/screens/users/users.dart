@@ -54,10 +54,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                     width: 200,
                     child: Text(
                       'Users',
-                      style: TextStyle(
-                          color: iconColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(
@@ -114,8 +111,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   Container(
                     width: 300,
                     child: DropdownButtonFormField(
-                      decoration:
-                          InputDecoration(contentPadding: EdgeInsets.all(15)),
+                      decoration: InputDecoration(contentPadding: EdgeInsets.all(15)),
                       hint: Text('Organization'),
                       onChanged: (String? newValue) {
                         setState(() {
@@ -123,13 +119,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         });
                       },
                       //тимчасові айтеми
-                      items: <String>[
-                        '',
-                        'Need',
-                        'Maybe',
-                        'Whatelse',
-                        'Forgoted'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: <String>['', 'Need', 'Maybe', 'Whatelse', 'Forgoted']
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -307,40 +298,25 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   (index) {
                     DateTime d;
                     d = provider.tickets[index].lastSignInTime;
-                    DateTime lastSignInTime = DateTime.utc(
-                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+                    DateTime lastSignInTime =
+                        DateTime.utc(d.year, d.month, d.day, d.hour, d.minute, d.second);
 
                     d = provider.tickets[index].lastAccessToFirebase;
-                    DateTime lastAccessToFirebase = DateTime.utc(
-                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+                    DateTime lastAccessToFirebase =
+                        DateTime.utc(d.year, d.month, d.day, d.hour, d.minute, d.second);
 
                     return PlutoRow(
                       cells: {
-                        'text_field_id':
-                            PlutoCell(value: provider.tickets[index].id),
-                        'text_field_firstName':
-                            PlutoCell(value: provider.tickets[index].firstName),
-                        'text_field_email':
-                            PlutoCell(value: provider.tickets[index].email),
-                        'text_field_mobile':
-                            PlutoCell(value: provider.tickets[index].mobile),
-                        // 'text_field_accountType': PlutoCell(
-                        //     value: provider.tickets[index].accountType),
-                        // 'number_field': PlutoCell(value: 2020),
-                        // 'select_field_ex': PlutoCell(value: 'item1'),
-
-                        // 'select_field_account_type': PlutoCell(
-                        //     value:
-                        //             (provider.tickets[index].accountType as Roles).name),
-
+                        'text_field_id': PlutoCell(value: provider.tickets[index].id),
+                        'text_field_firstName': PlutoCell(value: provider.tickets[index].firstName),
+                        'text_field_email': PlutoCell(value: provider.tickets[index].email),
+                        'text_field_mobile': PlutoCell(value: provider.tickets[index].mobile),
                         'select_field_account_type': PlutoCell(
                             value: Roles.values
                                 .firstWhere(
                                     (e) =>
                                         e.name ==
-                                        (provider.tickets[index].accountType
-                                                as Roles)
-                                            .name,
+                                        (provider.tickets[index].accountType as Roles).name,
                                     orElse: () => Roles.NEW_USER)
                                 .name),
                         'manage_user': PlutoCell(value: 'editUser'),
@@ -356,11 +332,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         // 'time_field_lastAccessToFirebase':
                         //     PlutoCell(value: lastAccessToFirebase),
 
-                        'date_field_lastSignInTime':
-                            PlutoCell(value: lastSignInTime),
-
-                        // 'time_field_lastSignInTime':
-                        //     PlutoCell(value: lastSignInTime),// 'time_field': PlutoCell(value: '12:30'),
+                        'date_field_lastSignInTime': PlutoCell(value: lastSignInTime),
                       },
                     );
                   },
@@ -379,12 +351,10 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
                   if (event.columnIdx == 4) {
-                    FirebaseApi.updateAccountType(
-                        uid: _uid, accountType: event.value);
+                    FirebaseApi.updateAccountType(uid: _uid, accountType: event.value);
                   }
                 },
-                onRowSecondaryTap:
-                    (PlutoGridOnRowSecondaryTapEvent event) async {
+                onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async {
                   print('onRowSecondaryTap');
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
@@ -392,13 +362,16 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
                   editUser(user: user);
                 },
+                createFooter: (stateManager) {
+                  stateManager.setPageSize(100, notify: false); // default 40
+                  return PlutoPagination(stateManager);
+                },
               ),
             ));
   }
 
   void editUser({required User? user}) {
-    Navigator.pushNamed(context, '/profile',
-        arguments: ScreenArguments(user: user));
+    Navigator.pushNamed(context, '/profile', arguments: ScreenArguments(user: user));
   }
 }
 
@@ -412,6 +385,9 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 Widget buildText(String text) => Center(
       child: Text(
         text,
-        style: TextStyle(fontSize: 24, color: Colors.blue),
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.blue,
+        ),
       ),
     );
