@@ -362,6 +362,9 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
                   editUser(user: user);
                 },
+                onLoaded: (PlutoGridOnLoadedEvent event) {
+                  event.stateManager.setShowColumnFilter(true);
+                },
                 createFooter: (stateManager) {
                   stateManager.setPageSize(100, notify: false); // default 40
                   return PlutoPagination(stateManager);
