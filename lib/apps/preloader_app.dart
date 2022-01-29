@@ -21,9 +21,9 @@ class Preloader extends StatelessWidget {
                     width: 300,
                     child: Image.asset('assets/images/preloader_logo.png')),
                 // Padding
-                Padding(padding: const EdgeInsets.only(top: 20)),
+                const Padding(padding: const EdgeInsets.only(top: 20)),
                 // Cirecle
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(),
               ],
             ),
           ),
