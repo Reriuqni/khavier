@@ -36,11 +36,49 @@ class TableUsersContextMenu extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.delete),
               title: Text('Delete'),
-              onTap: () => {},
+              onTap: () {
+                Navigator.pop(context);
+                AlertDialog(
+                  title: Text('Attention'),
+                  content: Text('Delete User?'),
+                  actions: [
+                    TextButton(onPressed: () {}, child: Text('No')),
+                    TextButton(onPressed: () {}, child: Text('Yes')),
+                  ],
+                );
+              },
             ),
           ),
         ];
       },
+    );
+  }
+}
+
+class MyStatelessWidget extends StatelessWidget {
+  const MyStatelessWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: const Text('AlertDialog description'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
     );
   }
 }
