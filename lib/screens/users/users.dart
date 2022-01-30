@@ -249,10 +249,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         title: 'Account Type',
         field: 'select_field_account_type',
         width: 150,
-        type: PlutoColumnType.select(Roles.values
-            .where((e) => ![Roles.AUTH, Roles.ROLE_NOT_FOUND].contains(e))
-            .map((e) => e.name)
-            .toList()),
+        type: PlutoColumnType.select(RolesExtension.getHumanListNames()),
       ),
 
       PlutoColumn(
@@ -308,13 +305,9 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         'text_field_email': PlutoCell(value: provider.tickets[index].email),
                         'text_field_mobile': PlutoCell(value: provider.tickets[index].mobile),
                         'select_field_account_type': PlutoCell(
-                            value: Roles.values
-                                .firstWhere(
-                                    (e) =>
-                                        e.name ==
-                                        (provider.tickets[index].accountType as Roles).name,
-                                    orElse: () => Roles.NEW_USER)
-                                .name),
+                            value: RolesExtension.getNameOfRole(
+                                role: provider.tickets[index].accountType)),
+
 
                         'time_field_lastAccessToFirebase': PlutoCell(
                             value:

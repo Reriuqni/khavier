@@ -1,5 +1,6 @@
 import 'package:admin/api/firebase_api.dart';
 import 'package:admin/auth/provider_configs.dart';
+import 'package:admin/routes/roles.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -202,10 +203,17 @@ class _InfoTabState extends State<InfoTab> {
                 initialValue: _user!.organization,
                 onChanged: (_) => _user!.organization = _,
               ),
-              RowItem(
-                text: '*  Account Type:',
-                initialValue: _user!.accountType,
-                onChanged: (_) => _user!.accountType = _,
+              // RowItem(
+              //   text: '*  Account Type:',
+              //   initialValue: _user!.accountType.name,
+              //   onChanged: (_) => _user!.accountType = _,
+              // ),
+              // 2do: Account Type vs Access Level ?
+              Column(
+                children: [
+                  Text('Access Level:'),
+                  getDropdownRoles(),
+                ],
               ),
             ],
           ),
@@ -216,8 +224,15 @@ class _InfoTabState extends State<InfoTab> {
               RowItem(
                 text: 'Site:',
               ),
-              RowItem(
-                text: 'Access Level:',
+              Container(
+                width: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Access Level:'),
+                    getDropdownRoles(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -273,6 +288,30 @@ class _InfoTabState extends State<InfoTab> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget getDropdownRoles() {
+    return DropdownButton<String>(
+      value: _user!.accountType.name,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      // style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue) {
+        setState(() {
+          _user!.accountType = RolesExtension.getRoleByName(findName: newValue!);
+        });
+      },
+      items: RolesExtension.getHumanListNames().map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
