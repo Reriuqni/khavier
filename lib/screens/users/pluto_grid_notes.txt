@@ -1,0 +1,18 @@
+var country = rendererContext.row.cells.entries
+    .firstWhere((entry) =>
+        ssssssssssssss(entry).key == 'text_field_id')
+    .value
+    .value;
+print('-->  ' + country); //7FkCfR3qPMTSvyGmiWGvjHUjO773
+
+rendererContext.column.field // text_context_menu
+rendererContext.row.cells['text_field_id']!.value // 7FkCfR3qPMTSvyGmiWGvjHUjO773
+rendererContext.row.cells[rendererContext.column.field]!.value.toString() // значення клікнутого поля
+
+
+MapEntry<String, PlutoCell> ssssssssssssss(
+    MapEntry<String, PlutoCell> entry) {
+  print(entry.value.value);
+  print(entry.key == 'text_field_id');
+  return entry;
+}

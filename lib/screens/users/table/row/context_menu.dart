@@ -1,44 +1,34 @@
+import 'package:admin/api/firebase_api.dart';
+import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:flutter/material.dart';
 
 class TableUsersContextMenu extends StatelessWidget {
   const TableUsersContextMenu({
     Key? key,
+    required this.uid,
   }) : super(key: key);
+
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       icon: const Icon(Icons.more_vert),
-      onSelected: (value) async {
-        switch (value) {
-          case 'Export file':
-            print('Export');
-            _showSnackBar(
-              context,
-              'Export file',
-            );
-            break;
-
-          case 'Delete':
-            print('Delete');
-            _showSnackBar(
-              context,
-              'Delete file',
-            );
-            break;
-
-          default:
-        }
-      },
+      onSelected: (value) async {},
       itemBuilder: (context) {
         return [
-          const PopupMenuItem(
-            child: Text('Export file'),
-            value: 'Export file',
-          ),
-          const PopupMenuItem(
-            child: Text('Delete'),
-            value: 'Delete',
+          PopupMenuItem<String>(
+            value: 'Edit',
+            child: ListTile(
+              leading: const Icon(Icons.edit),
+              title: Text('Edit'),
+              onTap: () async {
+                Navigator.pop(context); // close Popup
+                Navigator.pushNamed(context, '/profile',
+                    arguments: ScreenArguments(
+                        user: await FirebaseApi.readUser(uid: uid)));
+              },
+            ),
           ),
           const PopupMenuDivider(),
           PopupMenuItem<String>(
@@ -46,20 +36,11 @@ class TableUsersContextMenu extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.delete),
               title: Text('Delete'),
-              // iconColor: Colors.redAccent[400],
-              hoverColor: Colors.redAccent[900],
+              onTap: () => {},
             ),
           ),
         ];
       },
-    );
-  }
-
-  void _showSnackBar(BuildContext context, String data) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(data),
-      ),
     );
   }
 }

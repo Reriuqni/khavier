@@ -5,7 +5,6 @@ import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/routes/roles.dart';
 import 'package:admin/screens/users/table/row/context_menu.dart';
 import 'package:admin/widgets/containers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/widgets/buttons.dart';
@@ -52,12 +51,14 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 children: [
-                  TableUsersContextMenu(),
                   Container(
                     width: 200,
                     child: Text(
                       'Users',
-                      style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: iconColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(
@@ -114,7 +115,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   Container(
                     width: 300,
                     child: DropdownButtonFormField(
-                      decoration: InputDecoration(contentPadding: EdgeInsets.all(15)),
+                      decoration:
+                          InputDecoration(contentPadding: EdgeInsets.all(15)),
                       hint: Text('Organization'),
                       onChanged: (String? newValue) {
                         setState(() {
@@ -122,8 +124,13 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         });
                       },
                       //тимчасові айтеми
-                      items: <String>['', 'Need', 'Maybe', 'Whatelse', 'Forgoted']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>[
+                        '',
+                        'Need',
+                        'Maybe',
+                        'Whatelse',
+                        'Forgoted'
+                      ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -203,61 +210,27 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
   Widget getTicketsView(provider, context) {
     List<PlutoColumn> columns = [
-
-      PlutoColumn(
-        title: 'text_context_menu',
-        field: 'text_context_menu',
-        type: PlutoColumnType.text(),
-        // enableRowDrag: true,
-        // enableRowChecked: true,
-        // width: 250,
-        // minWidth: 175,
-        renderer: (rendererContext) {
-          return Row(
-            children: [
-              TableUsersContextMenu(),
-              // IconButton(
-              //   icon: const Icon(
-              //     Icons.add_circle,
-              //   ),
-              //   onPressed: () {
-              //     rendererContext.stateManager.insertRows(
-              //       rendererContext.rowIdx,
-              //       [rendererContext.stateManager.getNewRow()],
-              //     );
-              //   },
-              //   iconSize: 18,
-              //   color: Colors.green,
-              //   padding: const EdgeInsets.all(0),
-              // ),
-              // IconButton(
-              //   icon: const Icon(
-              //     Icons.remove_circle_outlined,
-              //   ),
-              //   onPressed: () {
-              //     rendererContext.stateManager
-              //         .removeRows([rendererContext.row]);
-              //   },
-              //   iconSize: 18,
-              //   color: Colors.red,
-              //   padding: const EdgeInsets.all(0),
-              // ),
-              // Expanded(
-              //   child: Text(
-              //     rendererContext.row.cells[rendererContext.column.field]!.value
-              //         .toString(),
-              //     maxLines: 1,
-              //     overflow: TextOverflow.ellipsis,
-              //   ),
-              // ),
-            ],
-          );
-        },
-      ),
       PlutoColumn(
         title: 'ID',
         field: 'text_field_id',
         type: PlutoColumnType.text(),
+        readOnly: true,
+        renderer: (rendererContext) {
+          return Row(
+            children: [
+              TableUsersContextMenu(
+                  uid: rendererContext.row.cells['text_field_id']!.value),
+              Expanded(
+                child: Text(
+                  rendererContext.row.cells[rendererContext.column.field]!.value
+                      .toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          );
+        },
       ),
       PlutoColumn(
         title: 'Name',
@@ -336,7 +309,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       //   field: 'time_opt',
       //   type: PlutoColumnType.time(),
       // ),
-
     ];
 
     return provider.tickets.isEmpty // tickets.isEmpty
@@ -352,8 +324,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   (index) {
                     DateTime d;
                     d = provider.tickets[index].lastSignInTime;
-                    DateTime lastSignInTime =
-                        DateTime.utc(d.year, d.month, d.day, d.hour, d.minute, d.second);
+                    DateTime lastSignInTime = DateTime.utc(
+                        d.year, d.month, d.day, d.hour, d.minute, d.second);
 
                     // d = provider.tickets[index].lastAccessToFirebase;
                     // DateTime lastAccessToFirebase =
@@ -361,17 +333,22 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
 
                     return PlutoRow(
                       cells: {
-                        'text_field_id': PlutoCell(value: provider.tickets[index].id),
+                        'text_field_id':
+                            PlutoCell(value: provider.tickets[index].id),
                         'text_field_firstName':
                             PlutoCell(value: provider.tickets[index].firstName),
-                        'text_field_email': PlutoCell(value: provider.tickets[index].email),
-                        'text_field_mobile': PlutoCell(value: provider.tickets[index].mobile),
+                        'text_field_email':
+                            PlutoCell(value: provider.tickets[index].email),
+                        'text_field_mobile':
+                            PlutoCell(value: provider.tickets[index].mobile),
                         'select_field_account_type': PlutoCell(
                             value: Roles.values
                                 .firstWhere(
                                     (e) =>
                                         e.name ==
-                                        (provider.tickets[index].accountType as Roles).name,
+                                        (provider.tickets[index].accountType
+                                                as Roles)
+                                            .name,
                                     orElse: () => Roles.NEW_USER)
                                 .name),
                         'manage_user': PlutoCell(value: 'editUser'),
@@ -387,8 +364,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         // 'time_field_lastAccessToFirebase':
                         //     PlutoCell(value: lastAccessToFirebase),
 
-                        'date_field_lastSignInTime': PlutoCell(value: lastSignInTime),
-                        'text_context_menu': PlutoCell(value: TableUsersContextMenu())
+                        'date_field_lastSignInTime':
+                            PlutoCell(value: lastSignInTime),
                       },
                     );
                   },
@@ -404,30 +381,32 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
                   if (event.columnIdx == 4) {
-                    FirebaseApi.updateAccountType(uid: _uid, accountType: event.value);
+                    FirebaseApi.updateAccountType(
+                        uid: _uid, accountType: event.value);
                   }
                 },
-                onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async {
-                  print('onRowSecondaryTap');
+                onRowSecondaryTap:
+                    (PlutoGridOnRowSecondaryTapEvent event) async {
+                  // print('onRowSecondaryTap');
                   // PlutoCell? cell = event.row!.cells['text_field_id'];
                   // String _uid = cell!.value;
                   // User? user = await FirebaseApi.readUser(uid: _uid);
 
                   // editUser(user: user);
 
-                  // final snackBar = SnackBar(
-                  //   content: const Text('Yay! A SnackBar!'),
-                  //   action: SnackBarAction(
-                  //     label: 'Undo',
-                  //     onPressed: () {
-                  //       // Some code to undo the change.
-                  //     },
-                  //   ),
-                  // );
+                  // // final snackBar = SnackBar(
+                  // //   content: const Text('Yay! A SnackBar!'),
+                  // //   action: SnackBarAction(
+                  // //     label: 'Undo',
+                  // //     onPressed: () {
+                  // //       // Some code to undo the change.
+                  // //     },
+                  // //   ),
+                  // // );
 
-                  // // Find the ScaffoldMessenger in the widget tree
-                  // // and use it to show a SnackBar.
-                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  // // // Find the ScaffoldMessenger in the widget tree
+                  // // // and use it to show a SnackBar.
+                  // // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 onLoaded: (PlutoGridOnLoadedEvent event) {
                   event.stateManager.setShowColumnFilter(true);
@@ -441,10 +420,10 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
   }
 
   void editUser({required User? user}) {
-    Navigator.pushNamed(context, '/profile', arguments: ScreenArguments(user: user));
+    Navigator.pushNamed(context, '/profile',
+        arguments: ScreenArguments(user: user));
   }
 }
-
 
 Widget buildText(String text) => Center(
       child: Text(
@@ -455,58 +434,3 @@ Widget buildText(String text) => Center(
         ),
       ),
     );
-
-class SectionedMenuDemo extends StatelessWidget {
-  const SectionedMenuDemo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text('GalleryLocalizations.of(context).demoMenuAnItemWithASectionedMenu'),
-      trailing: PopupMenuButton<String>(
-        padding: EdgeInsets.zero,
-        onSelected: (value) =>
-            print('print: GalleryLocalizations.of(context).demoMenuSelected(value)'),
-        itemBuilder: (context) => <PopupMenuEntry<String>>[
-          PopupMenuItem<String>(
-            value: 'GalleryLocalizations.of(context).demoMenuPreview',
-            child: ListTile(
-              leading: const Icon(Icons.visibility),
-              title: Text(
-                'GalleryLocalizations.of(context).demoMenuPreview',
-              ),
-            ),
-          ),
-          PopupMenuItem<String>(
-            value: 'GalleryLocalizations.of(context).demoMenuShare',
-            child: ListTile(
-              leading: const Icon(Icons.person_add),
-              title: Text(
-                'GalleryLocalizations.of(context).demoMenuShare',
-              ),
-            ),
-          ),
-          PopupMenuItem<String>(
-            value: 'GalleryLocalizations.of(context).demoMenuGetLink',
-            child: ListTile(
-              leading: const Icon(Icons.link),
-              title: Text(
-                'GalleryLocalizations.of(context).demoMenuGetLink',
-              ),
-            ),
-          ),
-          const PopupMenuDivider(),
-          PopupMenuItem<String>(
-            value: 'GalleryLocalizations.of(context).demoMenuRemove',
-            child: ListTile(
-              leading: const Icon(Icons.delete),
-              title: Text(
-                'GalleryLocalizations.of(context).demoMenuRemove',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
