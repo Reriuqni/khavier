@@ -41,139 +41,140 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
   @override
   Widget build(BuildContext context) {
     return Material(
-        type: MaterialType.transparency,
-        child: SafeArea(
-            child: HeaderAndSideMenu(
-          widget: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 200,
-                    child: Text(
-                      'Users',
-                      style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
+      type: MaterialType.transparency,
+      child: SafeArea(
+          child: HeaderAndSideMenu(
+        widget: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 200,
+                  child: Text(
+                    'Users',
+                    style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Container(
-                    width: 301,
-                    child: Row(
-                      children: [
-                        Checkbox(
-                            activeColor: secondaryColor,
-                            value: inviteCheckBox.value,
-                            onChanged: (value) {
-                              setState(() {
-                                inviteCheckBox.value = value;
-                              });
-                            }),
-                        SizedBox(
-                          width: 5,
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                Container(
+                  width: 301,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          activeColor: secondaryColor,
+                          value: inviteCheckBox.value,
+                          onChanged: (value) {
+                            setState(() {
+                              inviteCheckBox.value = value;
+                            });
+                          }),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('Show Invites',
+                          style: TextStyle(
+                            color: iconColor,
+                            fontSize: 16,
+                          )),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
+                        child: OwnButton(
+                          onPressed: () {},
+                          label: 'Invite',
                         ),
-                        Text('Show Invites',
-                            style: TextStyle(
-                              color: iconColor,
-                              fontSize: 16,
-                            )),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
-                          child: OwnButton(
-                            onPressed: () {},
-                            label: 'Invite',
-                          ),
-                        ),
-                        OwnButtonICon(
-                          onPressed: () async {
-                            Navigator.pushNamed(
-                              context,
-                              '/profile',
-                              arguments: ScreenArguments(user: await FirebaseApi.createMockUser()),
-                            );
-                          },
-                          icon: Icons.add,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 300,
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(contentPadding: EdgeInsets.all(15)),
-                      hint: Text('Organization'),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          // _type = newValue;
-                        });
-                      },
-                      //тимчасові айтеми
-                      items: <String>['', 'Need', 'Maybe', 'Whatelse', 'Forgoted']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                      ),
+                      OwnButtonICon(
+                        onPressed: () async {
+                          Navigator.pushNamed(
+                            context,
+                            '/profile',
+                            arguments: ScreenArguments(user: await FirebaseApi.createMockUser()),
+                          );
+                        },
+                        icon: Icons.add,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 20,
-                    height: 20,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 300,
+                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(contentPadding: EdgeInsets.all(15)),
+                    hint: Text('Organization'),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        // _type = newValue;
+                      });
+                    },
+                    //тимчасові айтеми
+                    items: <String>['', 'Need', 'Maybe', 'Whatelse', 'Forgoted']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
-                  Container(
-                    width: 300,
-                    child: OwnTextFieldWithIcons(
-                      labelText: 'Jim',
-                      prefixIcon: FontAwesomeIcons.search,
-                    ),
+                ),
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                ),
+                Container(
+                  width: 300,
+                  child: OwnTextFieldWithIcons(
+                    labelText: 'Jim',
+                    prefixIcon: FontAwesomeIcons.search,
                   ),
-                  SizedBox(
-                    width: 30,
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Container(
+                  width: 300,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                          value: archivedCheckBox.value,
+                          onChanged: (value) {
+                            setState(() {
+                              archivedCheckBox.value = value;
+                            });
+                          }),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('Show Archived',
+                          style: TextStyle(
+                            color: iconColor,
+                            fontSize: 16,
+                          )),
+                    ],
                   ),
-                  Container(
-                    width: 300,
-                    child: Row(
-                      children: [
-                        Checkbox(
-                            value: archivedCheckBox.value,
-                            onChanged: (value) {
-                              setState(() {
-                                archivedCheckBox.value = value;
-                              });
-                            }),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Show Archived',
-                            style: TextStyle(
-                              color: iconColor,
-                              fontSize: 16,
-                            )),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                // child: getTicketsView(),
-                child: getConsumerUserView(),
-              ),
-            ],
-          ),
-        )));
+                ),
+              ],
+            ),
+            Expanded(
+              // child: getTicketsView(),
+              child: getConsumerUserView(),
+            ),
+          ],
+        ),
+      )),
+    );
   }
 
   Widget getConsumerUserView() {
@@ -192,7 +193,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               final provider = Provider.of<NewVersionUserProvider>(context);
               provider.setUsers(users);
 
-              return getTicketsView(provider, context);
+              return Scaffold(body: getTicketsView(provider, context));
             }
         }
       },
@@ -349,6 +350,18 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   // String _uid = cell!.value;
                   // User? user = await FirebaseApi.readUser(uid: _uid);
                   // editUser(user: user);
+
+                  final snackBar = SnackBar(
+                    content: const Text('Yes! This is a SnackBar!'),
+                    action: SnackBarAction(
+                      label: 'Undo',
+                      onPressed: () {
+                        // Some code to undo the change.
+                      },
+                    ),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 onLoaded: (PlutoGridOnLoadedEvent event) {
                   event.stateManager.setShowColumnFilter(true);
