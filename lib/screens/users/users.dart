@@ -270,11 +270,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
             .map((e) => e.name)
             .toList()),
       ),
-      PlutoColumn(
-        title: 'Manage',
-        field: 'manage_user',
-        type: PlutoColumnType.select(['Edit']),
-      ),
+
 
       /// Time Column definition
       // PlutoColumn(
@@ -351,7 +347,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                                             .name,
                                     orElse: () => Roles.NEW_USER)
                                 .name),
-                        'manage_user': PlutoCell(value: 'editUser'),
 
                         // 'time_field_lastAccessToFirebase_format_by_intl': PlutoCell(
                         //     value: DateFormat('yyyy-MM-dd KK:mm:ss')
