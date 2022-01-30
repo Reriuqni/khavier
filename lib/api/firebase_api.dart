@@ -95,6 +95,11 @@ class FirebaseApi {
     return SolveUser.User.fromJson(snapshot.data()!);
   }
 
+  static Future<void> deleteUser({required String uid}) async {
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+    await docUser.delete();
+  }
+
   static Future<SolveUser.User> createUser(
       {required String uid, required SolveUser.User solveUser}) async {
     final docUser =
