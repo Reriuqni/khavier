@@ -14,8 +14,7 @@ class FirebaseApi {
   // Processing Tickets
 
   static Future<String> createTicket(Ticket ticket) async {
-    final docTicket =
-        FirebaseFirestore.instance.collection(ticketCollection).doc();
+    final docTicket = FirebaseFirestore.instance.collection(ticketCollection).doc();
 
     ticket.id = docTicket.id;
     await docTicket.set(ticket.toJson());
@@ -27,19 +26,17 @@ class FirebaseApi {
       .collection(ticketCollection)
       // .orderBy(TicketField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<
-          QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
+      .transform(Utils.transformer(Ticket.fromJson)
+          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
 
   static Future updateTicket(Ticket ticket) async {
-    final docTicket =
-        FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
+    final docTicket = FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
 
     await docTicket.update(ticket.toJson());
   }
 
   static Future deleteTicket(Ticket ticket) async {
-    final docTicket =
-        FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
+    final docTicket = FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
 
     await docTicket.delete();
   }
@@ -52,12 +49,10 @@ class FirebaseApi {
   ///
   /// `@uid` Firebase authentication user uid.
   /// {@comment example}
-  static Future<SolveUser.User?> readOrCreateUser(
-      {required AsyncSnapshot<User?> authUser}) async {
+  static Future<SolveUser.User?> readOrCreateUser({required AsyncSnapshot<User?> authUser}) async {
     String _uid = authUser.data!.uid;
 
-    final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc(_uid);
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(_uid);
     final snapshot = await docUser.get();
 
     if (snapshot.exists) {
@@ -88,8 +83,7 @@ class FirebaseApi {
 
   /// 2do: if snapshot.exists = false
   static Future<SolveUser.User> readUser({required String uid}) async {
-    final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     final snapshot = await docUser.get();
 
     return SolveUser.User.fromJson(snapshot.data()!);
@@ -100,10 +94,22 @@ class FirebaseApi {
     await docUser.delete();
   }
 
+  static Future<SolveUser.User> createMockUser() async {
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc();
+    SolveUser.User solveUser = SolveUser.User(
+      id: docUser.id,
+      firstName: 'Empty User',
+      lastAccessToFirebase: DateTime.now(),
+      lastSignInTime: DateTime.now(),
+    );
+    await docUser.set(solveUser.toJson());
+
+    return solveUser;
+  }
+
   static Future<SolveUser.User> createUser(
       {required String uid, required SolveUser.User solveUser}) async {
-    final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     await docUser.set(solveUser.toJson());
 
     final snapshot = await docUser.get();
@@ -123,13 +129,10 @@ class FirebaseApi {
       // .orderBy(UserField.date, descending: true)
       .snapshots()
       .transform(Utils.transformer(SolveUser.User.fromJson)
-          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
-              List<SolveUser.User>>);
+          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<SolveUser.User>>);
 
-  static Future<void> updateAccountType(
-      {required String uid, required String accountType}) async {
-    final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+  static Future<void> updateAccountType({required String uid, required String accountType}) async {
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
 
     await docUser
         .update({'accountType': accountType})
@@ -138,8 +141,7 @@ class FirebaseApi {
   }
 
   static Future<String> createUserNotUsed(SolveUser.User user) async {
-    final docUser =
-        FirebaseFirestore.instance.collection(usersCollection).doc();
+    final docUser = FirebaseFirestore.instance.collection(usersCollection).doc();
 
     user.id = docUser.id;
     await docUser.set(user.toJson());
