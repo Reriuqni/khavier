@@ -113,34 +113,19 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                 children: [
                   Container(
                     width: 300,
-                    child: DropdownButtonFormField(
-                      decoration:
-                          InputDecoration(contentPadding: EdgeInsets.all(15)),
-                      hint: Text('Organization'),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          // _type = newValue;
-                        });
-                      },
-                      //тимчасові айтеми
+                          child: OwnDropDown(
+                            hint: 'User Groups',
+                            onChanged: (value) {},
                       items: <String>[
                         '',
                         'Need',
                         'Maybe',
                         'Whatelse',
                         'Forgoted'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
+                            ],
+                          )
                   ),
-                  SizedBox(
-                    width: 20,
-                    height: 20,
-                  ),
+                    SizedBox(width: 20, height: 20,),
                   Container(
                     width: 300,
                     child: OwnTextFieldWithIcons(

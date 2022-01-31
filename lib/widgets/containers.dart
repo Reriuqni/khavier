@@ -1,6 +1,7 @@
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +10,7 @@ import '../constants/colors.dart';
 import '../screens/dashboard/components/header.dart';
 import '../screens/dashboard/components/headerResponsive.dart';
 import 'buttons.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 class HeaderAndSideMenu extends StatelessWidget {
   final Widget widget;
@@ -218,6 +220,86 @@ class RowItem extends StatelessWidget {
                 child: widget,
               ))
         ],
+      ),
+    );
+  }
+}
+
+class RadioRow extends StatelessWidget {
+  final Color color;
+  final String textRadio;
+  final String text0;
+  final String text1;
+  final String text2;
+  final String text3;
+  final Widget radioWidget;
+  RadioRow(
+      {this.color = Colors.black,
+        this.textRadio = '',
+        this.text0 = '',
+        this.text1 = '',
+        this.text2 = '',
+        this.text3 = '',
+        required this.radioWidget
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 2,
+            child: Row(
+              children: [
+                radioWidget,
+                Text(textRadio, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+              ],
+            )
+        ),
+        Expanded(
+          flex: 4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(text0, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text1, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text2, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text3, style: TextStyle(color: color, fontWeight: FontWeight.w600),)
+              ],
+        ))
+      ],
+    );
+  }
+}
+
+class ColorPickerItem extends StatelessWidget{
+  final Color colorVariable;
+  final void Function() onSelect;
+  final colorsNameMap;
+  final String title;
+  ColorPickerItem({required this.colorVariable, required this.onSelect, this.colorsNameMap, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350,
+      child: ListTile(
+        title: Text(title, style: TextStyle(fontSize: 16),),
+        subtitle: Text(
+          // ignore: lines_longer_than_80_chars
+          '${ColorTools.materialNameAndCode(colorVariable, colorSwatchNameMap: colorsNameMap)} '
+              'aka ${ColorTools.nameThatColor(colorVariable)}',
+            style: TextStyle(fontSize: 14)
+        ),
+        trailing: ColorIndicator(
+          width: 44,
+          height: 44,
+          borderRadius: 4,
+          color: colorVariable,
+          onSelectFocus: false,
+          onSelect: onSelect
+        ),
       ),
     );
   }

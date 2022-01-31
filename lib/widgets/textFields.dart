@@ -26,6 +26,7 @@ class OwnTextField extends StatelessWidget{
       onChanged: onChanged,
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
         labelStyle: TextStyle(color: iconColor),
         labelText: labelText,
         hintStyle: TextStyle(color: iconColor),
@@ -156,5 +157,29 @@ class OwnBigTextField extends StatelessWidget{
         ),
       ),
     );
+  }
+}
+
+class OwnDropDown extends StatelessWidget{
+  final void Function(dynamic)? onChanged;
+  final dynamic items;
+  final String hint;
+  OwnDropDown({ required this.onChanged, this.items = const [], this.hint = ''});
+
+ @override
+ Widget build(BuildContext context) {
+   return DropdownButtonFormField(
+     decoration: InputDecoration(
+         contentPadding: EdgeInsets.all(15)
+     ),
+     hint: Text(hint),
+     onChanged: onChanged,
+     items: items.map<DropdownMenuItem<String>>((String value) {
+       return DropdownMenuItem<String>(
+         value: value,
+         child: Text(value),
+       );
+     }).toList(),
+   );
   }
 }

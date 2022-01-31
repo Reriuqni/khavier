@@ -13,8 +13,8 @@ import 'package:admin/screens/ticket/tickets_screen.dart';
 import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
 import 'package:flutter/material.dart';
 
-import '../../screens/organizations/manageOrganizations.dart';
-import '../../screens/organizations/organizations.dart';
+import '../../screens/userGroups/manageUserGroups.dart';
+import '../../screens/userGroups//userGroups.dart';
 
 Map<String, WidgetBuilder> getAdminRoutes(BuildContext context) {
   return {
@@ -32,7 +32,7 @@ Map<String, WidgetBuilder> getAdminRoutes(BuildContext context) {
     '/profile': (context) => ProfilePage(),
     '/users': (context) => UsersPage(),
     '/addUser': (context) => NewUserPage(),
-    '/organizations': (context) => OrganizationsPage(),
-    '/editOrg' : (context) => OrganizationsEdit(),
+    '/userGroups': (context) => UserGroupsPage(),
+    '/editUserGroups' : (context) => UserGroupsEdit(),
   };
 }
