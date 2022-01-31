@@ -3,6 +3,7 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/model/user.dart';
 import 'package:admin/provider/NewVersionUserProvider.dart';
 import 'package:admin/routes/roles.dart';
+import 'package:admin/screens/users/table/row/context_menu.dart';
 import 'package:admin/widgets/containers.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/screens/ticket/screen_arguments.dart';
@@ -54,10 +55,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                     width: 200,
                     child: Text(
                       'Users',
-                      style: TextStyle(
-                          color: iconColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
+                    style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                   ),
                   SizedBox(
@@ -95,7 +93,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             Navigator.pushNamed(
                               context,
                               '/profile',
-                              arguments: 'newUser',
+                            arguments: ScreenArguments(user: await FirebaseApi.createMockUser()),
                             );
                           },
                           icon: Icons.add,
@@ -166,7 +164,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               ),
             ],
           ),
-        )));
+      )),
+    );
   }
 
   Widget getConsumerUserView() {
@@ -185,20 +184,38 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
               final provider = Provider.of<NewVersionUserProvider>(context);
               provider.setUsers(users);
 
-              return getTicketsView(provider);
+              return Scaffold(body: getTicketsView(provider, context));
             }
         }
       },
     );
   }
 
-  Widget getTicketsView(provider) {
+  Widget getTicketsView(provider, context) {
     List<PlutoColumn> columns = [
-      /// Text Column definition
       PlutoColumn(
         title: 'ID',
         field: 'text_field_id',
         type: PlutoColumnType.text(),
+        readOnly: true,
+        renderer: (rendererContext) {
+          return Row(
+            children: [
+              // rendererContext.column.field equal to 'text_field_id'
+              TableUsersContextMenu(
+                  uid: rendererContext.row.cells[rendererContext.column.field]!.value
+                      .toString()), //  TableUsersContextMenu(uid: rendererContext.row.cells['text_field_id']!.value),
+              Expanded(
+                child: Text(
+                  // rendererContext.row.cells[rendererContext.column.field]!.value.toString() equal to data in cell (uid)
+                  rendererContext.row.cells[rendererContext.column.field]!.value.toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          );
+        },
       ),
       PlutoColumn(
         title: 'Name',
@@ -215,54 +232,25 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         field: 'text_field_mobile',
         type: PlutoColumnType.text(),
       ),
-      // PlutoColumn(
-      //   title: 'Account Type',
-      //   field: 'text_field_accountType',
-      //   type: PlutoColumnType.text(),
-      // ),
 
-      // /// Number Column definition
-      // PlutoColumn(
-      //   title: 'number column',
-      //   field: 'number_field',
-      //   type: PlutoColumnType.number(),
-      // ),
-
-      // /// Select Column definition
       PlutoColumn(
         title: 'Account Type',
         field: 'select_field_account_type',
-        // type: PlutoColumnType.select(['item1', 'item2', 'item3']),
-        type: PlutoColumnType.select(Roles.values
-            .where((e) => ![Roles.AUTH, Roles.ROLE_NOT_FOUND].contains(e))
-            .map((e) => e.name)
-            .toList()),
-      ),
-      PlutoColumn(
-        title: 'Manage',
-        field: 'manage_user',
-        type: PlutoColumnType.select(['Edit']),
+        width: 150,
+        type: PlutoColumnType.select(RolesExtension.getHumanListNames()),
       ),
 
-      /// Time Column definition
-      // PlutoColumn(
-      //   title: 'Last Refresh',
-      //   field: 'time_field_lastAccessToFirebase_format_by_intl',
-      //   type: PlutoColumnType.text(),
-      // ),
-
-      /// Time Column definition
       PlutoColumn(
         title: 'Last Refresh',
         field: 'time_field_lastAccessToFirebase',
         type: PlutoColumnType.text(),
       ),
 
-      /// Datetime Column definition
       PlutoColumn(
         title: 'Auth SignIn',
         field: 'date_field_lastSignInTime',
         type: PlutoColumnType.date(),
+        width: 130,
       ),
 
       /// Time Column definition
@@ -273,9 +261,9 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       // ),
 
       // PlutoColumn(
-      //   title: 'Opt column',
-      //   field: 'time_opt',
-      //   type: PlutoColumnType.time(),
+      //   title: 'Last Refresh',
+      //   field: 'time_field_lastAccessToFirebase_format_by_intl',
+      //   type: PlutoColumnType.text(),
       // ),
     ];
 
@@ -286,80 +274,47 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
             child: Material(
               child: PlutoGrid(
                 columns: columns,
-                // rows: rows,
                 rows: List.generate(
                   provider.tickets.length,
                   (index) {
                     DateTime d;
                     d = provider.tickets[index].lastSignInTime;
-                    DateTime lastSignInTime = DateTime.utc(
-                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+                    DateTime lastSignInTime =
+                        DateTime.utc(d.year, d.month, d.day, d.hour, d.minute, d.second);
 
-                    d = provider.tickets[index].lastAccessToFirebase;
-                    DateTime lastAccessToFirebase = DateTime.utc(
-                        d.year, d.month, d.day, d.hour, d.minute, d.second);
+                    // d = provider.tickets[index].lastAccessToFirebase;
+                    // DateTime lastAccessToFirebase =
+                    //     DateTime.utc(d.year, d.month, d.day, d.hour, d.minute, d.second);
 
                     return PlutoRow(
                       cells: {
-                        'text_field_id':
-                            PlutoCell(value: provider.tickets[index].id),
-                        'text_field_firstName':
-                            PlutoCell(value: provider.tickets[index].firstName),
-                        'text_field_email':
-                            PlutoCell(value: provider.tickets[index].email),
-                        'text_field_mobile':
-                            PlutoCell(value: provider.tickets[index].mobile),
-                        // 'text_field_accountType': PlutoCell(
-                        //     value: provider.tickets[index].accountType),
-                        // 'number_field': PlutoCell(value: 2020),
-                        // 'select_field_ex': PlutoCell(value: 'item1'),
-
-                        // 'select_field_account_type': PlutoCell(
-                        //     value:
-                        //             (provider.tickets[index].accountType as Roles).name),
-
+                        'text_field_id': PlutoCell(value: provider.tickets[index].id),
+                        'text_field_firstName': PlutoCell(value: provider.tickets[index].firstName),
+                        'text_field_email': PlutoCell(value: provider.tickets[index].email),
+                        'text_field_mobile': PlutoCell(value: provider.tickets[index].mobile),
                         'select_field_account_type': PlutoCell(
-                            value: Roles.values
-                                .firstWhere(
-                                    (e) =>
-                                        e.name ==
-                                        (provider.tickets[index].accountType
-                                                as Roles)
-                                            .name,
-                                    orElse: () => Roles.NEW_USER)
-                                .name),
-                        'manage_user': PlutoCell(value: 'editUser'),
+                            value: RolesExtension.getNameOfRole(
+                                role: provider.tickets[index].accountType)),
 
-                        // 'time_field_lastAccessToFirebase_format_by_intl': PlutoCell(
-                        //     value: DateFormat('yyyy-MM-dd KK:mm:ss')
-                        //         .format(lastAccessToFirebase)),
 
                         'time_field_lastAccessToFirebase': PlutoCell(
                             value:
                                 "${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')} ${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}:${d.second.toString().padLeft(2, '0')}"),
 
-                        // 'time_field_lastAccessToFirebase':
-                        //     PlutoCell(value: lastAccessToFirebase),
+                        'date_field_lastSignInTime': PlutoCell(value: lastSignInTime),
 
-                        'date_field_lastSignInTime':
-                            PlutoCell(value: lastSignInTime),
-
-                        // 'time_field_lastSignInTime':
-                        //     PlutoCell(value: lastSignInTime),// 'time_field': PlutoCell(value: '12:30'),
-
-
+                        // 'time_field_lastAccessToFirebase': PlutoCell(value: lastAccessToFirebase),
+                        // 'time_field_lastAccessToFirebase_format_by_intl': PlutoCell(
+                        //     value: DateFormat('yyyy-MM-dd KK:mm:ss')
+                        //         .format(lastAccessToFirebase)),
                       },
                     );
                   },
                 ),
                 onRowDoubleTap: (event) async {
-                  print(event);
-                  PlutoCell? cell = event.row!.cells['text_field_id'];
-                  String _uid = cell!.value;
-                  // User? user = await FirebaseApi.readOrCreateUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
-                  User? user = await FirebaseApi.readUser(uid: _uid);
-
-                  editUser(user: user);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Yay! A SnackBar!'),
+                  ));
                 },
                 onChanged: (PlutoGridOnChangedEvent event) {
                   print(event);
@@ -367,43 +322,50 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   PlutoCell? cell = event.row!.cells['text_field_id'];
                   String _uid = cell!.value;
                   if (event.columnIdx == 4) {
-                    FirebaseApi.updateAccountType(
-                        uid: _uid, accountType: event.value);
+                    FirebaseApi.updateAccountType(uid: _uid, accountType: event.value);
                   }
                 },
-                onLoaded: (PlutoGridOnLoadedEvent event) {
-                  // print(event);  // Instance of 'PlutoGridOnLoadedEvent'
-                },
-                onRowSecondaryTap:
-                    (PlutoGridOnRowSecondaryTapEvent event) async {
-                  PlutoCell? cell = event.row!.cells['text_field_id'];
-                  String _uid = cell!.value;
-                  //  User? user = await FirebaseApi.readUser(uid: _uid, user: User(id: 'mock id', lastSignInTime: DateTime.now()));
-                  User? user = await FirebaseApi.readUser(uid: _uid);
+                onRowSecondaryTap: (PlutoGridOnRowSecondaryTapEvent event) async {
+                  // print('onRowSecondaryTap');
+                  // PlutoCell? cell = event.row!.cells['text_field_id'];
+                  // String _uid = cell!.value;
+                  // User? user = await FirebaseApi.readUser(uid: _uid);
+                  // editUser(user: user);
 
-                  editUser(user: user);
+                  final snackBar = SnackBar(
+                    content: const Text('Yes! This is a SnackBar!'),
+                    action: SnackBarAction(
+                      label: 'Undo',
+                      onPressed: () {
+                        // Some code to undo the change.
+                },
+                    ),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
+                onLoaded: (PlutoGridOnLoadedEvent event) {
+                  event.stateManager.setShowColumnFilter(true);
+                },
+                createFooter: (stateManager) {
+                  stateManager.setPageSize(100, notify: false); // default 40
+                  return PlutoPagination(stateManager);
                 },
               ),
             ));
   }
 
   void editUser({required User? user}) {
-    Navigator.pushNamed(context, '/profile',
-        //         arguments: ScreenArguments(ticketId: data.id));
-        arguments: ScreenArguments(user: user));
+    Navigator.pushNamed(context, '/profile', arguments: ScreenArguments(user: user));
   }
 }
-
-// class ScreenArguments {
-//   final String ticketId;
-//   final Ticket ticket;
-
-//   ScreenArguments({this.ticketId, this.ticket});
-// }
 
 Widget buildText(String text) => Center(
       child: Text(
         text,
-        style: TextStyle(fontSize: 24, color: Colors.blue),
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.blue,
+        ),
       ),
     );

@@ -38,7 +38,7 @@ class _AuthenticationGateState extends State<AuthenticationGate> {
       stream: auth.userChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
 
         // User is not signed in - show a sign-in screen
