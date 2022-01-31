@@ -1,17 +1,17 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../constants/colors.dart';
-import '../../widgets/buttons.dart';
-import '../../widgets/containers.dart';
-import '../../widgets/textFields.dart';
+import 'package:admin/constants/colors.dart';
+import 'package:admin/widgets/buttons.dart';
+import 'package:admin/widgets/containers.dart';
+import 'package:admin/widgets/textFields.dart';
 import 'package:flutter/material.dart';
 
 
-class OrganizationsPage extends StatefulWidget {
+class UserGroupsPage extends StatefulWidget {
   @override
-  _OrganizationsPage createState() => _OrganizationsPage();
+  _UserGroupsPage createState() => _UserGroupsPage();
 }
 
-class _OrganizationsPage extends State<OrganizationsPage> with RestorationMixin {
+class _UserGroupsPage extends State<UserGroupsPage> with RestorationMixin {
   RestorableBoolN archivedCheckBox = RestorableBoolN(false);
 
   @override
@@ -28,6 +28,7 @@ class _OrganizationsPage extends State<OrganizationsPage> with RestorationMixin 
     super.dispose();
   }
 
+  Color _color = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +37,11 @@ class _OrganizationsPage extends State<OrganizationsPage> with RestorationMixin 
         child: SafeArea(
             child: HeaderAndSideMenu(
               widget: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Organizations',
+                    'User Groups',
                     style: TextStyle(
                         color: iconColor,
                         fontSize: 20,
@@ -83,7 +84,7 @@ class _OrganizationsPage extends State<OrganizationsPage> with RestorationMixin 
                               onPressed: () async {
                                 Navigator.pushNamed(
                                   context,
-                                  '/editOrg',
+                                  '/editUserGroups',
                                 );
                               },
                               icon: Icons.add,
@@ -93,9 +94,48 @@ class _OrganizationsPage extends State<OrganizationsPage> with RestorationMixin 
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: Text('Organizations list'),
-                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                        child: Text('Name'),
+                      ),
+                      InkWell(
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onHover: (isHover) {
+                          setState(() {
+                            _color = _color == Colors.black ? secondaryColor : Colors.black;
+                          });
+                        },
+                        onTap: () {},
+                        child: Text('Administration',  style: TextStyle(color: _color, fontSize: 20)),
+                      ),
+                      InkWell(
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onHover: (isHover) {
+                          setState(() {
+                            _color = _color == Colors.black ? secondaryColor : Colors.black;
+                          });
+                        },
+                        onTap: () {},
+                        child: Text('Branding',  style: TextStyle(color: _color, fontSize: 20)),
+                      ),
+                      InkWell(
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onHover: (isHover) {
+                          setState(() {
+                            _color = _color == Colors.black ? secondaryColor : Colors.black;
+                          });
+                        },
+                        onTap: () {},
+                        child: Text('Demo',  style: TextStyle(color: _color, fontSize: 20)),
+                      ),
+                    ],
+                  )
                 ],
               ),
             )
