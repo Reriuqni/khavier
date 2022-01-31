@@ -58,10 +58,10 @@ class _SideMenuState extends State<SideMenu> {
                 title: 'Access',
             ),
             DrawerListSubTile(
-                title: 'Organization',
+                title: 'User Groups',
                 subTitle: 'Manage your business entities',
                 press: (){
-                  Navigator.pushNamed(context, '/organizations');
+                  Navigator.pushNamed(context, '/userGroups');
                   closeSideMenu();
                 }),
             DrawerListSubTile(

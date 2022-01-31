@@ -14,7 +14,7 @@ import 'package:admin/screens/ticket/tickets_screen_pluto_grid.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/userGroups/manageUserGroups.dart';
-import '../../screens/userGroups//userGroups.dart';
+import '../../screens/userGroups/userGroups.dart';
 
 Map<String, WidgetBuilder> getAdminRoutes(BuildContext context) {
   return {
