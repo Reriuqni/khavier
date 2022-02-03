@@ -26,7 +26,7 @@ class UserGroupsEdit extends StatefulWidget {
 class _UserGroupsEdit extends State<UserGroupsEdit>
     with SingleTickerProviderStateMixin, RestorationMixin {
   TabController? _tabController;
-  UserGroup _userGroup = UserGroup();
+  UserGroups _userGroup = UserGroups();
 
   final RestorableInt tabIndex = RestorableInt(0);
 

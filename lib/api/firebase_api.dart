@@ -157,7 +157,7 @@ class FirebaseApi {
 
   // Processing User Groups
 
-  static Future<void> createUserGroup({required UserGroup userGroup, uid, solveUser}) async {
+  static Future<void> createUserGroup({required UserGroups userGroup, uid, solveUser}) async {
     final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc();
     userGroup.id = docUG.id;
     await docUG.set(userGroup.toJson());

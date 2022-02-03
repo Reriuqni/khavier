@@ -28,8 +28,6 @@ class _UserGroupsPage extends State<UserGroupsPage> with RestorationMixin {
     super.dispose();
   }
 
-  Color _color = Colors.black;
-
   @override
   Widget build(BuildContext context) {
     return Material(
