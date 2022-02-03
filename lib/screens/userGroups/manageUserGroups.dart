@@ -1,7 +1,6 @@
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
