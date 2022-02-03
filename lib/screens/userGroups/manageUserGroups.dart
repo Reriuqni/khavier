@@ -1,5 +1,5 @@
 import 'package:admin/api/firebase_api.dart';
-import 'package:admin/model/user_group/user_group.dart';
+import 'package:admin/model/user_group/user_groups.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';

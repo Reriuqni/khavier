@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user_group.g.dart';
+part 'user_groups.g.dart';
 
 @JsonSerializable()
-class UserGroup {
+class UserGroups {
   String? id;
   // New User Groups
   String? name;
@@ -63,7 +63,7 @@ class UserGroup {
   // Custom
   String? acn;
 
-  UserGroup({
+  UserGroups({
     this.id,
     // New User Groups
     this.name,
@@ -124,7 +124,7 @@ class UserGroup {
     this.acn,
   });
 
-  factory UserGroup.fromJson(Map<String, dynamic> json) => _$UserGroupFromJson(json);
+  factory UserGroups.fromJson(Map<String, dynamic> json) => _$UserGroupsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserGroupToJson(this);
+  Map<String, dynamic> toJson() => _$UserGroupsToJson(this);
 }

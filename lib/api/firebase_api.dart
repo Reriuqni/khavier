@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin/model/user_group/user_group.dart';
+import 'package:admin/model/user_group/user_groups.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/model/ticket_static.dart';

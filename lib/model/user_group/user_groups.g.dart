@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_group.dart';
+part of 'user_groups.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserGroup _$UserGroupFromJson(Map<String, dynamic> json) => UserGroup(
+UserGroups _$UserGroupsFromJson(Map<String, dynamic> json) => UserGroups(
       id: json['id'] as String?,
       name: json['name'] as String?,
       subDomain: json['subDomain'] as String?,
@@ -56,7 +56,8 @@ UserGroup _$UserGroupFromJson(Map<String, dynamic> json) => UserGroup(
       acn: json['acn'] as String?,
     );
 
-Map<String, dynamic> _$UserGroupToJson(UserGroup instance) => <String, dynamic>{
+Map<String, dynamic> _$UserGroupsToJson(UserGroups instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'subDomain': instance.subDomain,
