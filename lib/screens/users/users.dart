@@ -93,7 +93,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             Navigator.pushNamed(
                               context,
                               '/profile',
-                            arguments: ScreenArguments(user: await FirebaseApi.createMockUser()),
+                                  arguments: 'newUser',
                             );
                           },
                           icon: Icons.add,

@@ -3,6 +3,7 @@ import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
+import '../../widgets/containers.dart';
 import '../dashboard/components/header.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
@@ -76,52 +77,6 @@ class _NewUserPage extends State<NewUserPage> with SingleTickerProviderStateMixi
   }
 }
 
-class RowItem extends StatelessWidget {
-  final String text;
-  final String label;
-  final Widget widget;
-  RowItem(
-      {this.text = '', this.label = 'Default', this.widget = const Text('')});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-            width: 300,
-            child: Text(
-              text,
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-            width: 300,
-            child: OwnTextField(
-              labelText: label,
-            ),
-          ),
-          Container(
-              padding: EdgeInsets.all(5),
-              width: 175,
-              child: Container(
-                child: widget,
-              ))
-        ],
-      ),
-    );
-  }
-}
-
 class InfoTab extends StatelessWidget {
   InfoTab();
 
@@ -141,10 +96,12 @@ class InfoTab extends StatelessWidget {
               ),
               RowItem(
                   text: '* Confirm Password:',
-                  widget: OwnButton(onPressed: () {}, label: 'Generate')),
+                  // widget: OwnButton(onPressed: () {}, label: 'Generate')
+              ),
               RowItem(
                   text: '* Preferred OTP',
-                  widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')),
+                  // widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth')
+              ),
             ],
           ),
         ));

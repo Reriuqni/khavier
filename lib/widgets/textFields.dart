@@ -169,6 +169,8 @@ class OwnDropDown extends StatelessWidget{
  @override
  Widget build(BuildContext context) {
    return DropdownButtonFormField(
+     isExpanded: true,
+     menuMaxHeight: 300,
      decoration: InputDecoration(
          contentPadding: EdgeInsets.all(15)
      ),
