@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
-import '../../widgets/buttons.dart';
 import '../../widgets/containers.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:admin/constants/branding.dart' as branding;
 
 class UGBranding extends StatefulWidget {
   @override
@@ -18,6 +16,7 @@ class _UGBranding extends State<UGBranding>{
   late Color TopToolbarIcon;
   late Color TopToolbarIconHover;
   late Color TopToolbarHyperlink;
+  late Color TopToolbarHyperlinkHover;
   late Color TopToolbarBackground;
   late Color TopToolbarSearchText;
   late Color TopToolbarSearchTextBorder;
@@ -25,6 +24,7 @@ class _UGBranding extends State<UGBranding>{
   late Color SideToolbarSubHeading;
   late Color SideToolbarSeparationBar;
   late Color SideToolbarInformation;
+  late Color SideToolbarHover;
   late Color SideToolbarBackground;
   late Color BodyButton;
   late Color BodyButtonHover;
@@ -54,26 +54,29 @@ class _UGBranding extends State<UGBranding>{
   @override
   void initState() {
     colorSelected = Colors.cyan;
-    LoginHyperlink = Colors.red;
-    LoginHyperlinkHover = Colors.teal;
-    TopToolbarIcon = Colors.greenAccent;
-    TopToolbarIconHover = Colors.yellow;
-    TopToolbarHyperlink = Colors.red;
-    TopToolbarBackground = Colors.greenAccent;
-    TopToolbarSearchText = Colors.yellow;
-    TopToolbarSearchTextBorder = Colors.red;
-    SideToolbarHeading = Colors.teal;
-    SideToolbarSubHeading = Colors.greenAccent;
-    SideToolbarSeparationBar = Colors.yellow;
-    SideToolbarInformation = Colors.teal;
-    SideToolbarBackground = Colors.red;
-    BodyButton = Colors.greenAccent;
-    BodyButtonHover = Colors.red;
-    BodyButtonText = Colors.yellow;
-    BodyButtonTextHover = Colors.red;
+    LoginHyperlink = branding.loginHyperlink;
+    LoginHyperlinkHover = branding.loginHyperlinkHover;
+    TopToolbarIcon = branding.topToolbarIcon;
+    TopToolbarIconHover = branding.topToolbarIconHover;
+    TopToolbarHyperlink = branding.topToolbarHyperlink;
+    TopToolbarHyperlinkHover = branding.topToolbarHyperlinkHover;
+    TopToolbarBackground = branding.topToolbarBackground;
+    TopToolbarSearchText = branding.topToolbarSearchText;
+    TopToolbarSearchTextBorder = branding.topToolbarSearchTextBorder;
+    SideToolbarHeading = branding.sideToolbarHeading;
+    SideToolbarSubHeading = branding.sideToolbarSubHeading;
+    SideToolbarSeparationBar = branding.sideToolbarSeparationBar;
+    SideToolbarInformation = branding.sideToolbarInformation;
+    SideToolbarHover = branding.sideToolbarHover;
+    SideToolbarBackground = branding.sideToolbarBackground;
+    BodyButton = branding.bodyButton;
+    BodyButtonHover = branding.bodyButtonHover;
+    BodyButtonText = branding.bodyButtonText;
+    BodyButtonTextHover = branding.bodyButtonTextHover;
     super.initState();
   }
 
+  double wrapGap = 200;
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +140,7 @@ class _UGBranding extends State<UGBranding>{
                 colorOnSelect('LoginHyperlink');
               }
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Hyperlink Hover (color)',
               colorsNameMap: colorsNameMap,
@@ -147,38 +151,17 @@ class _UGBranding extends State<UGBranding>{
         ),
         Wrap(
           children: [
-            Container(
-                padding: EdgeInsets.all(15),
-                width: 350,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Logo', style: TextStyle(fontSize: 18)),
-                    Image.asset(
-                      'assets/images/auth_screen/auth_bg.jpg',
-                      width: 150,
-                      height: 100,
-                    ),
-                    OwnButton(label: 'Browse', onPressed: () {},),
-                  ],
-                )
+            UGBrandingImage(
+                onPressed: () {},
+                image: branding.loginImage,
+                text: 'Logo'
             ),
-            Container(
-                padding: EdgeInsets.all(15),
-                width: 350,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Image', style: TextStyle(fontSize: 18)),
-                    Image.asset(
-                      'assets/images/header_logo_white.png',
-                      width: 150,
-                      height: 100,
+            SizedBox(width: wrapGap,),
+            UGBrandingImage(
+                onPressed: () {},
+                image: branding.loginLogo,
+                text: 'Image'
                     ),
-                    OwnButton(label: 'Browse', onPressed: () {},),
-                  ],
-                )
-            )
           ],
         ),
         Container(
@@ -193,6 +176,7 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: TopToolbarIcon,
                 onSelect: () => colorOnSelect('TopToolbarIcon')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Top Toolbar Icon Hover (color)',
               colorsNameMap: colorsNameMap,
@@ -204,11 +188,29 @@ class _UGBranding extends State<UGBranding>{
         Wrap(
           children: [
             ColorPickerItem(
+                title: 'Top Toolbar Hyperlink (color)',
+                colorsNameMap: colorsNameMap,
+                colorVariable: TopToolbarHyperlink,
+                onSelect: () => colorOnSelect('TopToolbarIcon')
+            ),
+            SizedBox(width: wrapGap,),
+            ColorPickerItem(
+              title: 'Top Toolbar Hyperlink Hover (color)',
+              colorsNameMap: colorsNameMap,
+              colorVariable: TopToolbarHyperlinkHover,
+              onSelect: () => colorOnSelect('TopToolbarHyperlinkHover'),
+            ),
+          ],
+        ),
+        Wrap(
+          children: [
+            ColorPickerItem(
                 title: 'Top Toolbar Background (color)',
                 colorsNameMap: colorsNameMap,
                 colorVariable: TopToolbarBackground,
                 onSelect: () => colorOnSelect('TopToolbarBackground')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Top Toolbar Search Text (color)',
               colorsNameMap: colorsNameMap,
@@ -225,22 +227,12 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: TopToolbarSearchTextBorder,
                 onSelect: () => colorOnSelect('TopToolbarSearchTextBorder')
             ),
-            Container(
-              padding: EdgeInsets.all(15),
-              width: 350,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Logo', style: TextStyle(fontSize: 18)),
-                  Image.asset(
-                    'assets/images/header_logo_white.png',
-                    width: 150,
-                    height: 100,
+            SizedBox(width: wrapGap,),
+            UGBrandingImage(
+                onPressed: () {},
+                image: branding.topToolbarLogo,
+                text: 'Logo'
                   ),
-                  OwnButton(label: 'Browse', onPressed: () {},),
-                ],
-              )
-            )
           ],
         ),
         Container(
@@ -255,6 +247,7 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: SideToolbarHeading,
                 onSelect: () => colorOnSelect('SideToolbarHeading')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Side Toolbar Sub Heading (color)',
               colorsNameMap: colorsNameMap,
@@ -271,6 +264,7 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: SideToolbarSeparationBar,
                 onSelect: () => colorOnSelect('SideToolbarSeparationBar')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Side Toolbar Information (color)',
               colorsNameMap: colorsNameMap,
@@ -279,11 +273,22 @@ class _UGBranding extends State<UGBranding>{
             ),
           ],
         ),
+        Wrap(
+          children: [
         ColorPickerItem(
           title: 'Side Toolbar Background (color)',
           colorsNameMap: colorsNameMap,
           colorVariable: SideToolbarBackground,
           onSelect: () => colorOnSelect('SideToolbarBackground'),
+        ),
+            SizedBox(width: wrapGap,),
+            ColorPickerItem(
+              title: 'Side Toolbar Hover (color)',
+              colorsNameMap: colorsNameMap,
+              colorVariable: SideToolbarHover,
+              onSelect: () => colorOnSelect('SideToolbarHover'),
+            ),
+          ],
         ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 10,),
@@ -297,6 +302,7 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: BodyButton,
                 onSelect: () => colorOnSelect('BodyButton')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Body Button Hover (color)',
               colorsNameMap: colorsNameMap,
@@ -313,6 +319,7 @@ class _UGBranding extends State<UGBranding>{
                 colorVariable: BodyButtonText,
                 onSelect: () => colorOnSelect('BodyButtonText')
             ),
+            SizedBox(width: wrapGap,),
             ColorPickerItem(
               title: 'Body Button Text Hover (color)',
               colorsNameMap: colorsNameMap,
@@ -320,6 +327,11 @@ class _UGBranding extends State<UGBranding>{
               onSelect: () => colorOnSelect('BodyButtonTextHover'),
             ),
           ],
+        ),
+        UGBrandingImage(
+            onPressed: () {},
+            image: branding.bodyBackgroundImage,
+            text: 'Image'
         ),
       ],
     );
@@ -339,6 +351,7 @@ class _UGBranding extends State<UGBranding>{
 
   Future<bool> colorPickerDialog(variable) async {
     return ColorPicker(
+      enableOpacity: true,
       color: colorSelected,
       onColorChanged: (Color color) =>
       {setState(() => {
@@ -408,6 +421,9 @@ class _UGBranding extends State<UGBranding>{
     if (variable == "TopToolbarHyperlink") {
       TopToolbarHyperlink = colorSelected;
     }
+    if (variable == "TopToolbarHyperlinkHover") {
+      TopToolbarHyperlinkHover = colorSelected;
+    }
     if (variable == "TopToolbarBackground") {
       TopToolbarBackground = colorSelected;
     }
@@ -428,6 +444,9 @@ class _UGBranding extends State<UGBranding>{
     }
     if (variable == "SideToolbarInformation") {
       SideToolbarInformation = colorSelected;
+    }
+    if (variable == "SideToolbarHover") {
+      SideToolbarHover = colorSelected;
     }
     if (variable == "SideToolbarBackground") {
       SideToolbarBackground = colorSelected;

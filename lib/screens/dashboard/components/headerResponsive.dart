@@ -3,7 +3,7 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
 import '../../../constants/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:admin/constants/branding.dart' as branding;
 import '../../../widgets/containers.dart';
 
 double _widthBurger = 0;
@@ -48,7 +48,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            color: headerColor,
+            color: branding.topToolbarBackground,
             child: Container(
               padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
@@ -74,7 +74,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                             icon: AnimatedIcons.menu_close,
                             progress: controller,
                             size: 25,
-                            color: primaryColor),
+                            color: branding.topToolbarIcon),
                       ),
                       SizedBox(
                         width: 10,
@@ -91,8 +91,8 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                         onPressed: () {
                           Navigator.pushNamed(context, '/');
                         },
-                        child: const Image(
-                          image: AssetImage('assets/images/header_logo_white.png'),
+                        child: Image.asset(
+                          branding.topToolbarLogo,
                           width: 210,
                           height: 50,
                         ),
@@ -118,7 +118,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                     },
                     child: Icon(
                       Icons.more_vert,
-                      color: primaryColor,
+                      color: branding.topToolbarIcon,
                       size: 25,
                     ),
                   )
@@ -136,7 +136,6 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                   Visibility(
                     visible: _burger ? false : true,
                     child: SideMenuContainer(
-                      color: headerColor,
                       width: _width,
                       height: MediaQuery.of(context).size.height - 70,
                     ),
@@ -154,7 +153,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                                 ? Colors.transparent
                                 : primaryColor,
                             width: 1)),
-                    color: headerColor,
+                    color: branding.topToolbarBackground,
                   ),
                   duration: Duration(milliseconds: 200),
                   child: Visibility(
@@ -188,7 +187,7 @@ class BurgerMenuContainer extends StatelessWidget {
               top: BorderSide(
                   color: _widthBurger == 0 ? Colors.transparent : primaryColor,
                   width: 1)),
-          color: headerColor,
+          color: branding.topToolbarBackground,
         ),
         duration: Duration(milliseconds: 200),
         child: Visibility(
@@ -202,24 +201,33 @@ class BurgerMenuContainer extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  SizedBox(
+                  Container(
+                      padding: EdgeInsets.only(top: 5),
                       width: 140,
                       child: Material(
                         type: MaterialType.transparency,
                         child: TextFormField(
-                          style: TextStyle(color: primaryColor),
+                          style: TextStyle(color: branding.topToolbarSearchText),
                           decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(5),
                               labelText: 'Search',
-                              labelStyle:
-                                  TextStyle(color: primaryColor, fontSize: 15)),
+                            labelStyle: TextStyle(color: branding.topToolbarSearchText, fontSize: 15),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: branding.topToolbarSearchTextBorder,
+                                  width: 2.0),
+                            ),
+                          ),
+
                         ),
                       )),
                   OwnAnimatedButton(
                     onTap: () {},
                     child: FaIcon(
                       FontAwesomeIcons.search,
-                      size: 20,
-                      color: primaryColor,
+                      size: 15,
+                      color: branding.topToolbarIcon,
                     ),
                   )
                 ],

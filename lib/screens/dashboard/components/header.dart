@@ -3,6 +3,7 @@ import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/constants/globals.dart' as globals;
+import 'package:admin/constants/branding.dart' as branding;
 import '../../../constants/colors.dart';
 import '../../../widgets/containers.dart';
 
@@ -38,7 +39,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       children: [
         // Іконки в правій частині хедера
         Container(
-            color: headerColor,
+            color: branding.topToolbarBackground,
             child: Container(
               padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
               child: Row(
@@ -62,7 +63,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
         Container(
             margin: EdgeInsets.all(0),
             padding: EdgeInsets.fromLTRB(100, 10, 100, 10),
-            color: Color(0xB2000000),
+            color: branding.topToolbarBackground,
             child: Column(
               children: [
                 SizedBox(
@@ -88,7 +89,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                               Navigator.pushNamed(context, '/');
                             },
                             child: Image.asset(
-                              'assets/images/header_logo_white.png',
+                              branding.topToolbarLogo,
                               width: 280,
                               height: 54,
                             ),
@@ -112,8 +113,15 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 17, horizontal: 10),
                                   labelText: 'Search',
-                                  labelStyle: TextStyle(color: primaryColor)),
-                              style: TextStyle(color: primaryColor),
+                                  labelStyle: TextStyle(color: branding.topToolbarSearchText),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                        color: branding.topToolbarSearchTextBorder,
+                                        width: 2.0),
+                                  ),
+                              ),
+                              style: TextStyle(color: branding.topToolbarSearchText),
                             ),
                           )),
                     OwnAnimatedButton(

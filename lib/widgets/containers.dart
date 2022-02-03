@@ -1,7 +1,6 @@
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -131,8 +130,7 @@ class _HeaderIcons extends State<HeaderIcons> {
 class SideMenuContainer extends StatelessWidget {
   final double width;
   final double height;
-  final Color color;
-  SideMenuContainer({required this.width, required this.height, this.color = const Color(0xB2000000)});
+  SideMenuContainer({required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +140,7 @@ class SideMenuContainer extends StatelessWidget {
         duration: Duration(milliseconds: 200),
         child: Material(
           type: MaterialType.transparency,
-          child: SideMenu(
-            color: color,
-          ),
+          child: SideMenu(),
         ));
   }
 }
@@ -296,6 +292,8 @@ class ColorPickerItem extends StatelessWidget{
           width: 44,
           height: 44,
           borderRadius: 4,
+          hasBorder: true,
+          borderColor: Color(0xB2000000),
           color: colorVariable,
           onSelectFocus: false,
           onSelect: onSelect
@@ -304,6 +302,35 @@ class ColorPickerItem extends StatelessWidget{
     );
   }
 }
+
+class UGBrandingImage extends StatelessWidget{
+  final String text;
+  final String image;
+  final void Function()? onPressed;
+  UGBrandingImage({required this.onPressed, required this.image, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.all(15),
+        width: 350,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text, style: TextStyle(fontSize: 18)),
+            Image.asset(
+              image,
+              width: 150,
+              height: 100,
+            ),
+            OwnButton(label: 'Browse', onPressed: onPressed,),
+          ],
+        )
+    );
+  }
+}
+
+
 
 
 

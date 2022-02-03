@@ -1,20 +1,33 @@
 import 'package:admin/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/constants/branding.dart' as branding;
 
-class OwnButton extends StatelessWidget{
+class OwnButton extends StatefulWidget{
   final String? label;
   final void Function()? onPressed;
   OwnButton({this.label, this.onPressed});
 
   @override
+  State<OwnButton> createState() => _OwnButtonState();
+}
+
+class _OwnButtonState extends State<OwnButton> {
+  Color bgColor = branding.bodyButton;
+  Color textColor = branding.bodyButtonText;
+
+  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: TextButton.styleFrom(
-          backgroundColor: secondaryColor,
+          backgroundColor: bgColor,
           padding: EdgeInsets.all(5),
         ),
-        onPressed: onPressed,
-        child: Text(label!, style: TextStyle(color: primaryColor),),
+        onHover: (hover) {setState(() {
+          bgColor = hover ? branding.bodyButtonHover : branding.bodyButton;
+          textColor = hover ? branding.bodyButtonText : branding.bodyButtonTextHover;
+        });},
+        onPressed: widget.onPressed,
+        child: Text(widget.label!, style: TextStyle(color: primaryColor),),
 
     );
   }
@@ -130,11 +143,11 @@ class _OwnAnimatedButtonState extends State<OwnAnimatedButton> {
           child: Container(
             padding: EdgeInsets.all(5),
             child: InkWell(
-              focusColor: secondaryColor,
+              focusColor: branding.topToolbarIconHover,
               hoverColor: Colors.transparent,
               onHover: (isHover) {
                 setState(() {
-                  _color = _color == Colors.transparent ? secondaryColor : Colors.transparent;
+                  _color = isHover ? branding.topToolbarIconHover : Colors.transparent;
                 });
               },
               onTap: widget.onTap,
@@ -153,13 +166,14 @@ class OwnAnimatedTextButton extends StatefulWidget{
   final void Function()? onPressed;
   final String? childText;
   final double fontSize;
+  final Color color;
 
-  OwnAnimatedTextButton({this.childText, this.onPressed, this.fontSize = 25});
+  OwnAnimatedTextButton({this.childText, this.onPressed, this.fontSize = 25, this.color = primaryColor});
 
 }
 
 class _OwnAnimatedTextButton extends State<OwnAnimatedTextButton> {
-  Color _color = primaryColor;
+  Color _color = branding.topToolbarHyperlink;
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
@@ -173,7 +187,7 @@ class _OwnAnimatedTextButton extends State<OwnAnimatedTextButton> {
                 highlightColor: Colors.transparent,
                 onHover: (isHover) {
                   setState(() {
-                    _color = _color == primaryColor ? secondaryColor : primaryColor;
+                    _color = isHover ? branding.topToolbarHyperlinkHover : widget.color;
                   });
                 },
                 onTap: widget.onPressed,

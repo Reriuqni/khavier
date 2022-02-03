@@ -44,23 +44,22 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
         type: MaterialType.transparency,
         child: SafeArea(
             child: HeaderAndSideMenu(
-          widget: Column(
+            widget:
+              Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 200,
-                    child: Text(
+                      Text(
                       'Users',
-                    style: TextStyle(color: iconColor, fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
+                        style: TextStyle(
+                            color: iconColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
-                    width: 50,
-                  ),
+                      SizedBox(width: 50,),
                   Container(
                     width: 301,
                     child: Row(
@@ -84,7 +83,8 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                         Container(
                           padding: EdgeInsets.fromLTRB(30, 0, 15, 0),
                           child: OwnButton(
-                            onPressed: () {},
+                              onPressed: () {
+                              },
                             label: 'Invite',
                           ),
                         ),
@@ -103,9 +103,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                   )
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+                  SizedBox(height: 10,),
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 children: [
@@ -131,9 +129,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                       prefixIcon: FontAwesomeIcons.search,
                     ),
                   ),
-                  SizedBox(
-                    width: 30,
-                  ),
+                        SizedBox(width: 30,),
                   Container(
                     width: 300,
                     child: Row(
@@ -145,14 +141,14 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                                 archivedCheckBox.value = value;
                               });
                             }),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Show Archived',
+                                SizedBox(width: 5,),
+                                Text(
+                                  'Show Archived',
                             style: TextStyle(
                               color: iconColor,
                               fontSize: 16,
-                            )),
+                                  )
+                                ),
                       ],
                     ),
                   ),
@@ -174,6 +170,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
+            print('ConnectionState.waiting');
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
