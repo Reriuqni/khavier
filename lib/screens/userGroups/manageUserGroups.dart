@@ -1,3 +1,5 @@
+import 'package:admin/api/firebase_api.dart';
+import 'package:admin/model/user_group/user_group.dart';
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';
@@ -24,6 +26,7 @@ class UserGroupsEdit extends StatefulWidget {
 class _UserGroupsEdit extends State<UserGroupsEdit>
     with SingleTickerProviderStateMixin, RestorationMixin {
   TabController? _tabController;
+  UserGroup _userGroup = UserGroup();
 
   final RestorableInt tabIndex = RestorableInt(0);
 
@@ -106,8 +109,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
                             children: [
                               OwnButton(
                                   onPressed: () {
-                                    // 2do: чи маєм право створювати порожнього юзера без прив'язки до uid FirebaseAuth?
-                                    // Поки, що коментую рядок
+                                    FirebaseApi.createUserGroup(userGroup: _userGroup);
                                     Navigator.pushNamed(context, '/');
                                   },
                                   label: 'Save')

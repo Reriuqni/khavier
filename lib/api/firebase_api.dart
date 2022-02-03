@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:admin/model/user_group/user_group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/model/ticket_static.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 
 String ticketCollection = 'tickets';
 String usersCollection = 'users';
+String userGroupCollection = 'user_group';
 
 class FirebaseApi {
   // Processing Tickets
@@ -152,4 +154,12 @@ class FirebaseApi {
   }
 
   // Processing Users
+
+  // Processing User Groups
+
+  static Future<void> createUserGroup({required UserGroup userGroup, uid, solveUser}) async {
+    final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc();
+    userGroup.id = docUG.id;
+    await docUG.set(userGroup.toJson());
+  }
 }

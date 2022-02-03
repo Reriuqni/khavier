@@ -7,6 +7,7 @@ part of 'user_group.dart';
 // **************************************************************************
 
 UserGroup _$UserGroupFromJson(Map<String, dynamic> json) => UserGroup(
+      id: json['id'] as String?,
       name: json['name'] as String?,
       subDomain: json['subDomain'] as String?,
       timeZone: json['timeZone'] as String?,
@@ -56,6 +57,7 @@ UserGroup _$UserGroupFromJson(Map<String, dynamic> json) => UserGroup(
     );
 
 Map<String, dynamic> _$UserGroupToJson(UserGroup instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'subDomain': instance.subDomain,
       'timeZone': instance.timeZone,

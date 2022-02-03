@@ -4,6 +4,7 @@ part 'user_group.g.dart';
 
 @JsonSerializable()
 class UserGroup {
+  String? id;
   // New User Groups
   String? name;
   String? subDomain;
@@ -62,72 +63,68 @@ class UserGroup {
   // Custom
   String? acn;
 
-
-
-
   UserGroup({
-  // New User Groups
-  this.name,
-  this.subDomain,
-  this.timeZone,
-  // Primary Contact
-  this.primaryContactName,
-  this.primaryContactMobile,
-  this.primaryContactEmail,
-  this.primaryContactWebsite,
-  // Address
-  this.address1,
-  this.address2,
-  this.country,
-  this.state,
-  this.city,
-  this.zipCode,
-  // Language
-  this.language,
-  this.isShowLangOpt,
-  this.otherLaguageChine,
-  this.otherLaguageEnglish,
-  this.otherLaguageUSA,
-  this.otherLaguageFrench,
-  // Billing
-  this.creditCardName,
-  this.creditCardNumber,
-  this.creditCardExp,
-  this.creditCardCVC,
-  // Branding: Login
-  this.isEnableUserRegistration,
-  this.loginHyperColor,
-  this.loginHyperHover,
-  this.loginLogo,
-  this.loginImage,
-  // Branding: Top Toolbar
-  this.colorToolbarIcon,
-  this.colorToolbarIconHover,
-  this.colorToolbarHyperLink,
-  this.colorToolbarHyperLinkHover,
-  this.colorToolbarBackground,
-  this.colorToolbarSearchText,
-  this.colorToolbarSearchBorder,
-  this.colorToolbarLogo,
-  // Branding: Body
-  this.colorBodyButton,
-  this.colorBodyButtonHover,
-  this.colorBodyButtonText,
-  this.colorBodyButtonTextHover,
-  this.colorBodyImage,
-  // Admin Prising
-  this.adminPrising,
-  // Sub User Group Settings
-  this.subUserGroupLanuage,
-  this.subUserGroupBranding,
-  this.subUserGroupBilling,
-  // Custom
-  this.acn,
+    this.id,
+    // New User Groups
+    this.name,
+    this.subDomain,
+    this.timeZone,
+    // Primary Contact
+    this.primaryContactName,
+    this.primaryContactMobile,
+    this.primaryContactEmail,
+    this.primaryContactWebsite,
+    // Address
+    this.address1,
+    this.address2,
+    this.country,
+    this.state,
+    this.city,
+    this.zipCode,
+    // Language
+    this.language,
+    this.isShowLangOpt,
+    this.otherLaguageChine,
+    this.otherLaguageEnglish,
+    this.otherLaguageUSA,
+    this.otherLaguageFrench,
+    // Billing
+    this.creditCardName,
+    this.creditCardNumber,
+    this.creditCardExp,
+    this.creditCardCVC,
+    // Branding: Login
+    this.isEnableUserRegistration,
+    this.loginHyperColor,
+    this.loginHyperHover,
+    this.loginLogo,
+    this.loginImage,
+    // Branding: Top Toolbar
+    this.colorToolbarIcon,
+    this.colorToolbarIconHover,
+    this.colorToolbarHyperLink,
+    this.colorToolbarHyperLinkHover,
+    this.colorToolbarBackground,
+    this.colorToolbarSearchText,
+    this.colorToolbarSearchBorder,
+    this.colorToolbarLogo,
+    // Branding: Body
+    this.colorBodyButton,
+    this.colorBodyButtonHover,
+    this.colorBodyButtonText,
+    this.colorBodyButtonTextHover,
+    this.colorBodyImage,
+    // Admin Prising
+    this.adminPrising,
+    // Sub User Group Settings
+    this.subUserGroupLanuage,
+    this.subUserGroupBranding,
+    this.subUserGroupBilling,
+    // Custom
+    this.acn,
   });
-
 
   factory UserGroup.fromJson(Map<String, dynamic> json) => _$UserGroupFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserGroupToJson(this);
-
 }
