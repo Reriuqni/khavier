@@ -1,13 +1,20 @@
 import 'package:admin/widgets/buttons.dart';
 import 'package:admin/widgets/textFields.dart';
+import 'package:country_state_city_pro/country_state_city_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/responsive.dart';
 import '../../widgets/containers.dart';
 import '../ticket/screen_arguments.dart';
 import 'UGBranding.dart';
+import 'package:admin/constants/globals.dart' as globals;
+
 
 dynamic args;
+
+double rowGap = 200;
+
 
 class UserGroupsEdit extends StatefulWidget {
   const UserGroupsEdit({Key? key}) : super(key: key);
@@ -35,7 +42,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
     super.initState();
     _tabController = TabController(
       initialIndex: 0,
-      length: 7,
+      length: 9,
       vsync: this,
     );
     _tabController!.addListener(() {
@@ -58,7 +65,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
   @override
   Widget build(BuildContext context) {
 
-    List tabs = ['New User Groups', 'Primary Contact', 'Address', 'Language', 'Billing', 'Branding', 'Admin Prising'];
+    List tabs = ['New User Groups', 'Primary Contact', 'Address', 'Language', 'Billing', 'Branding', 'Admin Prising', 'Sub User Group Settings', 'Custom'];
     args = ModalRoute.of(context)!.settings.arguments;
 
     if (args != 'newUser' && args != null) {
@@ -120,13 +127,49 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
                     body: TabBarView(
                       controller: _tabController,
                       children: [
-                        NewUserGroup(),
-                        UGPrimaryContact(),
-                        UGAddress(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [NewUserGroup()],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [UGPrimaryContact(),],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [UGAddress(),],
+                        ),
                         UGLanguage(),
-                        UGBilling(),
-                        UGBranding(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [UGBilling(),],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [UGBranding(),],
+                        ),
                         UGAdminPricing(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [SubUserGroupsSetting()],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TabsMainContainer(
+                              children: [
+                                RowItem(text: 'ACN',)
+                              ],
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   )),
@@ -136,7 +179,13 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
     );
   }
 }
-class NewUserGroup extends StatelessWidget {
+class NewUserGroup extends StatefulWidget {
+
+  @override
+  State<NewUserGroup> createState() => _NewUserGroupState();
+}
+
+class _NewUserGroupState extends State<NewUserGroup> {
 
   @override
   Widget build(BuildContext context) {
@@ -151,8 +200,17 @@ class NewUserGroup extends StatelessWidget {
             RowItem(
               label: 'Sub Domain',
             ),
-            RowItem(
-              label: 'TimeZone',
+            SizedBox(width: rowGap,),
+            // RowItem(
+            //   label: 'TimeZone',
+            // )
+            Container(
+              width: 300,
+              padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
+              child: OwnDropDown(
+                hint: 'TimeZone',
+                onChanged: (value) {},
+                items: globals.timeZone, ),
             )
           ],
         )
@@ -172,6 +230,7 @@ class UGPrimaryContact extends StatelessWidget {
             RowItem(
               label: 'Name',
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'Email',
             ),
@@ -182,6 +241,7 @@ class UGPrimaryContact extends StatelessWidget {
             RowItem(
               label: 'Mobile Phone',
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'Website',
             )
@@ -192,20 +252,27 @@ class UGPrimaryContact extends StatelessWidget {
   }
 }
 
-class UGAddress extends StatelessWidget {
+class UGAddress extends StatefulWidget {
+
+  @override
+  State<UGAddress> createState() => _UGAddressState();
+}
+
+class _UGAddressState extends State<UGAddress> {
+  TextEditingController country=TextEditingController();
+  TextEditingController state=TextEditingController();
+  TextEditingController city=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return TabsMainContainer(
       children: [
-        RowItem(
-          label: 'Country',
-        ),
         Wrap(
           children: [
             RowItem(
               label: 'Street Address 1',
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'Street Address 2',
             ),
@@ -213,17 +280,32 @@ class UGAddress extends StatelessWidget {
         ),
         Wrap(
           children: [
-            RowItem(
-              label: 'City',
+            Container(
+              width: 300,
+              padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
+              child: Column(
+                children: [
+                  CountryStateCityPicker(
+                    country: country,
+                    state: state,
+                    city: city,
+                    textFieldInputBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                          color: Color(0xFF009EAE),
+                          width: 2.0),
+                    ),
             ),
-            RowItem(
-              label: 'State/Province',
-            )
           ],
         ),
+            ),
+            SizedBox(width: rowGap,),
         RowItem(
           label: 'Zip/Post Code',
         )
+      ],
+        ),
+
       ],
     );
   }
@@ -391,6 +473,7 @@ class UGBilling extends StatelessWidget {
           ],
         ),
         Wrap(
+          crossAxisAlignment: WrapCrossAlignment.end,
           children: [
             RowItem(
               label: 'Expiry (MM/YY)',
@@ -398,8 +481,11 @@ class UGBilling extends StatelessWidget {
             RowItem(
               label: 'CVC',
             ),
-            OwnButton(
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+              child: OwnButton(
               label: 'Update',
+              ),
             )
           ],
         ),
@@ -530,6 +616,54 @@ class _UGAdminPricing extends State<UGAdminPricing>{
             ),
           )
         ],
+    );
+  }
+}
+
+class SubUserGroupsSetting extends StatefulWidget {
+  @override
+  _SubUserGroupsSetting createState() => _SubUserGroupsSetting();
+}
+
+class _SubUserGroupsSetting extends State<SubUserGroupsSetting>{
+
+  List sUGSettings = <String> [
+    'Sub-User Groups Cannot Change',
+    'Sub-User Groups Must Enter Information',
+    'Selected Sub-User Groups Must Enter Information'];
+
+  @override
+  Widget build(BuildContext context) {
+    return TabsMainContainer(
+      children: [
+        Container(
+          width: 460,
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          child: OwnDropDown(
+            hint: 'Language',
+            items: sUGSettings,
+            onChanged: (value) {},
+          ),
+        ),
+        Container(
+          width: 460,
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          child: OwnDropDown(
+            hint: 'Branding',
+            items: sUGSettings,
+            onChanged: (value) {},
+          ),
+        ),
+        Container(
+          width: 460,
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          child: OwnDropDown(
+            hint: 'Billing',
+            items: sUGSettings,
+            onChanged: (value) {},
+          ),
+        ),
+      ],
     );
   }
 }

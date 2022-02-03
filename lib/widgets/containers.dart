@@ -166,14 +166,12 @@ class TabsMainContainer extends StatelessWidget {
 class RowItem extends StatelessWidget {
   final String text;
   final String label;
-  final Widget widget;
   final dynamic onChanged;
   final dynamic initialValue;
   RowItem(
       {this.text = '',
         this.label = 'Default',
         this.onChanged,
-        this.widget = const Text(''),
         this.initialValue
       });
 
@@ -181,10 +179,7 @@ class RowItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.end,
-        children: [
-          Column(
+      child: Column(
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
@@ -209,14 +204,43 @@ class RowItem extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-              padding: EdgeInsets.all(5),
-              width: 175,
-              child: Container(
-                child: widget,
-              ))
-        ],
-      ),
+      // child: Wrap(
+      //   alignment: WrapAlignment.start,
+      //   crossAxisAlignment: WrapCrossAlignment.end,
+      //   children: [
+      //     Column(
+      //       children: [
+      //         Container(
+      //           padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+      //           width: 300,
+      //           child: Text(
+      //             text,
+      //             textAlign: TextAlign.end,
+      //             style: TextStyle(
+      //               fontSize: 16,
+      //               fontWeight: FontWeight.w500,
+      //             ),
+      //           ),
+      //         ),
+      //         Container(
+      //           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+      //           width: 300,
+      //           child: OwnTextField(
+      //             onChanged: onChanged,
+      //             labelText: label,
+      //             initialValue: initialValue,
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //     Container(
+      //         padding: EdgeInsets.all(5),
+      //         child: Container(
+      //           width: 175,
+      //           child: widget,
+      //         ))
+      //   ],
+      // ),
     );
   }
 }
