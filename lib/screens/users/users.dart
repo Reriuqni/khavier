@@ -170,7 +170,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            print('ConnectionState.waiting');
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {

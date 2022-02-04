@@ -1,4 +1,5 @@
 import 'package:admin/screens/userGroups/components/row_of_user_group.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
@@ -100,9 +101,31 @@ class _UserGroupsPage extends State<UserGroupsPage> with RestorationMixin {
                   RowOfUserGroup(nameOfGroup: 'Branding'),
                   RowOfUserGroup(nameOfGroup: 'Demo'),
                 ],
-              )
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('userGroups').snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return buildText('Something Went Wrong Try later');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            Row(children: [ListTile(title: Text((snapshot.data!.docs[index].data()! as Map<String, dynamic>)['name']))]),
+                      );
+                    }),
+              ),
             ],
           ),
         )));
   }
 }
+
+Widget buildText(String text) => Center(child: Text(text, style: TextStyle(fontSize: 24, color: Colors.blue)));
