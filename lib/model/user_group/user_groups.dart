@@ -1,7 +1,9 @@
+import 'package:admin/screens/userGroups/manageUserGroups.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_groups.g.dart';
 
+// @JsonSerializable(fieldRename:FieldRename.snake)
 @JsonSerializable()
 class UserGroups {
   String? id;
@@ -22,12 +24,12 @@ class UserGroups {
   String? city;
   String? zipCode;
   // Language
-  String? language;
-  String? isShowLangOpt;
-  String? otherLaguageChine;
-  String? otherLaguageEnglish;
-  String? otherLaguageUSA;
-  String? otherLaguageFrench;
+  String? defaultLanguage;
+  bool? isShowLanguageOption;
+  bool? laguageChineseSimplified;
+  bool? laguageEnglishAUS;
+  bool? laguageEnglishUSA;
+  bool? laguageFrench;
   // Billing
   String? creditCardName;
   String? creditCardNumber;
@@ -55,9 +57,9 @@ class UserGroups {
   String? colorBodyButtonTextHover;
   String? colorBodyImage;
   // Admin Prising
-  String? adminPrising;
+  AdminPricing adminPrising;
   // Sub User Group Settings
-  String? subUserGroupLanuage;
+  String? subUserGroupLanguge;
   String? subUserGroupBranding;
   String? subUserGroupBilling;
   // Custom
@@ -82,12 +84,12 @@ class UserGroups {
     this.city,
     this.zipCode,
     // Language
-    this.language,
-    this.isShowLangOpt,
-    this.otherLaguageChine,
-    this.otherLaguageEnglish,
-    this.otherLaguageUSA,
-    this.otherLaguageFrench,
+    this.defaultLanguage,
+    this.isShowLanguageOption,
+    this.laguageChineseSimplified,
+    this.laguageEnglishAUS,
+    this.laguageEnglishUSA,
+    this.laguageFrench,
     // Billing
     this.creditCardName,
     this.creditCardNumber,
@@ -115,16 +117,17 @@ class UserGroups {
     this.colorBodyButtonTextHover,
     this.colorBodyImage,
     // Admin Prising
-    this.adminPrising,
+    this.adminPrising = AdminPricing.Individual,
     // Sub User Group Settings
-    this.subUserGroupLanuage,
+    this.subUserGroupLanguge,
     this.subUserGroupBranding,
     this.subUserGroupBilling,
     // Custom
     this.acn,
   });
 
-  factory UserGroups.fromJson(Map<String, dynamic> json) => _$UserGroupsFromJson(json);
+  factory UserGroups.fromJson(Map<String, dynamic> json) =>
+      _$UserGroupsFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserGroupsToJson(this);
 }

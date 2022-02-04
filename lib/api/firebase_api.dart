@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 String ticketCollection = 'tickets';
 String usersCollection = 'users';
-String userGroupCollection = 'user_group';
+String userGroupCollection = 'userGroups';
 
 class FirebaseApi {
   // Processing Tickets

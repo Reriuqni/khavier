@@ -168,6 +168,7 @@ class OtherTab extends StatelessWidget {
               RowItem(
                 text: 'Tags:',
                 onChanged: (_) => _user!.tags = _,
+                initialValue: _user!.tags,
               ),
             if (args == 'newUser')
               SizedBox(width: rowGap,),
