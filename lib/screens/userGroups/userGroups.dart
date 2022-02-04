@@ -1,3 +1,4 @@
+import 'package:admin/screens/userGroups/components/row_context_menu.dart';
 import 'package:admin/screens/userGroups/components/row_of_user_group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -117,8 +118,12 @@ class _UserGroupsPage extends State<UserGroupsPage> with RestorationMixin {
 
                       return ListView.builder(
                         itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            Row(children: [ListTile(title: Text((snapshot.data!.docs[index].data()! as Map<String, dynamic>)['name']))]),
+                        itemBuilder: (BuildContext context, int index) => ListTile(
+                          leading: ExcludeSemantics(
+                            child: RowUserGroupContextMenu(uid: (snapshot.data!.docs[index].data()! as Map<String, dynamic>)['id']),
+                          ),
+                          title: Text((snapshot.data!.docs[index].data()! as Map<String, dynamic>)['name']),
+                        ),
                       );
                     }),
               ),

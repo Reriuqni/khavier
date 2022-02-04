@@ -24,8 +24,7 @@ class UserGroupsEdit extends StatefulWidget {
   _UserGroupsEdit createState() => _UserGroupsEdit();
 }
 
-class _UserGroupsEdit extends State<UserGroupsEdit>
-    with SingleTickerProviderStateMixin, RestorationMixin {
+class _UserGroupsEdit extends State<UserGroupsEdit> with SingleTickerProviderStateMixin, RestorationMixin {
   TabController? _tabController;
 
   final RestorableInt tabIndex = RestorableInt(0);
@@ -80,9 +79,12 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
     ];
     args = ModalRoute.of(context)!.settings.arguments;
 
-    if (args != 'newUser' && args != null) {
+    // if (args != 'newUser' && args != null) {
+    if ( args != null) {
       args = args as ScreenArguments?;
-      if (args.user != null) {
+      if (args.userGroups != null) {
+        _userGroup = args.userGroups;
+        print(_userGroup.id);
         isAddUser = false;
       }
     }
@@ -92,14 +94,9 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
           decoration: BoxDecoration(
               color: Colors.black,
               image: DecorationImage(
-                  colorFilter:
-                      ColorFilter.mode(Colors.black45, BlendMode.dstATop),
-                  alignment: Responsive.isDesktop(context)
-                      ? Alignment.topCenter
-                      : Alignment.center,
-                  fit: Responsive.isDesktop(context)
-                      ? BoxFit.cover
-                      : BoxFit.fitHeight,
+                  colorFilter: ColorFilter.mode(Colors.black45, BlendMode.dstATop),
+                  alignment: Responsive.isDesktop(context) ? Alignment.topCenter : Alignment.center,
+                  fit: Responsive.isDesktop(context) ? BoxFit.cover : BoxFit.fitHeight,
                   image: AssetImage("assets/images/home.jpg"))),
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
@@ -119,7 +116,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
                             children: [
                               OwnButton(
                                   onPressed: () {
-                                    saveUserGroup();
+                                    saveUserGroup(isNewUserGroup: isAddUser);
                                     Navigator.pushNamed(context, '/');
                                   },
                                   label: 'Save')
@@ -175,11 +172,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TabsMainContainer(children: [
-                              RowItem(
-                                  text: 'ACN',
-                                  label: 'ACN',
-                                  initialValue: _userGroup.acn,
-                                  onChanged: (_) => _userGroup.acn = _)
+                              RowItem(text: 'ACN', label: 'ACN', initialValue: _userGroup.acn, onChanged: (_) => _userGroup.acn = _)
                             ])
                           ],
                         ),
@@ -203,13 +196,20 @@ class _NewUserGroupState extends State<NewUserGroup> {
   Widget build(BuildContext context) {
     return TabsMainContainer(
       children: [
-        RowItem(label: 'Name', onChanged: (_) => _userGroup.name = _),
+        Text('UID: ' + _userGroup.id.toString()),
+        RowItem(
+          label: 'Name',
+          initialValue: _userGroup.name,
+          onChanged: (_) => _userGroup.name = _,
+        ),
         Wrap(
           alignment: WrapAlignment.center,
           children: [
             RowItem(
-                label: 'Sub Domain',
-                onChanged: (_) => _userGroup.subDomain = _),
+              label: 'Sub Domain',
+              initialValue: _userGroup.subDomain,
+              onChanged: (_) => _userGroup.subDomain = _,
+            ),
             SizedBox(width: rowGap),
             // RowItem(
             //   label: 'TimeZone',
@@ -276,8 +276,7 @@ class UGAddress extends StatefulWidget {
 }
 
 class _UGAddressState extends State<UGAddress> {
-  TextEditingController country =
-      TextEditingController(text: _userGroup.country);
+  TextEditingController country = TextEditingController(text: _userGroup.country);
   TextEditingController state = TextEditingController(text: _userGroup.state);
   TextEditingController city = TextEditingController(text: _userGroup.city);
 
@@ -313,8 +312,7 @@ class _UGAddressState extends State<UGAddress> {
                     city: city,
                     textFieldInputBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                      borderSide:
-                          BorderSide(color: Color(0xFF009EAE), width: 2.0),
+                      borderSide: BorderSide(color: Color(0xFF009EAE), width: 2.0),
                     ),
                   ),
                 ],
@@ -387,12 +385,7 @@ class _UGLanguageState extends State<UGLanguage> with RestorationMixin {
                 _userGroup.defaultLanguage = value;
               });
             },
-            items: [
-              'English (Aus)',
-              'English (USA)',
-              'Chinese (simplified)',
-              'French'
-            ],
+            items: ['English (Aus)', 'English (USA)', 'Chinese (simplified)', 'French'],
           ),
         ),
         Wrap(
@@ -525,7 +518,7 @@ class UGBilling extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
               child: OwnButton(
                 label: 'Update',
-                onPressed: () => saveUserGroup(),
+                // onPressed: () => saveUserGroup(isNewUserGroup: null),
               ),
             )
           ],
@@ -540,13 +533,7 @@ class UGAdminPricing extends StatefulWidget {
   _UGAdminPricing createState() => _UGAdminPricing();
 }
 
-enum AdminPricing {
-  Individual,
-  Business,
-  BusinessPlus,
-  Enterprise,
-  EnterprisePlus
-}
+enum AdminPricing { Individual, Business, BusinessPlus, Enterprise, EnterprisePlus }
 
 class _UGAdminPricing extends State<UGAdminPricing> {
   AdminPricing? _pricing = AdminPricing.Individual;
@@ -575,8 +562,7 @@ class _UGAdminPricing extends State<UGAdminPricing> {
               });
             },
           ),
-          color:
-              _pricing == AdminPricing.Individual ? secondaryColor : iconColor,
+          color: _pricing == AdminPricing.Individual ? secondaryColor : iconColor,
           textRadio: 'Individual',
           text0: '1-2',
           text1: r'$20.00',
@@ -610,9 +596,7 @@ class _UGAdminPricing extends State<UGAdminPricing> {
               });
             },
           ),
-          color: _pricing == AdminPricing.BusinessPlus
-              ? secondaryColor
-              : iconColor,
+          color: _pricing == AdminPricing.BusinessPlus ? secondaryColor : iconColor,
           textRadio: 'Business Plus',
           text0: '11-25',
           text1: r'$100.00',
@@ -629,8 +613,7 @@ class _UGAdminPricing extends State<UGAdminPricing> {
               });
             },
           ),
-          color:
-              _pricing == AdminPricing.Enterprise ? secondaryColor : iconColor,
+          color: _pricing == AdminPricing.Enterprise ? secondaryColor : iconColor,
           textRadio: 'Enterprise',
           text0: '26-50',
           text1: r'$150.00',
@@ -647,9 +630,7 @@ class _UGAdminPricing extends State<UGAdminPricing> {
               });
             },
           ),
-          color: _pricing == AdminPricing.EnterprisePlus
-              ? secondaryColor
-              : iconColor,
+          color: _pricing == AdminPricing.EnterprisePlus ? secondaryColor : iconColor,
           textRadio: 'Enterprise Plus',
           text0: '51-100',
           text1: r'$200.00',
@@ -670,14 +651,14 @@ class _UGAdminPricing extends State<UGAdminPricing> {
               ),
               OwnButton(
                 label: 'Downgrade',
-                onPressed: () => saveUserGroup(),
+                // onPressed: () => saveUserGroup(),
               ),
               SizedBox(
                 width: 10,
               ),
               OwnButton(
                 label: 'Upgrade',
-                onPressed: () => saveUserGroup(),
+                // onPressed: () => saveUserGroup(),
               )
             ],
           ),
@@ -739,6 +720,10 @@ class _SubUserGroupsSetting extends State<SubUserGroupsSetting> {
   }
 }
 
-void saveUserGroup() {
-  FirebaseApi.createUserGroup(userGroup: _userGroup);
+void saveUserGroup({required bool isNewUserGroup}) {
+  if (isNewUserGroup) {
+    FirebaseApi.createUserGroup(userGroup: _userGroup);
+  } else {
+    FirebaseApi.updateUserGroups(userGroups: _userGroup);
+  }
 }

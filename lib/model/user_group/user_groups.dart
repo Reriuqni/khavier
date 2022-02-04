@@ -6,7 +6,10 @@ part 'user_groups.g.dart';
 // @JsonSerializable(fieldRename:FieldRename.snake)
 @JsonSerializable()
 class UserGroups {
+  // 2Do: What name i right: id OR uid ?
   String? id;
+  String? parentId;
+  bool isDdeleteAvailable;
   // New User Groups
   String? name;
   String? subDomain;
@@ -67,6 +70,8 @@ class UserGroups {
 
   UserGroups({
     this.id,
+    this.parentId,
+    this.isDdeleteAvailable = true,
     // New User Groups
     this.name,
     this.subDomain,
