@@ -78,9 +78,9 @@ class _UserGroupsEdit extends State<UserGroupsEdit> with SingleTickerProviderSta
       'Custom'
     ];
     args = ModalRoute.of(context)!.settings.arguments;
-
+    _userGroup = UserGroups();
     // if (args != 'newUser' && args != null) {
-    if ( args != null) {
+    if (args != null) {
       args = args as ScreenArguments?;
       if (args.userGroups != null) {
         _userGroup = args.userGroups;
@@ -119,7 +119,7 @@ class _UserGroupsEdit extends State<UserGroupsEdit> with SingleTickerProviderSta
                                     saveUserGroup(isNewUserGroup: isAddUser);
                                     Navigator.pushNamed(context, '/');
                                   },
-                                  label: 'Save')
+                                  label: isAddUser ? 'Add new' : 'Save')
                             ],
                           )
                         ],

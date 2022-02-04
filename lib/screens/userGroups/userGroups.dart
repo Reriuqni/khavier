@@ -1,3 +1,4 @@
+import 'package:admin/screens/ticket/screen_arguments.dart';
 import 'package:admin/screens/userGroups/components/row_context_menu.dart';
 import 'package:admin/screens/userGroups/components/row_of_user_group.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -82,6 +83,7 @@ class _UserGroupsPage extends State<UserGroupsPage> with RestorationMixin {
                             Navigator.pushNamed(
                               context,
                               '/editUserGroups',
+                              // arguments: ScreenArguments(userGroups: await FirebaseApi.readUserGroup(uid: uid))
                             );
                           },
                           icon: Icons.add,
