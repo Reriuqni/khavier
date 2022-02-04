@@ -79,20 +79,8 @@ class _SideMenuState extends State<SideMenu> {
                 title: 'Management',
             ),
             DrawerListSubTile(
-                title: 'Matter Templates',
-                subTitle: 'Manage your matter processes',
-                press: (){}),
-            DrawerListSubTile(
-                title: 'Matter Management',
-                subTitle: 'Who can manage matters',
-                press: (){}),
-            DrawerListSubTile(
-                title: 'User Group Management',
-                subTitle: 'Who can manage your user group(s)',
-                press: (){}),
-            DrawerListSubTile(
-                title: 'User Management',
-                subTitle: 'Who can manage your user',
+                title: 'Access Rights',
+                subTitle: 'Manage your system access rights',
                 press: (){}),
           ],
         ),

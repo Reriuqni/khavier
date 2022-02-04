@@ -2,10 +2,6 @@ import 'package:admin/routes/roles.dart';
 
 import '../utils.dart';
 
-class UserField {
-  static const date = 'date';
-}
-
 class User {
   String organization;
   // 2do: Давайте переназвемо поле accountType в role?

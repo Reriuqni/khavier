@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:admin/model/user_group/user_groups.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:admin/model/user.dart' as SolveUser;
 import 'package:admin/model/ticket_static.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 
 String ticketCollection = 'tickets';
 String usersCollection = 'users';
+String userGroupCollection = 'userGroups';
 
 class FirebaseApi {
   // Processing Tickets
@@ -26,8 +28,7 @@ class FirebaseApi {
       .collection(ticketCollection)
       // .orderBy(TicketField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(Ticket.fromJson)
-          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
+      .transform(Utils.transformer(Ticket.fromJson) as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<Ticket>>);
 
   static Future updateTicket(Ticket ticket) async {
     final docTicket = FirebaseFirestore.instance.collection(ticketCollection).doc(ticket.id);
@@ -58,10 +59,7 @@ class FirebaseApi {
     if (snapshot.exists) {
       print('User exist. uid $_uid');
 
-      docUser.update({
-        'lastSignInTime': authUser.data!.metadata.lastSignInTime,
-        'lastAccessToFirebase': DateTime.now()
-      });
+      docUser.update({'lastSignInTime': authUser.data!.metadata.lastSignInTime, 'lastAccessToFirebase': DateTime.now()});
 
       return SolveUser.User.fromJson(snapshot.data()!);
     } else {
@@ -107,16 +105,19 @@ class FirebaseApi {
     return solveUser;
   }
 
-  static Future<SolveUser.User> createUser(
-      {required String uid, required SolveUser.User solveUser}) async {
+  // Create user and read from Firebase
+  // static Future<SolveUser.User> createUser(
+  //     {required String uid, required SolveUser.User solveUser}) async {
+  //   final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
+  //   await docUser.set(solveUser.toJson());
+  //   final snapshot = await docUser.get();
+  //   print('Created new User, docId = uid = ${snapshot.id}');
+  //   return SolveUser.User.fromJson(snapshot.data()!);
+  // }
+
+  static Future<void> createUser({required String uid, required SolveUser.User solveUser}) async {
     final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
     await docUser.set(solveUser.toJson());
-
-    final snapshot = await docUser.get();
-    String docID = snapshot.id;
-    print('Created new User, docId = uid = $docID');
-
-    return SolveUser.User.fromJson(snapshot.data()!);
   }
 
   static Future<void> updateUser({required SolveUser.User user}) async {
@@ -124,12 +125,22 @@ class FirebaseApi {
     await docUser.update(user.toJson());
   }
 
+  static Future<void> deleteUserGroups({required String uid}) async {
+    final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc(uid);
+    final ug = await docUG.get();
+
+    UserGroups userGroups = UserGroups.fromJson(ug.data()!);
+    if (userGroups.isDdeleteAvailable) {
+      docUG.delete();
+    }
+  }
+
   static Stream<List<SolveUser.User>> readUsers() => FirebaseFirestore.instance
       .collection(usersCollection)
       // .orderBy(UserField.date, descending: true)
       .snapshots()
-      .transform(Utils.transformer(SolveUser.User.fromJson)
-          as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<SolveUser.User>>);
+      .transform(
+          Utils.transformer(SolveUser.User.fromJson) as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<SolveUser.User>>);
 
   static Future<void> updateAccountType({required String uid, required String accountType}) async {
     final docUser = FirebaseFirestore.instance.collection(usersCollection).doc(uid);
@@ -152,4 +163,55 @@ class FirebaseApi {
   }
 
   // Processing Users
+
+  // Processing User Groups
+
+  static Future<void> createUserGroup({required UserGroups userGroup, uid, solveUser}) async {
+    final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc();
+    userGroup.id = docUG.id;
+    await docUG.set(userGroup.toJson());
+  }
+
+  static Future<void> updateUserGroups({required UserGroups userGroups}) async {
+    final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc(userGroups.id);
+    await docUG.update(userGroups.toJson());
+  }
+
+  // static Stream<List<UserGroups>> readUserGroups() =>
+  //     FirebaseFirestore.instance.collection(userGroupCollection).snapshots().transform(Utils.transformer((UserGroups.) as StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<UserGroups>));
+
+  static Future<List<UserGroups>> readUserGroupsOnce() async {
+    List<UserGroups> _allUserGroups = [];
+    var collection = FirebaseFirestore.instance.collection(userGroupCollection);
+    var querySnapshot = await collection.get();
+    return snapshotUserGroupsToMap(querySnapshot);
+  }
+
+  static List<UserGroups> readUserGroupsAsStreamNotUsed() {
+    List<UserGroups> _allUserGroups = [];
+    var collection = FirebaseFirestore.instance.collection(userGroupCollection);
+    collection.snapshots().listen((querySnapshot) {
+      _allUserGroups = snapshotUserGroupsToMap(querySnapshot);
+    });
+    return _allUserGroups;
+  }
+
+  static List<UserGroups> snapshotUserGroupsToMap(QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+    List<UserGroups> _allUserGroups = [];
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data();
+      _allUserGroups.add(UserGroups.fromJson(data));
+    }
+    return _allUserGroups;
+  }
+
+  static Future<UserGroups> readUserGroup({required String uid}) async {
+    final docUG = FirebaseFirestore.instance.collection(userGroupCollection).doc(uid);
+    final snapshot = await docUG.get();
+    print(snapshot.data());
+    print('--------');
+    print('--------');
+    print(UserGroups.fromJson(snapshot.data()!).id);
+    return UserGroups.fromJson(snapshot.data()!);
+  }
 }

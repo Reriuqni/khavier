@@ -9,11 +9,16 @@ import 'package:admin/responsive.dart';
 import 'package:admin/model/Storage.dart';
 import 'package:admin/model/user.dart';
 import '../../widgets/containers.dart';
+import '../../widgets/textFields.dart';
 import '../ticket/screen_arguments.dart';
+import 'package:country_state_city_pro/country_state_city_pro.dart';
+import 'package:admin/constants/globals.dart' as globals;
 
 dynamic args;
 User? _user =
     User(id: 'mock id', lastSignInTime: DateTime.now(), lastAccessToFirebase: DateTime.now());
+
+double rowGap = 200;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -125,9 +130,18 @@ class _ProfilePage extends State<ProfilePage>
                     body: TabBarView(
                       controller: _tabController,
                       children: [
-                        InfoTab(),
-                        ContactTab(),
-                        OtherTab(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [InfoTab()],),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [ContactTab(),],),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [OtherTab(),],),
                         if (args != 'newUser') FirebaseTab(),
                       ],
                     ),
@@ -149,13 +163,15 @@ class OtherTab extends StatelessWidget {
     return TabsMainContainer(
       children: [
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
             if (args == 'newUser')
               RowItem(
                 text: 'Tags:',
                 onChanged: (_) => _user!.tags = _,
+                initialValue: _user!.tags,
               ),
+            if (args == 'newUser')
+              SizedBox(width: rowGap,),
             RowItem(
               label: 'Liquidator #',
               initialValue: _user!.liquidatorId,
@@ -196,7 +212,6 @@ class _InfoTabState extends State<InfoTab> {
         ),
         if (args == 'newUser')
           Wrap(
-            alignment: WrapAlignment.spaceBetween,
             children: [
               RowItem(
                 text: '* Organization:',
@@ -219,7 +234,6 @@ class _InfoTabState extends State<InfoTab> {
           ),
         if (args != 'newUser')
           Wrap(
-            alignment: WrapAlignment.spaceBetween,
             children: [
               RowItem(
                 text: 'Site:',
@@ -242,13 +256,13 @@ class _InfoTabState extends State<InfoTab> {
           onChanged: (_) => _user!.id = _,
         ),
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
               text: '* First Name:',
               initialValue: _user!.firstName,
               onChanged: (_) => _user!.firstName = _,
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               text: '* Last Name:',
               initialValue: _user!.lastName,
@@ -257,29 +271,47 @@ class _InfoTabState extends State<InfoTab> {
           ],
         ),
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
               // 2do: we have firebase auth. Do we need password field?
               text: '* Password:',
             ),
+            SizedBox(width: rowGap,),
+            Wrap(
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: [
             RowItem(
                 text: '* Confirm Password:',
-                widget: OwnButton(onPressed: () {}, label: 'Generate')),
+              ),
+              SizedBox(width: 5,),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                child: OwnButton(onPressed: () {}, label: 'Generate'),
+              )
+            ],
+            )
           ],
         ),
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
+          children: [
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.end,
           children: [
             RowItem(
               // 2do: what is that? What is OTP? We have Firabes auth.
               text: '* Preferred OTP',
               initialValue: _user!.preferredOTP,
               onChanged: (_) => _user!.preferredOTP = _,
-              widget: OwnButton(onPressed: () {}, label: 'Setup Google Auth'),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 45, 10),
+                  child: OwnButton(onPressed: () {}, label: 'Setup Google Auth'),
+                )
+              ],
             ),
             if (args == 'newUser')
               // 2do: Can we change language only for new user?
+              SizedBox(width: rowGap,),
               RowItem(
                 text: 'Language:',
                 initialValue: _user!.language,
@@ -316,21 +348,30 @@ class _InfoTabState extends State<InfoTab> {
   }
 }
 
-class ContactTab extends StatelessWidget {
+class ContactTab extends StatefulWidget {
   ContactTab();
+
+  @override
+  State<ContactTab> createState() => _ContactTabState();
+}
+
+class _ContactTabState extends State<ContactTab> {
+  TextEditingController country=TextEditingController();
+  TextEditingController state=TextEditingController();
+  TextEditingController city=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return TabsMainContainer(
       children: [
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
               label: 'Email',
               initialValue: _user!.email,
               onChanged: (_) => _user!.email = _,
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'Mobile',
               initialValue: _user!.mobile,
@@ -339,13 +380,13 @@ class ContactTab extends StatelessWidget {
           ],
         ),
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
             RowItem(
               label: 'Street Address 1',
               initialValue: _user!.streetAddress1,
               onChanged: (_) => _user!.streetAddress1 = _,
             ),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'Street Address 2',
               initialValue: _user!.streetAddress2,
@@ -354,33 +395,48 @@ class ContactTab extends StatelessWidget {
           ],
         ),
         Wrap(
-          alignment: WrapAlignment.spaceBetween,
           children: [
-            RowItem(label: 'City', initialValue: _user!.city, onChanged: (_) => _user!.city = _),
-            RowItem(label: 'State', initialValue: _user!.state, onChanged: (_) => _user!.state = _),
+            Container(
+              width: 300,
+              padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
+              child: Column(
+                children: [
+                  CountryStateCityPicker(
+                    country: country,
+                    state: state,
+                    city: city,
+                    textFieldInputBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                          color: Color(0xFF009EAE),
+                          width: 2.0),
+                    ),
+                  ),
           ],
         ),
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          children: [
+            ),
+            // RowItem(label: 'City', initialValue: _user!.city, onChanged: (_) => _user!.city = _),
+            SizedBox(width: rowGap,),
             RowItem(
               label: 'PostCode',
               initialValue: _user!.postCode,
               onChanged: (_) => _user!.postCode = _,
             ),
-            RowItem(
-              label: 'Country',
-              initialValue: _user!.country,
-              onChanged: (_) => _user!.country = _,
-            ),
           ],
         ),
         if (args == 'newUser')
-          RowItem(
-            text: 'Time Zone:',
-            initialValue: _user!.timeZone,
-            onChanged: (_) => _user!.timeZone = _,
-          ),
+          Row(
+            children: [
+              Container(
+                width: 300,
+                padding: EdgeInsets.fromLTRB(5, 30, 5, 0),
+                child: OwnDropDown(
+                  hint: 'TimeZone',
+                  onChanged: (value) {},
+                  items: globals.timeZone, ),
+              )
+            ],)
+
       ],
     );
   }

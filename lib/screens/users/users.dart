@@ -93,7 +93,7 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
                             Navigator.pushNamed(
                               context,
                               '/profile',
-                            arguments: ScreenArguments(user: await FirebaseApi.createMockUser()),
+                                  arguments: 'newUser',
                             );
                           },
                           icon: Icons.add,
@@ -170,7 +170,6 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            print('ConnectionState.waiting');
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
@@ -200,11 +199,12 @@ class _UsersPageState extends State<UsersPage> with RestorationMixin {
             children: [
               // rendererContext.column.field equal to 'text_field_id'
               TableUsersContextMenu(
+                  //  rendererContext.column.field == 'text_field_id']
                   uid: rendererContext.row.cells[rendererContext.column.field]!.value
-                      .toString()), //  TableUsersContextMenu(uid: rendererContext.row.cells['text_field_id']!.value),
+                      .toString()), 
               Expanded(
                 child: Text(
-                  // rendererContext.row.cells[rendererContext.column.field]!.value.toString() equal to data in cell (uid)
+                  // rendererContext.row.cells[rendererContext.column.field]!.value.toString() equal to data in cell. In this case value of uid field.
                   rendererContext.row.cells[rendererContext.column.field]!.value.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
