@@ -96,6 +96,16 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                           ),
                           OwnAnimatedTextButton(
                             fontSize: 20,
+                            childText: 'SETTINGS',
+                            onPressed: () {
+                              setState(() {
+                                globals.width = globals.width == 0 ? 200 : 0;
+                              });
+                            },
+                          ),
+                          SizedBox(width: 80,),
+                          OwnAnimatedTextButton(
+                            fontSize: 20,
                             childText: 'MATTERS',
                             onPressed: () {
                               Navigator.pushNamed(context, '/main');
@@ -139,9 +149,12 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
                 ),
               ],
             )),
-        SideMenuContainer(
+        Container(
+          padding: EdgeInsets.only(left: 400),
+          child: SideMenuContainer(
+            height: 470,
           width: globals.width,
-          height: MediaQuery.of(context).size.height - 134,
+          ),
         )
       ],
     ));

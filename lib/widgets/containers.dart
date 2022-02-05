@@ -1,16 +1,15 @@
-import 'package:admin/constants/globals.dart' as globals;
-import 'package:admin/responsive.dart';
 import 'package:admin/screens/main/components/side_menu.dart';
 import 'package:admin/widgets/textFields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/responsive.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:admin/constants/globals.dart' as globals;
 import '../constants/colors.dart';
 import '../screens/dashboard/components/header.dart';
 import '../screens/dashboard/components/headerResponsive.dart';
 import 'buttons.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 class HeaderAndSideMenu extends StatelessWidget {
   final Widget widget;
@@ -22,18 +21,12 @@ class HeaderAndSideMenu extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          padding:
-              EdgeInsets.only(top: Responsive.isDesktop(context) ? 134 : 60),
+          padding: EdgeInsets.only(top: Responsive.isDesktop(context) ? 134 : 60),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (Responsive.isDesktop(context))
                 Container(
-                    alignment: Alignment.topCenter,
-                    width: 260,
-                    child: SideMenu()),
-              Container(
-                  width: MediaQuery.of(context).size.width - 260,
+                  width: MediaQuery.of(context).size.width,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: widget,
@@ -54,8 +47,10 @@ class StackHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (Responsive.isDesktop(context)) Header(),
-        if (!Responsive.isDesktop(context)) HeaderResponsive()
+        if (Responsive.isDesktop(context))
+          Header(),
+        if (!Responsive.isDesktop(context))
+          HeaderResponsive()
       ],
     );
   }
@@ -85,14 +80,14 @@ class _HeaderIcons extends State<HeaderIcons> {
             color: primaryColor,
           ),
         ),
-        OwnAnimatedButton(
-          onTap: widget.tapCog,
-          child: FaIcon(
-            FontAwesomeIcons.cog,
-            size: 17,
-            color: primaryColor,
-          ),
-        ),
+        // OwnAnimatedButton(
+        //   onTap: widget.tapCog,
+        //   child: FaIcon(
+        //     FontAwesomeIcons.cog,
+        //     size: 17,
+        //     color: primaryColor,
+        //   ),
+        // ),
         OwnAnimatedButton(
           onTap: () {
             Navigator.pushNamed(
@@ -156,7 +151,8 @@ class TabsMainContainer extends StatelessWidget {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: children),
+              children: children
+          ),
     ));
   }
 }
@@ -175,7 +171,8 @@ class RowItem extends StatelessWidget {
       {this.text = '',
       this.label = 'Default',
       this.onChanged,
-      this.initialValue});
+        this.initialValue
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -206,43 +203,6 @@ class RowItem extends StatelessWidget {
           ),
         ],
       ),
-      // child: Wrap(
-      //   alignment: WrapAlignment.start,
-      //   crossAxisAlignment: WrapCrossAlignment.end,
-      //   children: [
-      //     Column(
-      //       children: [
-      //         Container(
-      //           padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
-      //           width: 300,
-      //           child: Text(
-      //             text,
-      //             textAlign: TextAlign.end,
-      //             style: TextStyle(
-      //               fontSize: 16,
-      //               fontWeight: FontWeight.w500,
-      //             ),
-      //           ),
-      //         ),
-      //         Container(
-      //           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-      //           width: 300,
-      //           child: OwnTextField(
-      //             onChanged: onChanged,
-      //             labelText: label,
-      //             initialValue: initialValue,
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //     Container(
-      //         padding: EdgeInsets.all(5),
-      //         child: Container(
-      //           width: 175,
-      //           child: widget,
-      //         ))
-      //   ],
-      // ),
     );
   }
 }
@@ -262,7 +222,8 @@ class RadioRow extends StatelessWidget {
       this.text1 = '',
       this.text2 = '',
       this.text3 = '',
-      required this.radioWidget});
+        required this.radioWidget
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -274,33 +235,19 @@ class RadioRow extends StatelessWidget {
             child: Row(
               children: [
                 radioWidget,
-                Text(
-                  textRadio,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w600),
-                ),
+                Text(textRadio, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
               ],
-            )),
+            )
+                ),
         Expanded(
             flex: 4,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  text0,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  text1,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  text2,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  text3,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w600),
-                )
+                Text(text0, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text1, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text2, style: TextStyle(color: color, fontWeight: FontWeight.w600),),
+                Text(text3, style: TextStyle(color: color, fontWeight: FontWeight.w600),)
               ],
             ))
       ],
@@ -313,26 +260,20 @@ class ColorPickerItem extends StatelessWidget {
   final void Function() onSelect;
   final colorsNameMap;
   final String title;
-  ColorPickerItem(
-      {required this.colorVariable,
-      required this.onSelect,
-      this.colorsNameMap,
-      required this.title});
+  ColorPickerItem({required this.colorVariable, required this.onSelect, this.colorsNameMap, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 350,
       child: ListTile(
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 16),
-        ),
+        title: Text(title, style: TextStyle(fontSize: 16),),
         subtitle: Text(
             // ignore: lines_longer_than_80_chars
             '${ColorTools.materialNameAndCode(colorVariable, colorSwatchNameMap: colorsNameMap)} '
             'aka ${ColorTools.nameThatColor(colorVariable)}',
-            style: TextStyle(fontSize: 14)),
+            style: TextStyle(fontSize: 14)
+        ),
         trailing: ColorIndicator(
             width: 44,
             height: 44,
@@ -341,7 +282,8 @@ class ColorPickerItem extends StatelessWidget {
             borderColor: Color(0xB2000000),
             color: colorVariable,
             onSelectFocus: false,
-            onSelect: onSelect),
+          onSelect: onSelect
+        ),
       ),
     );
   }
@@ -351,8 +293,7 @@ class UGBrandingImage extends StatelessWidget {
   final String text;
   final String image;
   final void Function()? onPressed;
-  UGBrandingImage(
-      {required this.onPressed, required this.image, required this.text});
+  UGBrandingImage({required this.onPressed, required this.image, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -368,11 +309,9 @@ class UGBrandingImage extends StatelessWidget {
               width: 150,
               height: 100,
             ),
-            OwnButton(
-              label: 'Browse',
-              onPressed: onPressed,
-            ),
+            OwnButton(label: 'Browse', onPressed: onPressed,),
           ],
-        ));
+        )
+    );
   }
 }

@@ -142,7 +142,7 @@ class _ProfilePage extends State<ProfilePage>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [OtherTab(),],),
-                        if (args != 'newUser') FirebaseTab(),
+                        FirebaseTab(),
                       ],
                     ),
                   )),
@@ -168,7 +168,6 @@ class OtherTab extends StatelessWidget {
               RowItem(
                 text: 'Tags:',
                 onChanged: (_) => _user!.tags = _,
-                initialValue: _user!.tags,
               ),
             if (args == 'newUser')
               SizedBox(width: rowGap,),
@@ -311,7 +310,6 @@ class _InfoTabState extends State<InfoTab> {
             ),
             if (args == 'newUser')
               // 2do: Can we change language only for new user?
-              SizedBox(width: rowGap,),
               RowItem(
                 text: 'Language:',
                 initialValue: _user!.language,

@@ -150,16 +150,20 @@ class _UserGroupsEdit extends State<UserGroupsEdit> with SingleTickerProviderSta
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [UGAddress()],
                         ),
-                        UGLanguage(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [UGBilling()],
+                          children: [UGLanguage(),],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [UGBranding()],
+                          children: [UGBilling(),],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [UGBranding(),],
                         ),
                         UGAdminPricing(),
                         Row(

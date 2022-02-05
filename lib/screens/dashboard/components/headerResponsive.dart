@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/constants/colors.dart';
 import 'package:admin/widgets/buttons.dart';
@@ -65,7 +66,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                             _burger
                                 ? controller.forward()
                                 : controller.reverse();
-                            _widthBurger = _widthBurger == 0 ? 200 : 0;
+                            _widthBurger = _widthBurger == 0 ? 220 : 0;
                             _heightIcons = 0;
                             _width = 0;
                           });
@@ -144,7 +145,7 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                 ],
               ),
               AnimatedContainer(
-                  width: 200,
+                  width: 160,
                   height: _heightIcons,
                   decoration: BoxDecoration(
                     border: Border(
@@ -158,18 +159,15 @@ class _HeaderResponsiveState extends State<HeaderResponsive>
                   duration: Duration(milliseconds: 200),
                   child: Visibility(
                     visible: _heightIcons == 0 ? false : true,
-                    child: HeaderIcons(
-                      tapCog: () {
-                        setState(() {
-                          _width = _width == 0 ? 200 : 0;
-                          _heightIcons = 0;
-                          tapBurger();
-                        });
-                      },
+                    child: Row (
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [HeaderIcons(
                       tapUser: () {},
                       tapSquare: () {},
+                      ),],
+                    )
+                  )
                     ),
-                  )),
             ]),
       ],
     ));
@@ -203,7 +201,7 @@ class BurgerMenuContainer extends StatelessWidget {
                   ),
                   Container(
                       padding: EdgeInsets.only(top: 5),
-                      width: 140,
+                      width: 165,
                       child: Material(
                         type: MaterialType.transparency,
                         child: TextFormField(
@@ -232,16 +230,17 @@ class BurgerMenuContainer extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              OwnAnimatedTextButton(
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: OwnAnimatedTextButton(
                 childText: 'MATTERS',
                 fontSize: 15,
                 onPressed: () {
                   Navigator.pushNamed(context, '/main');
                 },
-              )
+                ),
+              ),
+              SideMenuContainer(width: _widthBurger, height: 470)
             ],
           ),
         ));

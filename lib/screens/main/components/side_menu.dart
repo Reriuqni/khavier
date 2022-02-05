@@ -32,23 +32,18 @@ class _SideMenuState extends State<SideMenu> {
             ),
             DrawerListSubTile(
                 title: 'Details',
-                subTitle: 'Contact Info, SSL, Time Zone',
                 press: (){}),
             DrawerListSubTile(
                 title: 'Billing',
-                subTitle: 'Gateway, Accounting, Currency, Taxes',
                 press: (){}),
             DrawerListSubTile(
                 title: 'Pricing',
-                subTitle: 'Set & Select Pricing Models',
                 press: (){}),
             DrawerListSubTile(
                 title: 'Branding',
-                subTitle: 'Login, Home Page, Language, Custom Fields',
                 press: (){}),
             DrawerListSubTile(
                 title: 'Notices',
-                subTitle: 'System Messages, Reports, Logs',
                 press: (){}),
             SizedBox(height: 10),
 
@@ -57,21 +52,18 @@ class _SideMenuState extends State<SideMenu> {
             ),
             DrawerListSubTile(
                 title: 'User Groups',
-                subTitle: 'Manage your business entities',
                 press: (){
                   Navigator.pushNamed(context, '/userGroups');
                   closeSideMenu();
                 }),
             DrawerListSubTile(
                 title: 'Users',
-                subTitle: 'Manage your users',
                 press: (){
                   Navigator.pushNamed(context, '/users');
                   closeSideMenu();
                 }),
             DrawerListSubTile(
                 title: 'Tags',
-                subTitle: 'Manage tags for system customization',
                 press: (){}),
             SizedBox(height: 10),
 
@@ -80,7 +72,6 @@ class _SideMenuState extends State<SideMenu> {
             ),
             DrawerListSubTile(
                 title: 'Access Rights',
-                subTitle: 'Manage your system access rights',
                 press: (){}),
           ],
         ),
@@ -123,11 +114,10 @@ class DrawerListSubTile extends StatelessWidget {
     Key? key,
     // For selecting those three line once press "Command+D"
     required this.title,
-    this.subTitle,
     required this.press,
   }) : super(key: key);
 
-  final String? title, subTitle;
+  final String? title;
   final VoidCallback press;
 
   @override
@@ -142,7 +132,6 @@ class DrawerListSubTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(title!, style: TextStyle(color: branding.sideToolbarHeading, fontSize: 14, fontWeight: FontWeight.w500, )),
-              Text(subTitle!, style: TextStyle(color: branding.sideToolbarSubHeading, fontSize: 10))
             ],
           )
       ),
